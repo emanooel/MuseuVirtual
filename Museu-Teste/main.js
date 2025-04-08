@@ -50,7 +50,7 @@ loader.load(`3d/${modelo}.glb`, function (gltf) {
 
   // Centraliza o modelo
   model.position.x += (model.position.x - center.x);
-  model.position.y += (model.position.y - center.y);
+  model.position.y += (model.position.y - center.y/6);
   model.position.z += (model.position.z - center.z);
 
   // Ajusta a câmera com base no tamanho do modelo
