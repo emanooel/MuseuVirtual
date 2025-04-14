@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('bibliotecas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("usuarioId")->constrained("usuarios");
-            $table->json("jazidasSalvas");
-            $table->json("rochasSalvas");
-            $table->json("mineraisSalvos");
+            $table->foreignId("usuarioId")->constrained("users");
+            $table->json("jazidasSalvas")->nullable();
+            $table->json("rochasSalvas")->nullable();
+            $table->json("mineraisSalvos")->nullable();
         });
     }
 
