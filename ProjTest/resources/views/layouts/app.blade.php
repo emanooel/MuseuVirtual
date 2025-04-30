@@ -28,7 +28,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="bg-[#67697C]">
                 {{ $slot }}
             </main>
         </div>

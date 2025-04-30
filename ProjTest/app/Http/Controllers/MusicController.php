@@ -53,22 +53,34 @@ class MusicController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Musicas $musica, $tipo = 'preview')
-    {
+    public function show($imagem, $tipo = 'preview'){
         if ($tipo === 'preview') {
             // Lista de músicas no formato preview
-            $musicasList = Musicas::select('imagem', 'nome')->limit(20)->get();
+            $musicasList = Musicas::select('imagem', 'nome', 'id')->limit(20)->get();
 
             $musicasArray = $musicasList->map(function($musica) {
-                return [$musica->imagem, $musica->nome];
+                return [$musica->imagem, $musica->nome, $musica->id];
             });
 
             return view('hello', ['musicas' => $musicasArray]);
         }
 
         // Caso contrário, exibe os dados completos da música
-        return view('hello', compact('musica'));
+        if ($tipo === 'dados') {
+            $musica = Musicas::where('id', $imagem)->first();
+            if (!$musica) {
+                abort(404, 'Música não encontrada');
+            }
+            $nome = $musica->nome;
+            $imagem = $musica->imagem;
+            $descricao = $musica->descricao;
+            $musicaFile = $musica->musica;
+
+            return view('viewMusic', ['nome' => $nome, 'msc' =>$musicaFile, 'img'=>$imagem, 'info' =>$descricao]);
+        }
+
     }
+
 
 
 

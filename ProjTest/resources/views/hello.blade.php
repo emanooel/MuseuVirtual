@@ -28,16 +28,19 @@
             </style>
 
             <div class="flex flex-wrap items-start justify-center">
+                @if ($musicas)
                 @foreach ($musicas as $musica)
-                    <a href="{{ route('musica.show', $musica[0]) }}" class="no-underline">
-                        <div class="musica-card m-2 border border-black flex flex-col items-center cursor-pointer hover:shadow-lg transition">
-                            <img src="{{ asset('img/musicasimg/' . $musica[0]) }}" alt="Capa" class="border-b border-black" />
-                            <div class="text-center p-1">
-                                {{ $musica[1] }}
-                            </div>
-                        </div>
-                    </a>
+                <a href="{{ route('musicas.show', ['musica' => $musica[2], 'tipo' => 'dados']) }}">
+                    <div class="musica-card">
+                        <img src="{{ asset('img/musicasimg/' . $musica[0]) }}" alt="Capa" />
+                        <div>{{ $musica[1] }}</div>
+                    </div>
+                </a>
+
                 @endforeach
+                @else
+                a
+                @endif
             </div>
         </div>
     </x-slot>

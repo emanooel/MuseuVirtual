@@ -3,23 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MusicController;
+Route::resource('musicas', MusicController::class ) ;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    // Redireciona para a rota /musicas/{musica} com o tipo 'preview'
-    return redirect()->route('musicas.show', ['musica' => 1, 'tipo' => 'preview']);
-});
+Route::get('/hello', [MusicController::class, 'show'])->defaults('musica', 'unused')->defaults('tipo', 'preview')->name('hello');
 
-Route::get('/music', function () {
-
-    return redirect()->route('musicas.show', ['musica' => 1, 'tipo' => 'dados']);
-});
-
-
-
-
+Route::get('/musicas/{musica}/{tipo?}', [MusicController::class, 'show'])->name('musicas.show');
 
 Route::get('/AddMusic', function () {
     $nome = 'admin';
@@ -29,8 +21,6 @@ Route::get('/AddMusic', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::resource('musicas', MusicController::class ) ;
 
 
 Route::middleware('auth')->group(function () {
