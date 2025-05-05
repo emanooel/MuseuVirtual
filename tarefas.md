@@ -8,3 +8,12 @@
 * Testar funcionalidades em mobile
 * Criar uma branch seguindo a padronização de branchs.
 * Se estiver tudo ok com os testes subir para o github seguindo padrões de commit.
+# Caio
+* Implementar Funcionalidade de cadastro de Minerias
+* Implementar Funcionalidade de listar minerais
+* Implementar Funcionalidade de editar minerais
+* Implementar funcionalidade de excluir minerais
+* Testar funcionalidades em desktop
+* Testar funcionalidades em mobile
+* Criar uma branch seguindo a padronização de branchs.
+* Se estiver tudo ok com os testes subir para o github seguindo padrões de commit.
