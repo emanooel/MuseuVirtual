@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Mineral;
 use Illuminate\Http\Request;
-
 class MineralController extends Controller
 {
     /**
@@ -12,7 +10,8 @@ class MineralController extends Controller
      */
     public function index()
     {
-        //
+        $minerais = Mineral::all();
+        return view('dashboard.minerais.index', compact('minerais'));
     }
 
     /**
@@ -20,7 +19,7 @@ class MineralController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.minerais.create');
     }
 
     /**
@@ -28,7 +27,13 @@ class MineralController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mineral = new Mineral;
+        $mineral -> nome = $request -> nome;
+        $mineral -> descricao = $request -> descricao;
+        $mineral -> propriedades = $request -> propriedades;
+        $mineral -> save();
+
+        return redirect('/minerais/');
     }
 
     /**
@@ -44,7 +49,7 @@ class MineralController extends Controller
      */
     public function edit(Mineral $mineral)
     {
-        //
+        return view('dashboard.minerais.edit');
     }
 
     /**
@@ -60,6 +65,6 @@ class MineralController extends Controller
      */
     public function destroy(Mineral $mineral)
     {
-        //
+        //return view('dashboard.minerais.delete');
     }
 }
