@@ -12,7 +12,8 @@ class RochaController extends Controller
      */
     public function index()
     {
-        //
+        $rochas = Rocha::paginate(10);  // 10 rochas por página
+        return view('dashboard.rocha.index', compact('rochas'));
     }
 
     /**
@@ -20,7 +21,7 @@ class RochaController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.rocha.create');
     }
 
     /**
@@ -28,7 +29,18 @@ class RochaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFiles('nome', 'descricao', 'composicao')){
+            $rochNome = $request->nome;
+            $rochDesc = $request->descricao;
+            $rochComp = $request->composicao;
+            $rocha = Rocha::create([
+                'nome'=>$request->nome,
+                'descricao'=>$request->descricao,
+                'composicao'=>$request->composicao,
+            ]);
+            return view('dashboard.rocha.index');
+        }
+        return view('dashboard.rocha.index');
     }
 
     /**
@@ -42,17 +54,43 @@ class RochaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Rocha $rocha)
+    public function edit($id)
     {
-        //
+
+        $rocha = Rocha::findOrFail($id);
+
+        return view('dashboard.rocha.edit', compact('rocha'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Rocha $rocha)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nome' => 'sometimes|required|string|max:255',  // 'nome' será requerido apenas se for preenchido
+            'descricao' => 'nullable|string',
+            'composicao' => 'nullable|string',
+        ]);
+
+        $rocha = Rocha::findOrFail($id);
+
+        if ($request->filled('nome')) {
+            $rocha->nome = $request->nome;
+        }
+    
+        if ($request->filled('descricao')) {
+            $rocha->descricao = $request->descricao;
+        }
+    
+        if ($request->filled('composicao')) {
+            $rocha->composicao = $request->composicao;
+        }
+    
+        $rocha->save();
+    
+        return redirect()->route('dashboard.rocha.index')->with('success', 'Rocha atualizada com sucesso!');
+    
     }
 
     /**
@@ -60,6 +98,11 @@ class RochaController extends Controller
      */
     public function destroy(Rocha $rocha)
     {
-        //
+        $roch = Rocha::findOrFail($rocha);
+        $roch->delete();
+        
+        $rochas = Rocha::paginate(10);  // 10 rochas por página
+
+        return redirect()->route('dashboard.rocha.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');
     }
 }
