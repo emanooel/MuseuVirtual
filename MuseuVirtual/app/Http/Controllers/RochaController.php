@@ -94,11 +94,10 @@ class RochaController extends Controller
      */
     public function destroy(Rocha $rocha)
     {
-        $roch = Rocha::findOrFail($rocha);
-        $roch->delete();
+        $rocha->delete();
         
         $rochas = Rocha::paginate(10);  // 10 rochas por página
 
-        return redirect()->route('dashboard.rocha.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');
+        return redirect()->route('Rocha.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rocha extends Model
 {
-    protected $filable = [
+    protected $fillable = [
         'id',
         'nome',
         'descricao',

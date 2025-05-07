@@ -7,10 +7,25 @@
 
     <x-slot name="slot">
         @if (session('success'))
-            <div id="popup" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-200 text-white px-4 py-2 rounded-md shadow-md opacity-0 transition-opacity duration-1500 ease-in-out">
+            <div id="popup" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-md shadow-md opacity-0 transition-opacity duration-500 ease-in-out">
                 {{ session('success') }}
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const popup = document.getElementById('popup');
+                    popup.classList.remove('opacity-0');
+                    popup.classList.add('opacity-100');
+
+                    setTimeout(() => {
+                        popup.classList.remove('opacity-100');
+                        popup.classList.add('opacity-0');
+                    }, 3000); // Esconde após 3 segundos
+                });
+            </script>
         @endif
+
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -53,7 +68,7 @@
                         @endforeach
                     </div>
                     {{ $rochas->links() }}
-                    <a href="{{ route('dashboard.rocha.create') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"> Cadastrar rochas </a>
+                    <a href="{{ route('Rocha.create') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"> Cadastrar rochas </a>
                 </div>
             </div>
         </div>
