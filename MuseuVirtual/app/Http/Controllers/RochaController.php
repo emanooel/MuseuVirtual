@@ -27,21 +27,18 @@ class RochaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        if ($request->hasFiles('nome', 'descricao', 'composicao')){
-            $rochNome = $request->nome;
-            $rochDesc = $request->descricao;
-            $rochComp = $request->composicao;
-            $rocha = Rocha::create([
-                'nome'=>$request->nome,
-                'descricao'=>$request->descricao,
-                'composicao'=>$request->composicao,
-            ]);
-            return view('dashboard.rocha.index');
-        }
-        return view('dashboard.rocha.index');
+    public function store(Request $request){
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'composicao' => 'required|string',
+        ]);
+
+        Rocha::create($validated);
+
+        return redirect()->route('Rocha.index')->with('success', 'Rocha criada com sucesso!');
     }
+
 
     /**
      * Display the specified resource.
@@ -65,33 +62,32 @@ class RochaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Rocha $rocha)
     {
         $request->validate([
-            'nome' => 'sometimes|required|string|max:255',  // 'nome' será requerido apenas se for preenchido
+            'nome' => 'sometimes|required|string|max:255',
             'descricao' => 'nullable|string',
             'composicao' => 'nullable|string',
         ]);
 
-        $rocha = Rocha::findOrFail($id);
-
+        // Atualizando apenas os campos que foram enviados
         if ($request->filled('nome')) {
             $rocha->nome = $request->nome;
         }
-    
+
         if ($request->filled('descricao')) {
             $rocha->descricao = $request->descricao;
         }
-    
+
         if ($request->filled('composicao')) {
             $rocha->composicao = $request->composicao;
         }
-    
+
         $rocha->save();
-    
-        return redirect()->route('dashboard.rocha.index')->with('success', 'Rocha atualizada com sucesso!');
-    
+
+        return redirect()->route('Rocha.index')->with('success', 'Rocha atualizada com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.
