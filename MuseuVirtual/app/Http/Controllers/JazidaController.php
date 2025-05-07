@@ -12,8 +12,8 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::with('administrador')->get();
-        return view('jazidas.index', compact('jazidas'));
+        $jazidas = Jazida::get();
+        return view('dashboard.jazidas.index', compact('jazidas'));
     }
 
     /**
@@ -32,7 +32,6 @@ class JazidaController extends Controller
         $request->validate([
             'localizacao' => 'required|string|max:255',
             'descricao' => 'nullable|string',
-            'administrador_id' => 'required|exists:administradores,id',
         ]);
 
         Jazida::create($request->all());
