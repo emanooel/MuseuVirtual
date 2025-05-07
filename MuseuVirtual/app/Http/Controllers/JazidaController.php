@@ -12,7 +12,8 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        //
+        $jazidas = Jazida::get();
+        return view('dashboard.jazidas.index', compact('jazidas'));
     }
 
     /**
@@ -20,7 +21,7 @@ class JazidaController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.jazidas.create');
     }
 
     /**
@@ -28,7 +29,14 @@ class JazidaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'localizacao' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+        ]);
+
+        Jazida::create($request->all());
+
+        return redirect()->route('jazidas.index')->with('success', 'Jazida criada com sucesso!');
     }
 
     /**
