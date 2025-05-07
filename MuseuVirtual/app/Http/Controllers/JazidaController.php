@@ -12,8 +12,10 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::with('administrador')->get();
-        return view('jazidas.index', compact('jazidas'));
+        $jazidas = Jazida::get();
+        return view('dashboard.jazidas.index', compact('jazidas'));
+
+        
     }
 
     /**
@@ -32,10 +34,13 @@ class JazidaController extends Controller
         $request->validate([
             'localizacao' => 'required|string|max:255',
             'descricao' => 'nullable|string',
-            'administrador_id' => 'required|exists:administradores,id',
         ]);
-
-        Jazida::create($request->all());
+        // dd($request->all()); 
+        // Jazida::create($request->all());
+        $jazida=new Jazida();
+        $jazida->localizacao = $request->localizacao;
+        $jazida->descricao = $request->descricao;
+        $jazida->save();
 
         return redirect()->route('jazidas.index')->with('success', 'Jazida criada com sucesso!');
     }
@@ -53,7 +58,7 @@ class JazidaController extends Controller
      */
     public function edit(Jazida $jazida)
     {
-        //
+        return view('dashboard.jazidas.edit', compact('jazida'));
     }
 
     /**
@@ -61,7 +66,17 @@ class JazidaController extends Controller
      */
     public function update(Request $request, Jazida $jazida)
     {
-        //
+        $request->validate([
+            'localizacao' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+        ]);
+    
+        $jazida->update([
+            'localizacao' => $request->localizacao,
+            'descricao' => $request->descricao,
+        ]);
+    
+        return redirect()->route('jazidas.index')->with('success', 'Jazida atualizada com sucesso!');
     }
 
     /**
@@ -69,6 +84,8 @@ class JazidaController extends Controller
      */
     public function destroy(Jazida $jazida)
     {
-        //
+        $jazida->delete();
+        return redirect()->route('jazidas.index')->with('success', 'Jazida excluída com sucesso!');
     }
+
 }
