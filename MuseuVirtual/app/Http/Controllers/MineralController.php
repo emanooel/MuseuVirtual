@@ -32,7 +32,6 @@ class MineralController extends Controller
         $mineral -> descricao = $request -> descricao;
         $mineral -> propriedades = $request -> propriedades;
         $mineral -> save();
-
         return redirect('/minerais/');
     }
 
@@ -47,24 +46,33 @@ class MineralController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Mineral $mineral)
+    public function edit($id)
     {
-        return view('dashboard.minerais.edit');
+        $mineral = Mineral::findOrFail($id);
+        return view('dashboard.minerais.edit', compact('mineral'));
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Mineral $mineral)
+    public function update(Request $request, $id)
     {
-        //
+        $mineral = Mineral::findOrFail($id);  // Buscar o mineral, antes de alterar os dados
+        $mineral -> nome = $request -> nome;
+        $mineral -> descricao = $request -> descricao;
+        $mineral -> propriedades = $request -> propriedades;
+        $mineral -> save();
+        return redirect('/minerais/');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Mineral $mineral)
+    public function destroy($id)
     {
-        //return view('dashboard.minerais.delete');
+        $mineral = Mineral::findOrFail($id);
+        $mineral->delete();
+        return redirect('/minerais/');
     }
 }
