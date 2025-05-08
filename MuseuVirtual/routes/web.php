@@ -19,6 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 
 //Rota Jazidas:
-Route::resource('/jazidas', JazidaController::class);
+Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

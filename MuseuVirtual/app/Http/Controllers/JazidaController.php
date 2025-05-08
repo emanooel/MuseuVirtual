@@ -14,8 +14,6 @@ class JazidaController extends Controller
     {
         $jazidas = Jazida::get();
         return view('dashboard.jazidas.index', compact('jazidas'));
-
-        
     }
 
     /**
