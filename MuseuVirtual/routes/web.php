@@ -1,12 +1,19 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RochaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JazidaController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
+
+Route::resource('rochas', RochaController::class)->names('Rocha');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

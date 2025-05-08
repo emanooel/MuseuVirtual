@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rocha extends Model
 {
-    //
+    protected $fillable = [
+        'id',
+        'nome',
+        'descricao',
+        'composicao',
+    ];
 }
