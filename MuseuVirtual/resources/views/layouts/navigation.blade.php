@@ -34,6 +34,8 @@
                         {{ __('Jazidas') }}
                     </x-nav-link>
                 </div>
+
+                
             </div>
 
 
