@@ -1,15 +1,34 @@
 <?php
 
+use App\Http\Controllers\FotosController;
+use App\Http\Controllers\JazidaController;
+use App\Http\Controllers\MineralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RochaController;
-use App\Http\Controllers\MineralController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\JazidaController;
-use App\Http\Controllers\FotosController;
-use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+Route::get("/api/rochas", [RochaController::class,'apiListRocha']);
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
@@ -28,6 +47,9 @@ Route::middleware('auth')->group(function () {
 // Rota Jazidas:
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 
+//Rota Minerais:
+Route::resource('/minerais', MineralController::class); 
+
 // Rota Fotos:
 Route::prefix('fotos')->group(function(){
     Route::get('/', [FotosController::class, 'index'])->name('fotos-index');
@@ -41,3 +63,6 @@ Route::prefix('fotos')->group(function(){
 Route::fallback(function(){
     return "Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)";
 });
+
+
+require __DIR__.'/auth.php';

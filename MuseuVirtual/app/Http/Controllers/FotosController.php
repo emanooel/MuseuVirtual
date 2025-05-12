@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fotos;
+use App\Models\Rocha;
 use Illuminate\Http\Request;
 
 class FotosController extends Controller
@@ -13,7 +14,8 @@ class FotosController extends Controller
     public function index()
     {
         $fotos = Fotos::all();
-        return view('fotos.index', ['fotos'=>$fotos]);
+        return view('dashboard.fotos.index', ['fotos' => $fotos]);
+        return view('fotos.index', ['fotos' => $fotos]);
     }
 
     /**
@@ -21,6 +23,8 @@ class FotosController extends Controller
      */
     public function create()
     {
+        $rochas = Rocha::all();
+        return view('dashboard.fotos.create', compact('rochas'));
         return view('fotos.create');
     }
 
@@ -44,15 +48,16 @@ class FotosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-public function edit($id)
-{
-    $fotos = Fotos::where('id', $id)->first();
-    if (!empty($fotos)) {
-        return view('fotos.edit', ['fotos' => $fotos]);
-    } else {
-        return redirect()->route('fotos-index');
+    public function edit($id)
+    {
+        $fotos = Fotos::where('id', $id)->first();
+        if (!empty($fotos)) {
+            return view('dashboard.fotos.edit', ['fotos' => $fotos]);
+            return view('fotos.edit', ['fotos' => $fotos]);
+        } else {
+            return redirect()->route('fotos-index');
+        }
     }
-}
 
 
     /**
@@ -66,7 +71,7 @@ public function edit($id)
             'idJazida' => $request->idJazida,
             'capa' => $request->capa,
         ];
-        Fotos::where( 'id',$id)->update($data);
+        Fotos::where('id', $id)->update($data);
         return redirect()->route('fogos-index');
     }
 
@@ -75,7 +80,7 @@ public function edit($id)
      */
     public function destroy($id)
     {
-        Fotos::where('id',$id)->delete();
+        Fotos::where('id', $id)->delete();
         return redirect()->route('fotos-index');
     }
 }
