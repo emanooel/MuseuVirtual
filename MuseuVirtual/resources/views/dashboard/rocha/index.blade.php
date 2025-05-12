@@ -1,9 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Stones List') }}
-        </h2>
-    </x-slot>
+        <div class="flex justify-between">
+
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Stones List') }}
+            </h2>
+            <a href="{{ route('Rocha.create') }}" class="bg-gray-100 inline-block text-black px-4 bg-blue-600 rounded hover:bg-blue-700">
+                Cadastrar Rocha
+            </a>
+        </div>
+            
+        </x-slot>
 
     <x-slot name="slot">
         @if (session('success'))
@@ -20,55 +27,67 @@
                     setTimeout(() => {
                         popup.classList.remove('opacity-100');
                         popup.classList.add('opacity-0');
-                    }, 3000); // Esconde após 3 segundos
+                    }, 3000);
                 });
             </script>
         @endif
-
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                        @foreach ($rochas as $rocha)
+                        <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-100 dark:bg-gray-700">
+                                <tr>
+                                    <th class="w-1/4 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Foto
+                                    </th>
+                                    <th class="w-1/2 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Nome
+                                    </th>
+                                    <th class="w-1/4 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Ações
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                @foreach ($rochas as $rocha)
+                                    <tr>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="text-sm text-gray-900 dark:text-gray-100">Fotoaqui</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm text-gray-900 dark:text-gray-100">{{ $rocha->nome }}</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <a href="{{ route('Rocha.edit', $rocha->id) }}"
+                                                class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                                    Editar
+                                                </a>
+                                                <form action="{{ route('Rocha.destroy', $rocha->id) }}" method="POST"
+                                                    onsubmit="return confirm('Tem certeza que deseja excluir esta rocha?');" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                            class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">
+                                                        Excluir
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
 
-                        <div class="flex items-center justify-between border-b border-gray-300 py-2">
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
 
-                            <div>
-                                <p class="text-lg font-semibold">Fotoaqui</p>
-                            </div>
-
-                            <div>
-                                <p class="text-lg font-semibold">{{ $rocha->nome }}</p>
-                            </div>
-
-                            <div x-data="{ open: false }" class="relative">
-                                <!-- Botão Alterações -->
-                                <button @click="open = !open" class="bg-gray-200 dark:bg-gray-700 text-sm px-3 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600">
-                                    Alterações
-                                </button>
-
-                                <!-- Dropdown -->
-                                <div x-show="open" @click.away="open = false" x-transition
-                                    class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded shadow-md z-50">
-                                    <!-- Editar -->
-                                    <a href="{{ route('Rocha.edit', $rocha->id) }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"> Editar </a>
-
-                                    <!-- Excluir -->
-                                    <form action="{{ route('Rocha.destroy', $rocha->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta rocha?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-700"> Excluir </button>
-                                    </form>
-                                </div>
-                            </div>
+                        <div class="mt-4">
+                            {{ $rochas->links() }}
                         </div>
-                            
-                        @endforeach
+
                     </div>
-                    {{ $rochas->links() }}
-                    <a href="{{ route('Rocha.create') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"> Cadastrar rochas </a>
                 </div>
             </div>
         </div>
