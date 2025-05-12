@@ -1,40 +1,34 @@
-<!DOCTYPE html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Mineral</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Adicionar Novo Mineral</h2>
-        
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
+<x-app-layout>
+    {{-- Cabeçalho da página --}}
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ __('Cadastrar Mineral') }}</h2>
+    </x-slot>
+    <x-slot name="slot">
         <form action="{{ route('minerais.store') }}" method="POST">
             @csrf
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            <div class="mb-4">
+                                <label for="nome" class="block mt-1 w-full">Nome</label>
+                                <input type="text" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="nome" name="nome" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="descricao" class="block mt-1 w-full">Descrição</label>
+                                <textarea class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="descricao" name="descricao" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label for="propriedades" class="block mt-1 w-full">Propriedades</label>
+                                <textarea class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="propriedades" name="propriedades" rows="4" required></textarea>
+                            </div>
+                            <div class="flex items-center justify-end mt-6">
+                                <x-primary-button type="submit" class="btn btn-primary">Criar</x-primary-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição</label>
-                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="propriedades" class="form-label">Propriedades</label>
-                <textarea class="form-control" id="propriedades" name="propriedades" rows="3" required></textarea>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Salvar">
-            <a href="{{ route('minerais.index') }}" class="btn btn-secondary">Voltar</a>
         </form>
-    </div>
-</body>
-</html>
+    </x-slot>
+</x-app-layout>

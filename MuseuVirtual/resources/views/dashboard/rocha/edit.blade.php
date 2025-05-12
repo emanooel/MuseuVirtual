@@ -11,7 +11,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-
                     <form method="POST" action="{{ route('Rocha.update', $rocha) }}">
                         @csrf
                         @method('PUT')
@@ -20,7 +19,7 @@
                         <div class="mb-4">
                             <x-input-label for="nome" :value="__('Nome')" />
                             <x-text-input id="nome" name="nome" type="text" class="block mt-1 w-full"
-                                          :value="old('nome', $rocha->nome)" />
+                                        :value="old('nome', $rocha->nome)" />
                             @error('nome') 
                                 <span class="text-red-500 text-sm">{{ $message }}</span> 
                             @enderror
@@ -29,7 +28,7 @@
                         {{-- Descrição --}}
                         <div class="mb-4">
                             <x-input-label for="descricao" :value="__('Descrição')" />
-                            <textarea id="descricao" name="descricao" class="block mt-1 w-full" rows="4">{{ old('descricao', $rocha->descricao) }}</textarea>
+                            <textarea id="descricao" name="descricao" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" rows="4">{{ old('descricao', $rocha->descricao) }}</textarea>
                             @error('descricao') 
                                 <span class="text-red-500 text-sm">{{ $message }}</span> 
                             @enderror
@@ -39,7 +38,7 @@
                         <div class="mb-4">
                             <x-input-label for="composicao" :value="__('Composição')" />
                             <x-text-input id="composicao" name="composicao" type="text" class="block mt-1 w-full"
-                                          :value="old('composicao', $rocha->composicao)" />
+                                        :value="old('composicao', $rocha->composicao)" />
                             @error('composicao') 
                                 <span class="text-red-500 text-sm">{{ $message }}</span> 
                             @enderror
@@ -51,7 +50,6 @@
                             </x-primary-button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
