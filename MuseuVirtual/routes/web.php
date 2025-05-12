@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RochaController;
 use App\Http\Controllers\MineralController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JazidaController;
 use App\Http\Controllers\FotosController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,6 @@ Route::middleware('auth')->group(function () {
 
 // Rota Jazidas:
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
-Route::resource('/minerais', MineralController::class);
 
 // Rota Fotos:
 Route::prefix('fotos')->group(function(){
