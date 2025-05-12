@@ -11,5 +11,6 @@ class Rocha extends Model
         'nome',
         'descricao',
         'composicao',
+        'tipo',
     ];
 }

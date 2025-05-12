@@ -32,6 +32,7 @@ class RochaController extends Controller
             'nome' => 'required|string|max:255',
             'descricao' => 'required|string',
             'composicao' => 'required|string',
+            'tipo' => 'required|integer',
         ]);
 
         Rocha::create($validated);
@@ -68,6 +69,7 @@ class RochaController extends Controller
             'nome' => 'sometimes|required|string|max:255',
             'descricao' => 'nullable|string',
             'composicao' => 'nullable|string',
+            'tipo' => 'required|integer',
         ]);
 
         // Atualizando apenas os campos que foram enviados
@@ -81,6 +83,10 @@ class RochaController extends Controller
 
         if ($request->filled('composicao')) {
             $rocha->composicao = $request->composicao;
+        }
+
+        if ($request->filled('tipo')) {
+            $rocha->tipo = $request->tipo;
         }
 
         $rocha->save();

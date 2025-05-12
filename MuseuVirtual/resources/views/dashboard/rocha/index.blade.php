@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
@@ -5,7 +6,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Stones List') }}
             </h2>
-            <a href="{{ route('Rocha.create') }}" class="bg-gray-100 inline-block text-black px-4 bg-blue-600 rounded hover:bg-blue-700">
+            <a href="{{ route('Rocha.create') }}" class="bg-[#9B9FB5] inline-block text-black px-4 bg-blue-600 rounded hover:bg-blue-700">
                 Cadastrar Rocha
             </a>
         </div>
@@ -63,16 +64,18 @@
                                         <td class="px-6 py-4 text-center">
                                             <div class="flex items-center justify-center gap-2">
                                                 <a href="{{ route('Rocha.edit', $rocha->id) }}"
-                                                class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                                class="inline-flex items-center px-2 py-1 text-sm bg-[#9B9FB5] text-black dark:text-white hover:underline rounded">
                                                     Editar
+                                                    <x-icons.pencil />
                                                 </a>
                                                 <form action="{{ route('Rocha.destroy', $rocha->id) }}" method="POST"
                                                     onsubmit="return confirm('Tem certeza que deseja excluir esta rocha?');" class="inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                            class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">
+                                                            class="inline-flex items-center px-2 py-1 bg-[#9B9FB5] text-sm text-red-600 dark:text-red-400 hover:underline rounded">
                                                         Excluir
+                                                        <x-icons.trash />
                                                     </button>
                                                 </form>
                                             </div>

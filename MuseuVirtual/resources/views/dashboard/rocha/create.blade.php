@@ -29,6 +29,11 @@
                                 <x-text-input id="composicao" class="block mt-1 w-full" type="text" name="composicao" required autocomplete="off" />
                             </div>
 
+                            <div>
+                                <x-input-label for="tipo" :value="__('TipoRocha(1->Ígnea, 2->Metamórfica, 3->Sedimentar)')" />
+                                <x-text-input id="tipo" class="block mt-1 w-full" type="text" name="tipo" required autocomplete="off" />
+                            </div>
+
                             <x-primary-button class="ms-3">
                                 {{ __('Criar Rocha') }}
                             </x-primary-button>
