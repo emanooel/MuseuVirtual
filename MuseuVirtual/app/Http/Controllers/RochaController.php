@@ -100,4 +100,9 @@ class RochaController extends Controller
 
         return redirect()->route('Rocha.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');
     }
+
+    public function apiListRocha(){
+        $rochas = Rocha::all();
+        return json_encode($rochas);
+    }
 }
