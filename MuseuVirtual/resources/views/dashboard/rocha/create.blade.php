@@ -16,17 +16,17 @@
 
                             <div>
                                 <x-input-label for="nome" :value="__('Nome')" />
-                                <x-text-input id="nome" class="block mt-1 w-full" type="text" name="nome" required autofocus autocomplete="nome" />
+                                <x-text-input id="nome" class="block mt-1 w-full" type="text" name="nome" required autofocus autocomplete="off" />
                             </div>
                             
                             <div>
                                 <x-input-label for="descricao" :value="__('Descrição')" />
-                                <x-text-input id="descricao" class="block mt-1 w-full" type="text" name="descricao" required autocomplete="descricao" />
+                                <x-text-input id="descricao" class="block mt-1 w-full" type="text" name="descricao" required autocomplete="off" />
                             </div>
                             
                             <div>
                                 <x-input-label for="composicao" :value="__('Composição')" />
-                                <x-text-input id="composicao" class="block mt-1 w-full" type="text" name="composicao" required autocomplete="composicao" />
+                                <x-text-input id="composicao" class="block mt-1 w-full" type="text" name="composicao" required autocomplete="off" />
                             </div>
 
                             <x-primary-button class="ms-3">
