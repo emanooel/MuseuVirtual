@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("nome");
-            $table->string("descricao");
-            $table->string("composicao");
+            $table->text("descricao");
+            $table->text("composicao");
             $table->enum("tipo", ['1', '2', '3']);
         });
     }
