@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId("idMineral")->constrained("minerals")->nullable();
             $table->foreignId("idJazida")->constrained("jazidas")->nullable();
             $table->boolean("capa");
+            $table->string('caminho')->nullable();
         });
     }
 

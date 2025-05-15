@@ -13,4 +13,9 @@ class Rocha extends Model
         'composicao',
         'tipo',
     ];
+    public function fotos()
+    {
+        return $this->hasMany(Fotos::class, 'idRocha');
+    }
 }
+

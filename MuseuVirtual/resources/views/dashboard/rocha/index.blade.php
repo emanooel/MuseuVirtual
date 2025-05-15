@@ -56,7 +56,7 @@
                                 @foreach ($rochas as $rocha)
                                     <tr>
                                         <td class="px-6 py-4 text-center">
-                                            <span class="text-sm text-gray-900 dark:text-gray-100">Fotoaqui</span>
+                                            <span class="text-sm text-gray-900 dark:text-gray-100"><img src="{{$rocha->fotos[0]->caminho}}"></span>
                                         </td>
                                         <td class="px-6 py-4">
                                             <span class="text-sm text-gray-900 dark:text-gray-100">{{ $rocha->nome }}</span>

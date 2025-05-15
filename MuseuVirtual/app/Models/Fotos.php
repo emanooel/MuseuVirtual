@@ -16,4 +16,8 @@ class Fotos extends Model
         'idJazida',
         'capa',
     ];
+    public function rocha()
+    {
+        return $this->belongsTo(Rocha::class, 'idRocha');
+    }
 }

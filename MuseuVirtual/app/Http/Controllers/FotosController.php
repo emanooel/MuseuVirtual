@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fotos;
+use App\Models\Jazida;
+use App\Models\Mineral;
 use App\Models\Rocha;
 use Illuminate\Http\Request;
 
@@ -14,8 +16,8 @@ class FotosController extends Controller
     public function index()
     {
         $fotos = Fotos::all();
+        // dd($fotos);
         return view('dashboard.fotos.index', ['fotos' => $fotos]);
-        return view('fotos.index', ['fotos' => $fotos]);
     }
 
     /**
@@ -24,19 +26,46 @@ class FotosController extends Controller
     public function create()
     {
         $rochas = Rocha::all();
-        return view('dashboard.fotos.create', compact('rochas'));
-        return view('fotos.create');
+        $minerais = Mineral::all();
+        $jazidas = Jazida::all();
+        return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas'));
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        Fotos::create($request->all());
-        return redirect()->route('fotos-index');
-    }
+        $foto = new Fotos();
+       // Define o local de upload
+        $diretorio = 'fotos/geral'; // Padrão
+        if ($request->filled('idRocha')) {
+            $foto->idRocha = $request->idRocha;
+            $diretorio = 'fotos/rochas';
+        } 
+        elseif ($request->filled('idMineral')) {
+            $foto->idMineral = $request->idMineral;
+            $diretorio = 'fotos/minerais';
+        } 
+        elseif ($request->filled('idJazida')) {
+            $foto->idJazida = $request->idJazida;
+            $diretorio = 'fotos/jazidas';
+        }
 
+        if ($request->hasFile("foto")) {
+            $arquivo = $request->file("foto");
+            $nome = time() . "_" . $arquivo->getClientOriginalName();
+            $caminho = $arquivo->storeAs($diretorio, $nome, 'public');
+            $foto->caminho = $caminho;
+        }
+
+        $foto->capa = $request->capa ?? false;
+
+        $foto->save();
+
+        return redirect()->route('fotos-index')->with('success', 'Foto enviada com sucesso!');
+    }
     /**
      * Display the specified resource.
      */
@@ -53,7 +82,6 @@ class FotosController extends Controller
         $fotos = Fotos::where('id', $id)->first();
         if (!empty($fotos)) {
             return view('dashboard.fotos.edit', ['fotos' => $fotos]);
-            return view('fotos.edit', ['fotos' => $fotos]);
         } else {
             return redirect()->route('fotos-index');
         }
@@ -72,7 +100,7 @@ class FotosController extends Controller
             'capa' => $request->capa,
         ];
         Fotos::where('id', $id)->update($data);
-        return redirect()->route('fogos-index');
+        return redirect()->route('fotos-index');
     }
 
     /**
