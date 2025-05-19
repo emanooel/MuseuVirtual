@@ -36,35 +36,46 @@ class FotosController extends Controller
      */
     public function store(Request $request)
     {
-        $foto = new Fotos();
-       // Define o local de upload
-        $diretorio = 'fotos/geral'; // Padrão
+        $diretorio = 'fotos/geral';
+        $atributos = [];
+
+
         if ($request->filled('idRocha')) {
-            $foto->idRocha = $request->idRocha;
+            $atributos['idRocha'] = $request->idRocha;
             $diretorio = 'fotos/rochas';
-        } 
-        elseif ($request->filled('idMineral')) {
-            $foto->idMineral = $request->idMineral;
+        } elseif ($request->filled('idMineral')) {
+            $atributos['idMineral'] = $request->idMineral;
             $diretorio = 'fotos/minerais';
-        } 
-        elseif ($request->filled('idJazida')) {
-            $foto->idJazida = $request->idJazida;
+        } elseif ($request->filled('idJazida')) {
+            $atributos['idJazida'] = $request->idJazida;
             $diretorio = 'fotos/jazidas';
         }
 
-        if ($request->hasFile("foto")) {
-            $arquivo = $request->file("foto");
-            $nome = time() . "_" . $arquivo->getClientOriginalName();
-            $caminho = $arquivo->storeAs($diretorio, $nome, 'public');
-            $foto->caminho = $caminho;
+
+        if ($request->hasFile('foto')) {
+            $nomeCapa = $request->input('capa_nome');
+
+            foreach ($request->file('foto') as $arquivo) {
+                $foto = new Fotos($atributos);
+
+                $nomeOriginal = $arquivo->getClientOriginalName();
+                $nomeFinal = time() . "_" . $nomeOriginal;
+
+                $caminho = $arquivo->storeAs($diretorio, $nomeFinal, 'public');
+                $foto->caminho = $caminho;
+
+                // Compara o nome original para marcar como capa
+                $foto->capa = ($nomeOriginal === $nomeCapa) ? 1 : 0;
+
+                $foto->save();
+            }
+
         }
-
-        $foto->capa = $request->capa ?? false;
-
-        $foto->save();
-
-        return redirect()->route('fotos-index')->with('success', 'Foto enviada com sucesso!');
+        if (! in_array($request->tipo, ['1','2','3'])){
+            return redirect()->route('fotos-index')->with('success', 'Fotos enviadas com sucesso!');
+        }
     }
+
     /**
      * Display the specified resource.
      */
