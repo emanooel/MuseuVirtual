@@ -33,6 +33,19 @@ class MineralController extends Controller
         $mineral -> descricao = $request -> descricao;
         $mineral -> propriedades = $request -> propriedades;
         $mineral -> save();
+        
+        if ($request->hasFile('foto')) {
+            $fotosRequest = new Request([
+                "idMineral" => $mineral->id,
+                "capa_nome" => $request->input('capa_nome'),
+            ]);
+
+            // Encaminha os arquivos
+            $fotosRequest->files->set('foto', $request->file('foto'));
+
+            // Chama o controller de fotos
+            app(\App\Http\Controllers\FotosController::class)->store($fotosRequest);
+        }
         return redirect('/minerais/');
     }
 
