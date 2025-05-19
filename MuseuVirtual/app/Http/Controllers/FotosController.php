@@ -117,8 +117,17 @@ class FotosController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-    {
-        Fotos::where('id', $id)->delete();
+    {   
+        $foto = Fotos::findOrFail($id);
+        $caminhoFoto = $foto->caminho;
+    
+        // Remover o arquivo físico, se existir
+        if (Storage::exists('public/fotos/' . $caminhoFoto)) {
+            Storage::delete('public/fotos/' . $caminhoFoto);
+        }
+        
+        $foto->delete();
+
         return redirect()->route('fotos-index');
     }
 }

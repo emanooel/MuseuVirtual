@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('fotos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("idRocha")->nullable()->constrained("rochas");
-            $table->foreignId("idMineral")->nullable()->constrained("minerals");
-            $table->foreignId("idJazida")->nullable()->constrained("jazidas");
+            $table->foreignId("idRocha")->nullable()->constrained("rochas")->onDelete('cascade');
+            $table->foreignId("idMineral")->nullable()->constrained("minerals")->onDelete('cascade');
+            $table->foreignId("idJazida")->nullable()->constrained("jazidas")->onDelete('cascade');
             $table->boolean("capa");
             $table->string('caminho');
         });
