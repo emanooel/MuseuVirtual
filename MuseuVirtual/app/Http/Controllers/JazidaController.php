@@ -86,4 +86,8 @@ class JazidaController extends Controller
         return redirect()->route('jazidas.index')->with('success', 'Jazida excluída com sucesso!');
     }
 
+    public function site(){
+        return view("Jazidas");
+    }
+
 }
