@@ -10,7 +10,8 @@ class MineralController extends Controller
      */
     public function index()
     {
-        $minerais = Mineral::all();
+        $minerais = Mineral::with('fotos')->get();
+        // dd($minerais);
         return view('dashboard.minerais.index', compact('minerais'));
     }
 
