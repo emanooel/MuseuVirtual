@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Jazida extends Model
 {
     use HasFactory;
-
+    public function fotos(){
+        return $this->hasMany(Fotos::class, 'idJazida' );
+    }
     protected $fillable = [
         'localizacao', 
         'descricao', 

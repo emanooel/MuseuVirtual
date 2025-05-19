@@ -25,15 +25,25 @@
                             <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-100 dark:bg-gray-700">
                                     <tr>
-                                        <th class="w-1/3 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Localização</th>
-                                        <th class="w-1/3 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Descrição</th>
-                                        <th class="w-1/3 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Ações</th>
+                                        <th class="w-1/6 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">ID</th>
+                                        <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Fotos</th>
+                                        <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Localização</th>
+                                        <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Descrição</th>
+                                        <th class="w-2/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Ações</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     @foreach ($jazidas as $jazida)
                                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                            <td class="px-6 py-4 text-center">{{ $jazida->localizacao }}</td>
+                                            <td class="px-6 py-4">{{ $jazida->id }}</td>
+                                            <td class="px-6 py-4 text-center">
+                                                @if ($jazida->fotos->isEmpty())
+                                                    <p>Não existe fotos cadastradas</p>
+                                                @else
+                                                    <img src="{{ asset('storage/' . $jazida->fotos->first()->caminho) }}" alt="Foto das jazidas" class="h-[144px] w-[128px] object-cover">
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4 text-center">{{ $jazida->localizacao ?? 'Sem localização' }}</td>
                                             <td class="px-6 py-4 text-center">{{ $jazida->descricao ?? 'Sem descrição' }}</td>
                                             <td class="px-6 py-4 text-center">
                                                 <div class="flex items-center justify-center gap-2">

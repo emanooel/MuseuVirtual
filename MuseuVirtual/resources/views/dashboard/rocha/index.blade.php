@@ -56,7 +56,13 @@
                                 @foreach ($rochas as $rocha)
                                     <tr>
                                         <td class="px-6 py-4 text-center">
-                                            <span class="text-sm text-gray-900 dark:text-gray-100">Fotoaqui</span>
+                                            <span class="text-sm text-gray-900 dark:text-gray-100">
+                                                @if ($rocha->fotos->isEmpty())
+                                                    <p>Não existe fotos cadastradas</p>
+                                                @else
+                                                        <img src="{{ asset('storage/' . $rocha->fotos->first()->caminho) }}" alt="Foto da Rocha" class="h-[144px] w-[128px] object-cover"> 
+                                                 @endif
+                                            </span>
                                         </td>
                                         <td class="px-6 py-4">
                                             <span class="text-sm text-gray-900 dark:text-gray-100">{{ $rocha->nome }}</span>

@@ -23,7 +23,12 @@
                 <tbody>
                     @foreach ($minerais as $mineral)
                         <tr>
-                            <td class="px-6 py-4 text-center">Foto Aqui</td>
+                            <td class="px-6 py-4 text-center">
+                                @if ($mineral->fotos->isEmpty())
+                                    <p>Não existe fotos cadastradas</p>
+                                @else
+                                    <img src="{{ asset('storage/' . $mineral->fotos->first()->caminho) }}" alt="Foto dos Minerais" class="h-[144px] w-[128px] object-cover"> 
+                                @endif</td>
                             <td class="px-6 py-4 text-center">{{ $mineral->nome }}</td>
                             <td class="px-6 py-4 text-center">
                                 <div class="flex items-center justify-center gap-2">

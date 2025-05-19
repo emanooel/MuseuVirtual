@@ -12,7 +12,8 @@ class RochaController extends Controller
      */
     public function index()
     {
-        $rochas = Rocha::paginate(10);  // 10 rochas por página
+        $rochas = Rocha::with('fotos')->paginate(10);  // 10 rochas por página
+        // dd(vars: $rochas);
         return view('dashboard.rocha.index', compact('rochas'));
     }
 
