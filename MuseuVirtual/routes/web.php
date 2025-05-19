@@ -5,20 +5,21 @@ use App\Http\Controllers\JazidaController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RochaController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+Route::get("/",[SiteController::class,'home']);
 Route::get("/api/rochas", [RochaController::class,'apiListRocha']);
 
 Route::get('/dashboard', function () {
