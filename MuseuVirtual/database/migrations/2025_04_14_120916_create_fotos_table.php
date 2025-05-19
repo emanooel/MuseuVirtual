@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('fotos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("idRocha")->constrained("rochas")->nullable();
-            $table->foreignId("idMineral")->constrained("minerals")->nullable();
-            $table->foreignId("idJazida")->constrained("jazidas")->nullable();
+            $table->foreignId("idRocha")->nullable()->constrained("rochas");
+            $table->foreignId("idMineral")->nullable()->constrained("minerals");
+            $table->foreignId("idJazida")->nullable()->constrained("jazidas");
             $table->boolean("capa");
+            $table->string('caminho');
         });
     }
 

@@ -24,5 +24,6 @@ class Fotos extends Model
         'idMineral',
         'idJazida',
         'capa',
+        'caminho',
     ];
 }
