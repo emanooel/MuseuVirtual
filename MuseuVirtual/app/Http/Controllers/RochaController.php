@@ -112,4 +112,8 @@ class RochaController extends Controller
         $rochas = Rocha::all();
         return json_encode($rochas);
     }
+
+    public function site(){
+        return view('rochas');
+    }
 }
