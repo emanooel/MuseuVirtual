@@ -44,6 +44,20 @@
                             @enderror
                         </div>
 
+                        {{-- Tipo de Rocha --}}
+                        <div class="mb-4">
+                            <x-input-label for="tipo" :value="__('Tipo de Rocha')" />
+                            <select id="tipo" name="tipo" required class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring focus:ring-indigo-200">
+                                <option value="" disabled {{ old('tipo', $rocha->tipo) === null ? 'selected' : '' }}>Escolha uma rocha...</option>
+                                <option value="1" {{ old('tipo', $rocha->tipo) == '1' ? 'selected' : '' }}>Ígneas</option>
+                                <option value="2" {{ old('tipo', $rocha->tipo) == '2' ? 'selected' : '' }}>Metamórficas</option>
+                                <option value="3" {{ old('tipo', $rocha->tipo) == '3' ? 'selected' : '' }}>Sedimentares</option>
+                            </select>
+                            @error('tipo') 
+                                <span class="text-red-500 text-sm">{{ $message }}</span> 
+                            @enderror
+                        </div>
+
                         <div class="flex items-center justify-end mt-6">
                             <x-primary-button>
                                 {{ __('Salvar Alterações') }}

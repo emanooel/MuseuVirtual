@@ -30,8 +30,13 @@
                             </div>
 
                             <div>
-                                <x-input-label for="tipo" :value="__('TipoRocha(1->Ígnea, 2->Metamórfica, 3->Sedimentar)')" />
-                                <x-text-input id="tipo" class="block mt-1 w-full" type="text" name="tipo" required autocomplete="off" />
+                                <x-input-label for="tipo" :value="__('Tipo de Rocha')" />
+                                <select id="tipo" name="tipo" required class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring focus:ring-indigo-200">
+                                    <option value="" disabled selected>Escolha uma rocha...</option>
+                                    <option value="1">Ígneas</option>
+                                    <option value="2">Metamórficas</option>
+                                    <option value="3">Sedimentares</option>
+                                </select>
                             </div>
 
                             <x-primary-button class="ms-3">
