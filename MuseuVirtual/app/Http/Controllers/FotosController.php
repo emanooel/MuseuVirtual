@@ -104,15 +104,53 @@ class FotosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $foto = Fotos::findOrFail($id);
+
+        // Atualiza campo de capa
+        $capa = $request->has('capa') ? 1 : 0;
+        if ($capa) {
+            // Remove marcação de outras capas
+            Fotos::where('capa', 1)->update(['capa' => 0]);
+        }
+
         $data = [
             'idRocha' => $request->idRocha,
             'idMineral' => $request->idMineral,
             'idJazida' => $request->idJazida,
-            'capa' => $request->capa,
+            'capa' => $capa,
         ];
-        Fotos::where('id', $id)->update($data);
-        return redirect()->route('fotos-index');
+
+        // Se uma nova foto foi enviada
+        if ($request->hasFile('foto')) {
+            // Exclui o arquivo antigo
+            File::delete('storage/' . $foto->caminho);
+
+            $arquivo = $request->file('foto');
+            $nomeOriginal = $arquivo->getClientOriginalName();
+            $nomeFinal = time() . '_' . $nomeOriginal;
+
+            // Decide em qual pasta salvar
+            if ($request->filled('idRocha')) {
+                $diretorio = 'fotos/rochas';
+            } elseif ($request->filled('idMineral')) {
+                $diretorio = 'fotos/minerais';
+            } elseif ($request->filled('idJazida')) {
+                $diretorio = 'fotos/jazidas';
+            } else {
+                $diretorio = 'fotos/geral';
+            }
+
+            // Salva o novo arquivo
+            $caminho = $arquivo->storeAs($diretorio, $nomeFinal, 'public');
+            $data['caminho'] = $caminho;
+        }
+
+        // Atualiza os dados no banco
+        $foto->update($data);
+
+        return redirect()->back()->with('success', 'Foto atualizada com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.

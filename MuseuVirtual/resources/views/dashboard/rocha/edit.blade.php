@@ -87,7 +87,8 @@
 
                                     {{-- Botões abaixo da imagem --}}
                                     <div class="flex items-center gap-2">
-                                        <a href="{{ route('Rocha.edit', $rocha->id) }}" class="inline-flex items-center px-2 py-1 text-sm bg-[#9B9FB5] text-black dark:text-white hover:underline rounded">
+
+                                        <a href="{{ route('fotos-edit', $foto->id) }}" class="inline-flex items-center px-2 py-1 text-sm bg-[#9B9FB5] text-black dark:text-white hover:underline rounded">
                                             Editar
                                             <x-icons.pencil />
                                         </a>

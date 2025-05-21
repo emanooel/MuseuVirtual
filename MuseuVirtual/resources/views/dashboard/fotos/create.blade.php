@@ -17,7 +17,7 @@
                     <div>
                         <label for="foto"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Foto</label>
-                        <input type="file" name="foto[]" id="foto" multiple
+                        <input type="file" name="foto[] " id="foto" multiple
                             class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 file:bg-gray-100 file:border-0 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:text-gray-700 file:cursor-pointer hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-200 dark:hover:file:bg-gray-600" />
                     </div>
 
@@ -31,7 +31,7 @@
                             @foreach ($rochas as $rocha)
                                 <option value="{{ $rocha->id }}">{{ $rocha->nome }}</option>
                             @endforeach
-                        </select>
+                        </select> 
                     </div>
 
                     <!-- idMineral -->
