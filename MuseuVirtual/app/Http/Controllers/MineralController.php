@@ -96,4 +96,5 @@ class MineralController extends Controller
         return redirect('/minerais/');
     }
 
+    
 }
