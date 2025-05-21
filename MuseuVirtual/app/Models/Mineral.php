@@ -14,7 +14,6 @@ class Mineral extends Model
         'propriedades',
     ];
     public function fotos(){
-
         return $this->hasMany(Fotos::class, 'idMineral' );
     }
 

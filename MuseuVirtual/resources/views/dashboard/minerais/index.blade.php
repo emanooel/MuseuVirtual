@@ -37,7 +37,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">Excluir</button>
-                                </form>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

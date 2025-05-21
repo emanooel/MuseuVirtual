@@ -86,7 +86,13 @@ class MineralController extends Controller
     public function destroy($id)
     {
         $mineral = Mineral::findOrFail($id);
+        foreach ($mineral->fotos as $foto) {
+            app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
+        }
+        
         $mineral->delete();
+        $minerais = Mineral::paginate(10);
+
         return redirect('/minerais/');
     }
 
