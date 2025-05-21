@@ -73,7 +73,7 @@ class RochaController extends Controller
     public function edit($id)
     {
 
-        $rocha = Rocha::findOrFail($id);
+        $rocha = Rocha::with('fotos')->findOrFail($id);
 
         return view('dashboard.rocha.edit', compact('rocha'));
     }
@@ -118,8 +118,12 @@ class RochaController extends Controller
      */
     public function destroy(Rocha $rocha)
     {
-        $rocha->delete();
+        foreach ($rocha->fotos as $foto) {
+            app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
+
+        }
         
+        $rocha->delete();
         $rochas = Rocha::paginate(10);  // 10 rochas por página
 
         return redirect()->route('Rocha.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');

@@ -7,6 +7,7 @@ use App\Models\Jazida;
 use App\Models\Mineral;
 use App\Models\Rocha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class FotosController extends Controller
 {
@@ -54,7 +55,7 @@ class FotosController extends Controller
 
         if ($request->hasFile('foto')) {
             $nomeCapa = $request->input('capa_nome');
-
+            
             foreach ($request->file('foto') as $arquivo) {
                 $foto = new Fotos($atributos);
 
@@ -120,14 +121,13 @@ class FotosController extends Controller
     {   
         $foto = Fotos::findOrFail($id);
         $caminhoFoto = $foto->caminho;
-    
         // Remover o arquivo físico, se existir
-        if (Storage::exists('public/fotos/' . $caminhoFoto)) {
-            Storage::delete('public/fotos/' . $caminhoFoto);
+        if (File::exists(public_path('storage/' . $caminhoFoto))) {
+            File::delete('storage/' . $caminhoFoto);
         }
         
         $foto->delete();
 
-        return redirect()->route('fotos-index');
+        return redirect()->back();
     }
 }

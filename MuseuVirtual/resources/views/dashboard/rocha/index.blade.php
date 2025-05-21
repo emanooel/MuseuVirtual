@@ -77,12 +77,12 @@
                                                     <x-icons.pencil />
                                                 </a>
                                                 <form action="{{ route('Rocha.destroy', $rocha->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta rocha?');" class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="inline-flex items-center px-2 py-1 bg-[#9B9FB5] text-sm text-red-600 dark:text-red-400 hover:underline rounded">
-                                                        Excluir
-                                                        <x-icons.trash />
-                                                    </button>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-flex items-center px-2 py-1 bg-[#9B9FB5] text-sm text-red-600 dark:text-red-400 hover:underline rounded">
+                                                    Excluir
+                                                    <x-icons.trash />
+                                                </button>
                                                 </form>
                                             </div>
                                         </td>

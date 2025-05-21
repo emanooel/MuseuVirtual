@@ -53,6 +53,7 @@
                             <td class="px-6 py-4 whitespace-nowrap flex items-center gap-3">
                                 <a href="{{ route('fotos-edit', $foto->id) }}"
                                    class="text-blue-500 hover:underline">Editar</a>
+                                   
                                 <form action="{{ route('fotos-destroy', $foto->id) }}" method="POST"
                                       onsubmit="return confirm('Tem certeza que deseja deletar?')">
                                     @csrf
