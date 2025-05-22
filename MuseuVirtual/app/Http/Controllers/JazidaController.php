@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fotos;
 use App\Models\Jazida;
 use Illuminate\Http\Request;
 
@@ -32,16 +33,26 @@ class JazidaController extends Controller
         $request->validate([
             'localizacao' => 'required|string|max:255',
             'descricao' => 'nullable|string',
+            'foto.*' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
-        // dd($request->all()); 
-        // Jazida::create($request->all());
-        $jazida=new Jazida();
-        $jazida->localizacao = $request->localizacao;
-        $jazida->descricao = $request->descricao;
-        $jazida->save();
 
-        return redirect()->route('jazidas.index')->with('success', 'Jazida criada com sucesso!');
+        $jazida = Jazida::create($request->only(['localizacao', 'descricao']));
+
+        // Processar upload de fotos
+        if ($request->hasFile('foto')) {
+            foreach ($request->file('foto') as $arquivo) {
+                $foto = new Fotos([
+                    'idJazida' => $jazida->id,
+                    'caminho' => $arquivo->store('fotos/jazidas', 'public'),
+                    'capa' => $arquivo->getClientOriginalName() === $request->capa_nome ? 1 : 0
+                ]);
+                $foto->save();
+            }
+        }
+
+        return redirect()->route('jazidas.index')->with('success', 'Jazida cadastrada com sucesso!');
     }
+
 
     /**
      * Display the specified resource.
@@ -67,15 +78,26 @@ class JazidaController extends Controller
         $request->validate([
             'localizacao' => 'required|string|max:255',
             'descricao' => 'nullable|string',
+            'foto.*' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
-    
-        $jazida->update([
-            'localizacao' => $request->localizacao,
-            'descricao' => $request->descricao,
-        ]);
-    
+
+        $jazida->update($request->only(['localizacao', 'descricao']));
+
+        // Processar novas fotos, se houver
+        if ($request->hasFile('foto')) {
+            foreach ($request->file('foto') as $arquivo) {
+                $foto = new Fotos([
+                    'idJazida' => $jazida->id,
+                    'caminho' => $arquivo->store('fotos/jazidas', 'public'),
+                    'capa' => $arquivo->getClientOriginalName() === $request->capa_nome ? 1 : 0
+                ]);
+                $foto->save();
+            }
+        }
+
         return redirect()->route('jazidas.index')->with('success', 'Jazida atualizada com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.
