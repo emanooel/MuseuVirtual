@@ -16,6 +16,7 @@
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">Fotos</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">ID</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">Rocha</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">Mineral</th>
@@ -27,6 +28,7 @@
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     @foreach ($fotos as $foto)
                         <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100"><img src="{{ asset('storage/' . $foto->caminho) }}" alt="Foto" class="h-[144px] w-[128px] object-cover"></td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{{ $foto->id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
                                 @if ($foto->rocha)
