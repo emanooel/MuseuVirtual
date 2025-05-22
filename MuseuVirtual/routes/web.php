@@ -20,6 +20,11 @@ use Inertia\Inertia;
 //     ]);
 // });
 Route::get("/",[SiteController::class,'home']);
+
+Route::get("/site/jazidas", [JazidaController::class, 'site']);
+
+Route::get("/site/rochas", [RochaController::class, 'site']);
+
 Route::get("/api/rochas", [RochaController::class,'apiListRocha']);
 
 Route::get('/dashboard', function () {
