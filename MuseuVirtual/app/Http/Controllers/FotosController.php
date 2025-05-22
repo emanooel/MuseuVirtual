@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Fotos;
 use App\Models\Jazida;
 use App\Models\Mineral;
-use App\Models\Jazida;
-use App\Models\Mineral;
 use App\Models\Rocha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -18,7 +16,6 @@ class FotosController extends Controller
      */
     public function index()
     {
-        $fotos = Fotos::with('rocha')->get();
         $fotos = Fotos::with('rocha')->get();
         return view('dashboard.fotos.index', ['fotos' => $fotos]);
     }
@@ -32,9 +29,7 @@ class FotosController extends Controller
         $minerais = Mineral::all();
         $jazidas = Jazida::all();
         return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas'));
-        $minerais = Mineral::all();
-        $jazidas = Jazida::all();
-        return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas'));
+
     }
 
 

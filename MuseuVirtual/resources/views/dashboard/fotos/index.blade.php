@@ -46,7 +46,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
                                 @if ($foto->jazida)
-                                    {{ $foto->jazida->id}}
+                                    {{ $foto->jazida->localizacao}}
                                 @else
                                     {{ __('Não existe') }}
                                 @endif
