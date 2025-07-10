@@ -10,41 +10,64 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use App\Models\AnotacaoFoto;
+
 class FotosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $fotos = Fotos::with(['rocha', 'mineral', 'jazida', 'anotacoes'])->get();
-        return Inertia::render('Dashboard/Fotos/Index', ['fotos' => $fotos]);
+        $query = Fotos::with(['rocha', 'mineral', 'jazida', 'anotacoes']);
+
+        if ($request->filled('termo')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereHas('rocha', fn($r) => $r->where('nome', 'like', "%{$request->termo}%"))
+                  ->orWhereHas('mineral', fn($m) => $m->where('nome', 'like', "%{$request->termo}%"))
+                  ->orWhereHas('jazida', fn($j) => $j->where('localizacao', 'like', "%{$request->termo}%"));
+            });
+        }
+
+        if ($request->boolean('semLigacao')) {
+            $query->whereNull('idRocha')
+                  ->whereNull('idMineral')
+                  ->whereNull('idJazida');
+        } else {
+            if ($request->boolean('comRocha')) {
+                $query->whereNotNull('idRocha');
+            }
+
+            if ($request->boolean('comMineral')) {
+                $query->whereNotNull('idMineral');
+            }
+
+            if ($request->boolean('comJazida')) {
+                $query->whereNotNull('idJazida');
+            }
+        }
+
+        return Inertia::render('Dashboard/Fotos/Index', [
+            'fotos' => $query->paginate(10)->withQueryString(),
+            'rochas' => Rocha::all(),
+            'minerais' => Mineral::all(),
+            'jazidas' => Jazida::all(),
+            'filters' => $request->only([
+                'termo', 'comRocha', 'comMineral', 'comJazida', 'semLigacao',
+            ]),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $rochas = Rocha::all();
-        $minerais = Mineral::all();
-        $jazidas = Jazida::all();
-        $idRocha = request('idRocha'); // captura o valor da query string
-
-        # return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas', 'idRocha'));
-        return Inertia::render('Dashboard/Fotos/Create', ['rochas'=>$rochas, 'minerais'=> $minerais, 'jazidas'=>$jazidas, 'idRochas'=>$idRocha]);
+        return Inertia::render('Dashboard/Fotos/Create', [
+            'rochas' => Rocha::all(),
+            'minerais' => Mineral::all(),
+            'jazidas' => Jazida::all(),
+            'idRochas' => request('idRocha'),
+        ]);
     }
 
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $diretorio = 'fotos/geral';
         $atributos = [];
-
 
         if ($request->filled('idRocha')) {
             $atributos['idRocha'] = $request->idRocha;
@@ -57,66 +80,104 @@ class FotosController extends Controller
             $diretorio = 'fotos/jazidas';
         }
 
-
         if ($request->hasFile('foto')) {
             $nomeCapa = $request->input('capa_nome');
-            
+
             foreach ($request->file('foto') as $arquivo) {
                 $foto = new Fotos($atributos);
 
                 $nomeOriginal = $arquivo->getClientOriginalName();
                 $nomeFinal = time() . "_" . $nomeOriginal;
-
                 $caminho = $arquivo->storeAs($diretorio, $nomeFinal, 'public');
                 $foto->caminho = $caminho;
 
-                // Compara o nome original para marcar como capa
-                $foto->capa = ($nomeOriginal === $nomeCapa) ? 1 : 0;
+                $marcarCapa = ($nomeOriginal === $nomeCapa) ? 1 : 0;
 
+                if ($marcarCapa) {
+                    $existeCapa = Fotos::where('capa', true)
+                        ->when(isset($atributos['idRocha']), fn($q) => $q->where('idRocha', $atributos['idRocha']))
+                        ->when(isset($atributos['idMineral']), fn($q) => $q->where('idMineral', $atributos['idMineral']))
+                        ->when(isset($atributos['idJazida']), fn($q) => $q->where('idJazida', $atributos['idJazida']))
+                        ->exists();
+
+                    if ($existeCapa) {
+                        return redirect()->back()
+                            ->withErrors(['capa' => 'Este item já possui uma foto marcada como capa.'])
+                            ->withInput();
+                    }
+                }
+
+                $foto->capa = $marcarCapa;
                 $foto->save();
             }
+        }
 
-        }
-        if (! in_array($request->tipo, ['1','2','3'])){
-            return redirect()->route('fotos-index')->with('success', 'Fotos enviadas com sucesso!');
-        }
+        return redirect()->route('fotos-index')->with('success', 'Fotos enviadas com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Fotos $fotos)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
-        $fotos = Fotos::with('anotacoes')->findOrFail($id);
+        $foto = Fotos::with('anotacoes')->findOrFail($id);
+
+        $outraCapaExiste = false;
+
+        if (!$foto->capa) {
+            $query = Fotos::where('capa', true)
+                ->where('id', '!=', $foto->id);
+
+            $query->where(function ($q) use ($foto) {
+                if ($foto->idRocha) {
+                    $q->where('idRocha', $foto->idRocha);
+                } elseif ($foto->idMineral) {
+                    $q->where('idMineral', $foto->idMineral);
+                } elseif ($foto->idJazida) {
+                    $q->where('idJazida', $foto->idJazida);
+                }
+            });
+
+            $outraCapaExiste = $query->exists();
+        }
+
+        // Buscando as listas completas para popular os selects
+        $rochas = Rocha::all();
+        $minerais = Mineral::all();
+        $jazidas = Jazida::all();
 
         return Inertia::render('Dashboard/Fotos/Edit', [
-            'fotos' => $fotos
+            'fotos' => [
+                'id' => $foto->id,
+                'caminho' => $foto->caminho,
+                'anotacoes' => $foto->anotacoes,
+                'idRocha' => $foto->idRocha,
+                'idMineral' => $foto->idMineral,
+                'idJazida' => $foto->idJazida,
+                'capa' => (bool) $foto->capa,
+                'outraCapaExiste' => $outraCapaExiste,
+            ],
+            'rochas' => $rochas,
+            'minerais' => $minerais,
+            'jazidas' => $jazidas,
         ]);
     }
 
-
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $foto = Fotos::findOrFail($id);
-        // Atualiza campo de capa
-
         $capa = $request->capa != null && $request->capa != "0" ? 1 : 0;
 
         if ($capa) {
-            // Remove marcação de outras capas
-            Fotos::where('capa', 1)->update(['capa' => 0]);
+            $existeOutraCapa = Fotos::where('capa', true)
+                ->where('id', '!=', $foto->id)
+                ->when($request->filled('idRocha'), fn($q) => $q->where('idRocha', $request->idRocha))
+                ->when($request->filled('idMineral'), fn($q) => $q->where('idMineral', $request->idMineral))
+                ->when($request->filled('idJazida'), fn($q) => $q->where('idJazida', $request->idJazida))
+                ->exists();
+
+            if ($existeOutraCapa) {
+                return redirect()->back()
+                    ->withErrors(['capa' => 'Este item já possui uma foto marcada como capa.'])
+                    ->withInput();
+            }
         }
 
         $data = [
@@ -126,69 +187,53 @@ class FotosController extends Controller
             'capa' => $capa,
         ];
 
-        // Se uma nova foto foi enviada
         if ($request->hasFile('foto')) {
-            // Exclui o arquivo antigo
             File::delete('storage/' . $foto->caminho);
-
             $arquivo = $request->file('foto');
-            $nomeOriginal = $arquivo->getClientOriginalName();
-            $nomeFinal = time() . '_' . $nomeOriginal;
+            $nomeFinal = time() . '_' . $arquivo->getClientOriginalName();
 
-            // Decide em qual pasta salvar
+            $diretorio = 'fotos/geral';
             if ($request->filled('idRocha')) {
                 $diretorio = 'fotos/rochas';
             } elseif ($request->filled('idMineral')) {
                 $diretorio = 'fotos/minerais';
             } elseif ($request->filled('idJazida')) {
                 $diretorio = 'fotos/jazidas';
-            } else {
-                $diretorio = 'fotos/geral';
             }
 
-            // Salva o novo arquivo
-            $caminho = $arquivo->storeAs($diretorio, $nomeFinal, 'public');
-            $data['caminho'] = $caminho;
+            $data['caminho'] = $arquivo->storeAs($diretorio, $nomeFinal, 'public');
         }
 
-        // Atualiza os dados no banco
         $foto->update($data);
 
-        return redirect()->back()->with('success', 'Foto atualizada com sucesso!');
+        return redirect()->route('fotos-index')->with('success', 'Foto atualizada com sucesso!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
-    {   
+    {
         $foto = Fotos::findOrFail($id);
-        $caminhoFoto = $foto->caminho;
-        // Remover o arquivo físico, se existir
-        if (File::exists(public_path('storage/' . $caminhoFoto))) {
-            File::delete('storage/' . $caminhoFoto);
+        $caminho = public_path('storage/' . $foto->caminho);
+
+        if (File::exists($caminho)) {
+            File::delete($caminho);
         }
-        
+
         $foto->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Foto excluída com sucesso!');
     }
-
 
     public function salvarAnotacoes(Request $request, $fotoId)
     {
         $anotacoes = $request->input('anotacoes', []);
         $deletadas = $request->input('deletadas', []);
 
-        // Deletar as anotações marcadas para exclusão
         if (!empty($deletadas)) {
             AnotacaoFoto::whereIn('id', $deletadas)->delete();
         }
 
         foreach ($anotacoes as $anotacao) {
-            if (isset($anotacao['id']) && $anotacao['id']) {
-                // Atualiza anotação existente
+            if (!empty($anotacao['id'])) {
                 $registro = AnotacaoFoto::find($anotacao['id']);
                 if ($registro) {
                     $registro->update([
@@ -198,7 +243,6 @@ class FotosController extends Controller
                     ]);
                 }
             } else {
-                // Cria nova anotação
                 AnotacaoFoto::create([
                     'foto_id' => $fotoId,
                     'x' => $anotacao['x'],
@@ -207,6 +251,5 @@ class FotosController extends Controller
                 ]);
             }
         }
-
-    }
+    }   
 }
