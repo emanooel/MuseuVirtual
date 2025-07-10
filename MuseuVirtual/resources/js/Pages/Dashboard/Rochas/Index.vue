@@ -2,10 +2,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { computed, onMounted, ref } from 'vue';
+import { aparelhoUso } from '@/Composables/aparelhoUso.js';
 
 const props = defineProps({
     rochas: Object,
 });
+
+const { Mobile, Desktop } = aparelhoUso();
+
 
 const page = usePage();
 const successMessage = computed(() => page.props?.flash?.success ?? null);
@@ -53,7 +57,7 @@ function deleteRocha(id) {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div v-if='Desktop' class="p-6 text-gray-900 dark:text-gray-100">
                         <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-100 dark:bg-gray-700">
                                 <tr>
@@ -101,7 +105,7 @@ function deleteRocha(id) {
                                 v-for="link in rochas.links"
                                 :key="link.label"
                                 :is="link.url ? 'a' : 'span'"
-                                :to="link.url"
+                                :href="link.url"
                                 class="mx-1 px-3 py-1 rounded text-sm"
                                 :class="{
                                     'bg-blue-600 text-white': link.active,
@@ -112,6 +116,51 @@ function deleteRocha(id) {
                             />
                         </div>
                     </div>
+
+
+                    <div v-else class="p-4 flex flex-col items-center gap-6">
+                        <div v-for="rocha in rochas.data":key="rocha.id" class="border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-900 shadow max-w-fit min-w-[200px] max-w[90vw] text-center">
+                            
+                            <h3 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-2">
+                            {{ rocha.nome }}
+                            </h3>
+
+                            <!-- Imagem -->
+                            <div class="mb-2">
+                                <template v-if="!rocha.fotos || rocha.fotos.length === 0">
+                                    <p class="text-gray-500 text-sm">Sem foto cadastrada</p>
+                                </template>
+                                
+                                <template v-else>
+                                    <img :src="`/storage/${(rocha.fotos.find(f => f.capa) || rocha.fotos[0]).caminho}`" alt="Foto da Rocha" class="h-auto max-h-[144px] w-auto max-w-[128px] object-cover rounded mx-auto"/>
+                                </template>
+                            
+                            </div>
+
+                            <!-- Ações -->
+                            <div class="flex justify-center gap-2 mt-2">
+                            <a :href="route('Rocha.edit', rocha.id)" class="text-sm bg-[#9B9FB5] text-black dark:text-white px-3 py-1 rounded hover:underline">Editar</a>
+                            <button @click="deleteRocha(rocha.id)" class="text-sm bg-[#9B9FB5] text-red-600 dark:text-red-400 px-3 py-1 rounded hover:underline">Excluir</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex justify-center">
+                            <component
+                                v-for="link in rochas.links"
+                                :key="link.label"
+                                :is="link.url ? 'a' : 'span'"
+                                :href="link.url"
+                                class="mx-1 px-3 py-1 rounded text-sm"
+                                :class="{
+                                'bg-blue-600 text-white': link.active,
+                                'text-gray-500 dark:text-gray-300': !link.active && link.url,
+                                'text-gray-400': !link.url
+                                }"
+                                v-html="link.label"
+                            />
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
