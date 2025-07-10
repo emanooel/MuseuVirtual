@@ -68,8 +68,10 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
-    <div class="w-[1600px] mx-auto">
+    <div class="2xl:px-80">
         <x-menu_site />
+    </div>
+    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 ">
 
         {{-- @dd($mineral) --}}
 
@@ -88,24 +90,17 @@
         @endforeach
         <img class="w-[1600px] h-[832px] rounded-xl" src="{{ asset('storage/' . $fotoExibir->caminho) }}"
             alt="">
-        <div class="swiper-container-wrapper">
-            <div class="swiper-button-prev pb-20 color-[#F1EEDD]"></div>
-            <div class="swiper mySwiper">
-                <div class="flex pt-4 justify-center swiper-wrapper">
-                    @foreach ($mineral->fotos as $item)
-                        <div class="pr-4">
-                            <img class="size-60 rounded-xl swiper-slide" src="{{ asset('storage/' . $item->caminho) }}"
-                                alt="">
-                        </div>
-                    @endforeach
+
+        <div class="flex pt-4 justify-center">
+            @foreach ($mineral->fotos as $item)
+                <div class="pr-4">
+                    <img class="size-60 rounded-xl" src="{{ asset('storage/' . $item->caminho) }}" alt="">
                 </div>
-            </div>
-            <div class="pb-20 swiper-button-next"></div>
+            @endforeach
         </div>
-        
-        <div class="pt-2">
-            <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição: </strong>{{ $mineral->descricao }}
-            </h2>
+        <div class="pt-6">
+            <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
+                </strong>{{ $mineral->descricao }}</h2>
             <br>
             <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição do mineral: </strong>
                 {{ $mineral->composicao }}</h2>

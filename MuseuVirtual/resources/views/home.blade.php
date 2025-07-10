@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <!-- Styles / Scripts -->
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endif
-</head>
-
-<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20%">
-    <div class="w-100 mx-auto" >
-        <x-menu_site></x-menu_site>
-    </div>
+<x-layouts.BaseLayout>
+    <x-slot name="title">Home</x-slot>
     <h1 class="font-[arial] pt-40 font-bold text-[80px] text-center text-[#F1EEDD]">Museu Virtual</h1>
     <h2 class="text-center text-[20px] font-[arial] text-[#F1EEDD]">Bem-vindo ao Museu Virtual das Rochas, um <br>espaço
         interativo e educativo dedicado à incrível<br> diversidade geológica da nossa região. </h2>
     <br>
     <p class="text-center"><a href="{{route('dashboard')}}" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
-    <figure class="w-100 mt-20">
+    <figure data-aos="fade-in" class="w-100 mt-20">
         <img class="w-full" src="/assets/img/image 1.png" alt="Imagem de uma jazida ">
     </figure>
 
@@ -37,7 +22,7 @@
     <div class="flex justify-center mt-10">
         <div class="w-[1200px]">
             <div class="grid grid-cols-2 grid-rows-2  gap-x-8 gap-y-4 justify-items-center items-center">
-                <figure>
+                <figure data-aos="fade-right">
                     <a href="{{route('site.jazidas')}}"><img class="cursor-pointer" src="/assets/img/JazidaInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Jazidas</h2>
@@ -45,7 +30,7 @@
                     </figcaption>
                 </figure>
 
-                <figure>
+                <figure data-aos="fade-left">
                     <a href="{{route('site.rochas')}}"><img class="cursor-pointer" src="/assets/img/RochaInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Rochas</h2>
@@ -53,7 +38,7 @@
                     </figcaption>
                 </figure>
 
-                <figure>
+                <figure data-aos="fade-right">
                     <a href="{{route('site.minerais')}}"><img class="cursor-pointer" src="/assets/img/MineraisInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Minerais</h2>
@@ -61,7 +46,7 @@
                     </figcaption>
                 </figure>
 
-                <figure>
+                <figure data-aos="fade-left">
                     <a href="#"><img class="cursor-pointer" src="/assets/img/CatalogoInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Catálogo</h2>
@@ -74,7 +59,4 @@
             </div>
         </div>
     </div>
-    <x-rodape_site></x-rodape_site>
-</body>
-
-</html>
+</x-layouts.BaseLayout>

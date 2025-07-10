@@ -93,7 +93,7 @@
 <header id="header" >
     <nav id="nav" class="block"> 
         {{-- justify-center no nav --}}
-        <div id="div" class=" rounded-full mt-6 ">
+        <div id="div" class=" rounded-full">
             <button aria-label="Abrir menu" id="btn-mobile" aria-controls="menu" aria-haspopup="true" aria-expanded="false"
                 class="hidden text-[#565851]">Menu
                 <span id="hamburguer"></span>
