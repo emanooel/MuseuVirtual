@@ -1,5 +1,5 @@
 <div class="flex justify-center mt-10">
-    <footer class="grid grid-cols-2 gap-4 pt-40 pb-10">
+    <footer class="grid grid-cols-1 gap-4 pt-40 pb-10 md:grid-cols-2">
         <form class="row-span-3 p-8 rounded-xl bg-[#F1EEDD] text-[#565851] font-[arial] shadow-xl text-[20px]" action=""
             action="get">
             <h2>Entre com sua conta no Museu Virtual</h2>
