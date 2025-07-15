@@ -49,10 +49,8 @@
             <div class="pb-20 swiper-button-next"></div>
         </div>
         
-        <div class="pt-6">
-            <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
-                </strong>{{ $rocha->descricao }}</h2>
-            <br>
+        <div class="text-white">
+            {!! $rocha->descricao !!}
             <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição da rocha: </strong>
                 {{ $rocha->composicao }}</h2>
         </div>
