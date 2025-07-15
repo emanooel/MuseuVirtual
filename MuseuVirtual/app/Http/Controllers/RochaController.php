@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rocha;
+use App\Models\Jazida;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
@@ -28,6 +29,12 @@ class RochaController extends Controller
     public function create()
     {
         return Inertia::render('Dashboard/Rochas/Create');
+
+        $jazidas = Jazida::all(['id', 'descricao']); // ou 'localizacao', se preferir
+
+        return Inertia::render('Dashboard/Rochas/Create', [
+            'jazidas' => $jazidas
+        ]);
     }
 
     /**
@@ -40,6 +47,7 @@ class RochaController extends Controller
             'descricao' => 'required|string',
             'composicao' => 'required|string',
             'tipo' => 'required|integer',
+            'jazida_id' => 'nullable|exists:jazidas,id', 
         ]);
 
 
@@ -82,8 +90,12 @@ class RochaController extends Controller
 
         
         $rocha = Rocha::with('fotos')->findOrFail($id);
+        $jazidas = Jazida::all(['id', 'descricao']);
         
-        return Inertia::render('Dashboard/Rochas/Edit', ['rocha' => $rocha]);
+        return Inertia::render('Dashboard/Rochas/Edit', [
+            'rocha' => $rocha,
+            'jazidas' => $jazidas
+        ]);
     }
 
     /**
@@ -96,6 +108,7 @@ class RochaController extends Controller
             'descricao' => 'nullable|string',
             'composicao' => 'nullable|string',
             'tipo' => 'required|integer',
+            'jazida_id' => 'nullable|exists:jazidas,id',
         ]);
 
         // Atualizando apenas os campos que foram enviados
@@ -115,6 +128,8 @@ class RochaController extends Controller
             $rocha->tipo = $request->tipo;
         }
 
+        $rocha->jazida_id = $request->jazida_id;
+        
         $rocha->save();
 
         return redirect()->route('Rocha.index')->with('success', 'Rocha atualizada com sucesso!');

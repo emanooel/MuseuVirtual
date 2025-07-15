@@ -33,6 +33,7 @@ Route::resource('rochas', RochaController::class)->names('Rocha');
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 Route::resource('/minerais', MineralController::class);
+Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 
 Route::prefix('fotos')->group(function() {
     Route::get('/', [FotosController::class, 'index'])->name('fotos-index');

@@ -12,9 +12,16 @@ class Rocha extends Model
         'descricao',
         'composicao',
         'tipo',
+        'jazida_id', // Adicionado para permitir preenchimento via create/update
     ];
-    public function fotos(){
-        return $this->hasMany(Fotos::class, 'idRocha' );
+
+    public function fotos()
+    {
+        return $this->hasMany(Fotos::class, 'idRocha');
     }
 
+    public function jazida()
+    {
+        return $this->belongsTo(Jazida::class);
+    }
 }

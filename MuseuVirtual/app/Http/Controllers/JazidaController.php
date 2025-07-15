@@ -125,4 +125,13 @@ class JazidaController extends Controller
         return view('_Jazidas',compact("jazidas"));
     }
 
+    public function apiListJazidas()
+    {
+        return response()->json(
+            \App\Models\Jazida::select('id', 'localizacao')->get()
+        );
+    }
+
+    
+
 }
