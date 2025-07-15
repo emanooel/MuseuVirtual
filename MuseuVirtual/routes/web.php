@@ -47,6 +47,10 @@ Route::prefix('fotos')->group(function() {
     Route::post('/{foto}/anotacoes', [FotosController::class, 'salvarAnotacoes'])->name('fotos.anotacoes.store');
 });
 
+// Route::get('/emanoel', function(){
+//     return view("emanoel");
+// });
+
 Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
 Route::get('/image-picker/{type?}', [ImageUploadController::class, 'picker'])->name('image.picker');
 

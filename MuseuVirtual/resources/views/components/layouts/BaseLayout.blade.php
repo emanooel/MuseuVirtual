@@ -17,6 +17,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20%">
@@ -25,7 +30,17 @@
     <x-rodape_site></x-rodape_site>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+        //Inicia o AOS
         AOS.init();
+
+        //Inicia o SWIPE
+        const swiper = new Swiper(".mySwiper", {
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
     </script>
 </body>
 
