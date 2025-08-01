@@ -12,33 +12,25 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    Dashboard
+                </x-nav-link>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('Rocha.index')" :active="request()->routeIs('Rocha.*')">
-                        {{ __('Rocha') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link :href="route('rochas.index')" :active="request()->routeIs('rochas.*')">
+                    Rocha
+                </x-nav-link>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('fotos-index')" :active="request()->routeIs('fotos-*')">
-                        {{ __('Fotos') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link :href="route('fotos.index')" :active="request()->routeIs('fotos.*')">
+                    Fotos
+                </x-nav-link>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('jazidas.index')" :active="request()->routeIs('jazidas.*')">
-                        {{ __('Jazidas') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link :href="route('jazidas.index')" :active="request()->routeIs('jazidas.*')">
+                    Jazidas
+                </x-nav-link>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('minerais.index')" :active="request()->routeIs('minerais.*')">
-                        {{ __('Minerais') }}
-                    </x-nav-link>
+                <x-nav-link :href="route('minerais.index')" :active="request()->routeIs('minerais.*')">
+                    Minerais
+                </x-nav-link>
                 </div>
                 
             </div>

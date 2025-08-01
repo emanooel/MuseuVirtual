@@ -4,8 +4,8 @@
     <h2 class="text-center text-[20px] font-[arial] text-[#F1EEDD]">Bem-vindo ao Museu Virtual das Rochas, um <br>espaço
         interativo e educativo dedicado à incrível<br> diversidade geológica da nossa região. </h2>
     <br>
-    <p class="text-center"><a href="{{route('dashboard')}}" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
-    <figure data-aos="fade-in" class="w-100 mt-20">
+    <p class="text-center"><a href="{{route('dashboardPublica')}}" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
+    <figure class="w-100 mt-20">
         <img class="w-full" src="/assets/img/image 1.png" alt="Imagem de uma jazida ">
     </figure>
 

@@ -88,7 +88,7 @@ class MineralController extends Controller
      */
     public function update(Request $request, Mineral $mineral)
     {
-        //dd($mineral);
+        // dd($mineral);
         $mineral = Mineral::with('fotos')->findOrFail($request->id);
         $request->validate([
             'nome' => 'sometimes|required|string|max:255',
@@ -109,8 +109,8 @@ class MineralController extends Controller
             $mineral->propriedades = $request->propriedades;
         }
 
-        if ($request->filled('jazida_id')) {
-            $mineral->jazida_id = $request->jazida_id;
+        if ($request->has('jazida_id')) { # has aceita valores nulos
+           $mineral->jazida_id = $request->jazida_id;
         }
 
         $mineral->save();

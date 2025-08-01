@@ -48,7 +48,7 @@ const showingNavigationDropdown = ref(false);
                                     Jazidas
                                 </NavLink>
                                 <NavLink
-                                    :href="route('fotos-index')"
+                                    :href="route('fotos.index')"
                                     :active="route().current('fotos-*')"
                                 >
                                     Fotos
@@ -164,8 +164,8 @@ const showingNavigationDropdown = ref(false);
                             Jazidas
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            :href="route('fotos-index')"
-                            :active="route().current('fotos-*')"
+                            :href="route('fotos.index')"
+                            :active="route().current('fotos.*')"
                         >
                             Fotos
                         </ResponsiveNavLink>

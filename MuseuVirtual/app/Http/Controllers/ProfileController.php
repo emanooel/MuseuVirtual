@@ -13,6 +13,7 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+
     /**
      * Display the user's profile form.
      */
@@ -34,7 +35,10 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
+        
+        $user = User::find(1);
+        $user->assignRole('admin');
+        
         $request->user()->save();
 
         return Redirect::route('profile.edit');

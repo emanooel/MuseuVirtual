@@ -7,6 +7,7 @@ use App\Http\Controllers\MineralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RochaController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +23,10 @@ Route::get("/api/rochas", [RochaController::class, 'apiListRocha']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/dashboardPublica', function () {
+    return Inertia::render('DashboardPublica');
+})->middleware(['auth', 'verified'])->name('dashboardPublica');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -29,6 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
+
 Route::resource('rochas', RochaController::class)->names('Rocha');
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
@@ -56,6 +62,14 @@ Route::get('/image-picker/{type?}', [ImageUploadController::class, 'picker'])->n
 
 Route::fallback(function() {
     return json_encode("Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)");
+});
+
+Route::middleware(['auth','role:admin'])->group(function(){
+    Route::get('/dashboard', [AdminController::class,'index'])->name('dashboard');
+    Route::get('/rochas', [RochaController::class,'index'])->name('rochas.index');
+    Route::get('/fotos', [FotosController::class,'index'])->name('fotos.index');
+    Route::get('/jazidas', [JazidaController::class,'index'])->name('jazidas.index');
+    Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
 });
 
 require __DIR__.'/auth.php';
