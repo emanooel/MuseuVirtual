@@ -108,7 +108,6 @@ class RochaController extends Controller
             'descricao' => 'nullable|string',
             'composicao' => 'nullable|string',
             'tipo' => 'required|integer',
-            'jazida_id' => 'nullable|exists:jazidas,id',
         ]);
 
         // Atualizando apenas os campos que foram enviados
@@ -128,7 +127,9 @@ class RochaController extends Controller
             $rocha->tipo = $request->tipo;
         }
 
-        $rocha->jazida_id = $request->jazida_id;
+        if ($request->filled('jazida_id')) {
+            $rocha->jazida_id = $request->jazida_id;
+        }
         
         $rocha->save();
 

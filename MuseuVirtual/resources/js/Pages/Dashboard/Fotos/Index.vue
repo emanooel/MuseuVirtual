@@ -64,12 +64,12 @@ watch(
 </script>
 
 <template>
-  <Head title="Listagem de fotos" />
+  <Head title="Lista de Fotos" />
   <AuthenticatedLayout>
     <template #header>
       <div class="flex justify-between items-center">
-        <h2 class="font-semibold text-xl text-black leading-tight">Listagem de fotos</h2>
-        <a :href="route('fotos-create')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl transition">
+        <h2 class="font-semibold text-xl text-black leading-tight">Lista de Fotos</h2>
+        <a :href="route('fotos-create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
           Adicionar foto
         </a>
       </div>
@@ -144,10 +144,10 @@ watch(
               <td class="px-6 py-4 text-white">{{ foto.capa ? 'Sim' : 'Não' }}</td>
               <td class="px-6 py-4">
                 <div class="flex justify-center gap-2">
-                  <a :href="route('fotos-edit', foto.id)" class="bg-blue-400 hover:bg-blue-500 text-white font-medium px-3 py-1 rounded-md transition">
+                  <a :href="route('fotos-edit', foto.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
                     Editar
                   </a>
-                  <button @click="deletar(foto.id)" class="bg-red-500 hover:bg-red-600 text-white font-medium px-3 py-1 rounded-md transition">
+                  <button @click="deletar(foto.id)" class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">
                     Excluir
                   </button>
                 </div>

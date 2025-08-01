@@ -63,9 +63,15 @@ function submitDeleteFoto(id) {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800  leading-tight">
                 Editar Rocha
             </h2>
+            <a :href="route('rochas.index')"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Voltar
+                </a>
+            </div>
         </template>
 
         <div class="py-12">
@@ -107,7 +113,7 @@ function submitDeleteFoto(id) {
 
                             <!-- Switch de associação -->
                             <div class="mb-4">
-                                <label for="jazida" class="block font-medium">Associar este mineral à alguma jazida?</label>
+                                <label for="jazida" class="block font-medium">Associar esta rocha à alguma jazida?</label>
                                 <div id="switch" class="flex items-center gap-4 mt-2">
                                     <p>Não</p>
                                     <label class="switch">
@@ -130,9 +136,9 @@ function submitDeleteFoto(id) {
                                 </select>
                             </div>
 
-                            <div class="flex items-center justify-end mt-6">
+                            <div class="flex items-center justify-center mt-6">
                                 <button type="submit"
-                                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
                                     Salvar Alterações
                                 </button>
                             </div>
@@ -141,10 +147,10 @@ function submitDeleteFoto(id) {
                         <!-- Galeria de Fotos -->
                         <div class="mt-8 flex flex-wrap justify-center">
                             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mr-4">
-                                Fotos da rocha
+                                Fotos da rocha:
                             </h2>
                             <a :href="route('fotos-create', { idRocha: rocha.id })"
-                                class="bg-[#9B9FB5] text-black px-4 py-2 rounded hover:bg-blue-700">
+                                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-4">
                                 Adicionar fotos
                             </a>
                         </div>
@@ -172,3 +178,74 @@ function submitDeleteFoto(id) {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style>
+/* O switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 30px;
+}
+
+#switch { 
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+
+/* Esconder checkbox padrão*/
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(40px);
+  -ms-transform: translateX(40px);
+  transform: translateX(40px);
+}
+
+.slider.round {
+  border-radius: 15px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+</style>

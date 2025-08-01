@@ -67,8 +67,8 @@ function submitForm() {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Stones List
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
+                Cadastrar Rocha
             </h2>
         </template>
 
