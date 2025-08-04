@@ -1,10 +1,27 @@
-<x-layouts.BaseLayout>
-    <x-slot name="title">Minerais</x-slot>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minerais</title>
+    <!-- Styles / Scripts -->
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
+</head>
+</head>
+
+<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20%">
+    <div class="2xl:px-80">
+        <x-menu_site />
+    </div>
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 ">
         <div class="w-100 mx-auto sm:px-10">
 
             <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>Minerais</strong></h1>
-            <div>
+            <div >
                 <img class= "2xl:pb-40 pb-10 w-full " src="/assets/img/image (3).png" alt="Foto do mineral tal">
             </div>
 
@@ -72,7 +89,14 @@
                         class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851] cursor-pointer ">Ver
                         mais</a>
                 </div>
+
+                <div class="flex justify-center">
+                    <div class="pagination">
+                        {{ $minerais->links() }}
+                    </div>
+                    <x-rodape_site></x-rodape_site>
+                </div>
             </div>
-        </div>
-    </div>
-</x-layouts.BaseLayout>
+</body>
+
+</html>

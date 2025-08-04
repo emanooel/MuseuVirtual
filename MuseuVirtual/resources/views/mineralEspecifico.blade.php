@@ -1,50 +1,52 @@
 <style>
     .swiper-container-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 800px;
-  margin: 50px auto;
-  position: relative;
-}
-    .mySwiper {
-  width: 600px;
-  height: 400px;
-}
-    .swiper-slide img {
-  width: 100%;
-  height:20%;
-  object-fit: cover;
-}
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 800px;
+        margin: 50px auto;
+        position: relative;
+    }
 
-.swiper-button-prev,
-.swiper-button-next {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  font-size: 20px;
-  color:#d8d4c0
-}
+    .mySwiper {
+        width: 600px;
+        height: 400px;
+    }
+
+    .swiper-slide img {
+        width: 100%;
+        height: 20%;
+        object-fit: cover;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+        font-size: 20px;
+        color: #d8d4c0
+    }
 </style>
 
 <script>
-  const swiper = new Swiper(".mySwiper", {
-    loop: true,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-  });
+    const swiper = new Swiper(".mySwiper", {
+        loop: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
 </script>
-
 
 
 <!DOCTYPE html>
@@ -65,10 +67,14 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+    <!-- Fancybox JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
 </head>
 
 {{-- Classe para o fundo gradiente de toda a página --}}
+
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
+
     {{-- Contêiner para o menu (com paddings responsivos do Tailwind) --}}
     <div class="2xl:px-80">
         <x-menu_site /> {{-- Componente do menu do seu site (Laravel Blade) --}}
@@ -116,11 +122,13 @@
                     {{-- Loop pelas fotos do mineral para criar os slides do carrossel --}}
                     @foreach ($mineral->fotos as $item)
                         {{-- Cada slide do carrossel. pr-4 foi removido aqui pois 'spaceBetween' é configurado no JS --}}
-                        <div class="swiper-slide">
-                            <img class=" size-60 rounded-xl" {{-- Imagem do slide (240x240px com arredondamento) --}}
-                                src="{{ asset('storage/' . $item->caminho) }}"
-                                alt="Miniatura de {{ $mineral->nome }}">
-                        </div>
+                        <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
+                            <div class="swiper-slide">
+                                <img class=" size-60 rounded-xl" {{-- Imagem do slide (240x240px com arredondamento) --}}
+                                    src="{{ asset('storage/' . $item->caminho) }}"
+                                    alt="Miniatura de {{ $mineral->nome }}">
+                            </div>
+                        </a>
                     @endforeach
                 </div>
             </div>
@@ -155,6 +163,11 @@
                     prevEl: ".swiper-button-prev", // Seletor para o botão "anterior"
                 },
             });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        Fancybox.bind("[data-fancybox]", {
         });
     </script>
 </body>

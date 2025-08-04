@@ -1,5 +1,14 @@
 <x-layouts.BaseLayout>
     <x-slot name="title">RochaEspecifica</x-slot>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        Fancybox.bind("[data-fancybox]", {
+        });
+    </script>
+
     <style>
         /* Estilos para o contêiner principal do carrossel e seus botões */
         .swiper-container-wrapper {
@@ -180,9 +189,11 @@
                         @foreach ($rocha->fotos as $item)
                             {{-- Cada slide do carrossel. pr-4 foi removido aqui pois 'spaceBetween' é configurado no JS --}}
                             <div class="swiper-slide">
-                                <img class="size-60 rounded-xl" {{-- Imagem do slide (240x240px com arredondamento) --}}
-                                    src="{{ asset('storage/' . $item->caminho) }}"
-                                    alt="Miniatura de {{ $rocha->nome }}">
+                                <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
+                                    <img class="size-60 rounded-xl" {{-- Imagem do slide (240x240px com arredondamento) --}}
+                                        src="{{ asset('storage/' . $item->caminho) }}"
+                                        alt="Miniatura de {{ $rocha->nome }}">
+                                </a>
                             </div>
                         @endforeach
                     </div>
