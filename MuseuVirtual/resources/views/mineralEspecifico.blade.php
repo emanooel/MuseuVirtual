@@ -138,7 +138,7 @@
         {{-- Seção de descrição e composição do mineral --}}
         <div class="pt-6">
             <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
-                </strong>{{ $mineral->descricao }}</h2>
+                </strong>{!! $mineral->descricao !!}</h2>
             <br>
             <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição do mineral: </strong>
                 {{ $mineral->composicao }}</h2>
