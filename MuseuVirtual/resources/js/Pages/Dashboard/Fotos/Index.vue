@@ -31,7 +31,7 @@ function deletar(id) {
   if (confirm('Tem certeza que deseja deletar?')) {
     router.delete(route('fotos-destroy', id), {
       preserveState: true,
-      onSuccess: () => alert('Foto excluída com sucesso!'),
+      // onSuccess: () => alert('Foto excluída com sucesso!'),
     });
   }
 }
@@ -48,7 +48,7 @@ watch(
   filters,
   (newFilters) => {
     router.get(
-      route('fotos-index'),
+      route('fotos.index'),
       {
         ...newFilters,
         comRocha: newFilters.comRocha ? 1 : 0,

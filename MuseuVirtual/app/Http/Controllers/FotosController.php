@@ -208,7 +208,7 @@ class FotosController extends Controller
 
         $foto->update($data);
 
-        return redirect()->route('fotos-index')->with('success', 'Foto atualizada com sucesso!');
+        return redirect()->route('fotos.index')->with('success', 'Foto atualizada com sucesso!');
     }
 
     public function destroy($id)

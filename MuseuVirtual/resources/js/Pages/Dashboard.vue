@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 
 const props = defineProps({
   estatisticas: {
@@ -18,6 +18,10 @@ const props = defineProps({
   },
 })
 
+onMounted(()=>{
+  console.log(props)
+});
+
 const estatisticasList = computed(() => [
   { label: 'Rochas', total: props.estatisticas?.rochas ?? 0 },
   { label: 'Minerais', total: props.estatisticas?.minerais ?? 0 },
@@ -32,7 +36,7 @@ const estatisticasList = computed(() => [
   <AuthenticatedLayout>
   <div class="max-w-7xl mx-auto py-10 px-4 bg-gray-900 min-h-screen">
       <h1 class="text-2xl font-bold text-white mb-6">
-        Bem-vido, {{ $page.props.auth.user?.name || 'Usuário' }}
+        Bem-vindo, {{ $page.props.auth.user?.name || 'Usuário' }}
       </h1>
 
       <!-- Estatísticas -->
