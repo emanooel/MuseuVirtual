@@ -201,6 +201,10 @@
                     src="{{ asset('storage/' . $fotoExibir->caminho) }}" {{-- Caminho para a imagem --}}
                     alt="Imagem principal de {{ $mineral->nome }}"> {{-- Texto alternativo para acessibilidade --}}
             </div>
+            <a href="{{ route('minerais.qrcode', $mineral->id) }}"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Baixar QR Code da Rocha 📥
+            </a>
         @endif
 
         {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}

@@ -148,7 +148,7 @@
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
                 @foreach ($rochastipo3 as $item)
-                    <a href="{{ route('Rocha.show', $item->id) }}">
+                    <a href="{{ route('rochas.show', $item->id) }}">
                         <figure class="w-full ">
                             @php
                                 $fotoExibir = null; // Inicializa como nulo

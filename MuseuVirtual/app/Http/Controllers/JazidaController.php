@@ -6,6 +6,7 @@ use App\Models\Fotos;
 use App\Models\Jazida;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use SimpleSoftwareIO\QrCode\Facades\QrCode; // Certifique-se de ter o pacote instalado
 
 class JazidaController extends Controller
 {
@@ -132,6 +133,15 @@ class JazidaController extends Controller
         );
     }
 
-    
+        public function gerarQrCode($id)
+    {
+        $jazida = Jazida::findOrFail($id);
+        $url = route('jazidas.show', $jazida->id); // ou use slug se tiver
+        $qrCode = QrCode::format('png')->size(300)->generate($url);
+
+        return response($qrCode)
+            ->header('Content-Type', 'image/png')
+            ->header('Content-Disposition', 'attachment; filename="jazida_'.$jazida->id.'_qr.png"');
+    }
 
 }

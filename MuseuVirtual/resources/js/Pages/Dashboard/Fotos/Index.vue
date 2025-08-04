@@ -106,7 +106,7 @@ watch(
             <span>Com Jazida</span>
           </label>
 
-          <label class="inline-flex items-center space-x-2 dark:text-white font-semibold">
+          <label class="inline-flex items-center space-x-2 dark:text-white">
             <input type="checkbox" v-model="filters.semLigacao" />
             <span>Sem Nenhuma Ligação</span>
           </label>
@@ -137,11 +137,11 @@ watch(
                   @click="abrirModalVisualizacao(foto)"
                 />
               </td>
-              <td class="px-6 py-4 text-white">{{ foto.id }}</td>
-              <td class="px-6 py-4 text-white">{{ foto.rocha?.nome ?? '-' }}</td>
-              <td class="px-6 py-4 text-white">{{ foto.mineral?.nome ?? '-' }}</td>
-              <td class="px-6 py-4 text-white">{{ foto.jazida?.localizacao ?? '-' }}</td>
-              <td class="px-6 py-4 text-white">{{ foto.capa ? 'Sim' : 'Não' }}</td>
+              <td class="px-6 py-4 dark:text-white">{{ foto.id }}</td>
+              <td class="px-6 py-4 dark:text-white">{{ foto.rocha?.nome ?? '-' }}</td>
+              <td class="px-6 py-4 dark:text-white">{{ foto.mineral?.nome ?? '-' }}</td>
+              <td class="px-6 py-4 dark:text-white">{{ foto.jazida?.localizacao ?? '-' }}</td>
+              <td class="px-6 py-4 dark:text-white">{{ foto.capa ? 'Sim' : 'Não' }}</td>
               <td class="px-6 py-4">
                 <div class="flex justify-center gap-2">
                   <a :href="route('fotos-edit', foto.id)" class="bg-blue-400 hover:bg-blue-500 text-white font-medium px-3 py-1 rounded-md transition">

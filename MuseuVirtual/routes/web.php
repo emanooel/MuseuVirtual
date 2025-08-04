@@ -16,6 +16,7 @@ Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");
+Route::get('/minerais/{id}/qrcode', [MineralController::class, 'gerarQrCode'])->name('minerais.qrcode');
 
 Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/api/rochas", [RochaController::class, 'apiListRocha']);
@@ -34,6 +35,7 @@ Route::resource('rochas', RochaController::class)->names('Rocha');
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 Route::resource('/minerais', MineralController::class);
 Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
+Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');
 
 Route::prefix('fotos')->group(function() {
     Route::get('/', [FotosController::class, 'index'])->name('fotos-index');
@@ -53,9 +55,10 @@ Route::prefix('fotos')->group(function() {
 
 Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
 Route::get('/image-picker/{type?}', [ImageUploadController::class, 'picker'])->name('image.picker');
-
-Route::fallback(function() {
+Route::get('/rochas/{rocha}', [RochaController::class, 'show'])->name('rochas.show');Route::fallback(function() {
     return json_encode("Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)");
 });
+Route::get('/rochas/{id}/qrcode', [RochaController::class, 'gerarQrCode'])->name('rochas.qrcode');
+
 
 require __DIR__.'/auth.php';

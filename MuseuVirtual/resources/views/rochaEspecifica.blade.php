@@ -170,6 +170,11 @@
                         alt="Imagem principal de {{ $rocha->nome }}"> {{-- Texto alternativo para acessibilidade --}}
                 </div>
             @endif
+            <a href="{{ route('rochas.qrcode', $rocha->id) }}"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Baixar QR Code da Rocha 📥
+            </a>
+
 
             {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}
             <div class="swiper-container-wrapper">
