@@ -19,11 +19,13 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    
+
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20%">
-    <x-menu_site />
+    <div class="2xl:px-80">
+        <x-menu_site />
+    </div>
     {{ $slot }}
     <x-rodape_site></x-rodape_site>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>

@@ -12,7 +12,7 @@
     @endif
 </head>
 </head>
-
+{{-- @dd($minerais) --}}
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20%">
     <div class="2xl:px-80">
         <x-menu_site />
@@ -84,14 +84,9 @@
                     @endforeach
 
                 </div>
-                <div class="text-center m-10">
-                    <a href=""
-                        class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851] cursor-pointer ">Ver
-                        mais</a>
-                </div>
-
-                <div class="flex justify-center">
-                    <div class="pagination">
+                
+                <div class="pagination justify-content-center">
+                    <div>
                         {{ $minerais->links() }}
                     </div>
                     <x-rodape_site></x-rodape_site>
