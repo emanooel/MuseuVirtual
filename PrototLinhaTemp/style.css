@@ -1,0 +1,50 @@
+body {
+    background-color: #36393B;
+    color: #000;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.maior {
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.nivel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    background-color: #e0e0e0;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.eon, .era, .periodo {
+    background-color: #BFB6BB;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.eon:hover, .era:hover, .periodo:hover {
+    background-color: #d3c6cc;
+}
+
+.final {
+    font-size: 24px;
+    font-weight: bold;
+    color: green;
+}
+
+.hidden {
+    display: none;
+}

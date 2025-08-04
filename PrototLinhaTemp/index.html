@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="script.js" defer></script>
+  <title>Escala do Tempo Geológico</title>
+</head>
+<body>
+  <div class="maior">
+    <!-- EONS -->
+    <div class="nivel" id="eons">
+        <div class="eon" id="eon-1">Hadeano</div>
+        <div class="eon" id="eon-2">Arqueano</div>
+        <div class="eon" id="eon-3">Proterozoico</div>
+        <div class="eon" id="eon-4">Fanerozoico</div>
+    </div>
+
+    <!-- ERAS DENTRO DOS EONS -->
+    <div class="nivel hidden" id="eon-1">
+        <div class="era" id="era-1">Pré-Arqueano</div>
+    </div>
+
+    <div class="nivel hidden" id="eon-2">
+        <div class="era" id="era-2a">Eoarqueano</div>
+        <div class="era" id="era-2b">Paleoarqueano</div>
+        <div class="era" id="era-2c">Mesoarqueano</div>
+        <div class="era" id="era-2d">Neoarqueano</div>
+    </div>
+
+    <!-- etc... -->
+
+
+    <div class="nivel hidden" id="eon-3">
+      <div class="era" id="301">Paleoproterozoico</div>
+      <div class="era" id="302">Mesoproterozoico</div>
+      <div class="era" id="303">Neoproterozoico</div>
+    </div>
+
+    <div class="nivel hidden" id="eon-4">
+      <div class="era" id="401">Paleozóico</div>
+      <div class="era" id="402">Mesozóico</div>
+      <div class="era" id="403">Cenozóico</div>
+    </div>
+
+    <!-- PERÍODOS -->
+    <div class="nivel hidden" id="era-401">
+      <div class="periodo" id="40101">Cambriano</div>
+      <div class="periodo" id="40102">Ordoviciano</div>
+      <div class="periodo" id="40103">Siluriano</div>
+      <div class="periodo" id="40104">Devoniano</div>
+      <div class="periodo" id="40105">Carbonífero</div>
+      <div class="periodo" id="40106">Permiano</div>
+    </div>
+
+    <div class="nivel hidden" id="era-402">
+      <div class="periodo" id="40201">Triássico</div>
+      <div class="periodo" id="40202">Jurássico</div>
+      <div class="periodo" id="40203">Cretáceo</div>
+    </div>
+
+    <div class="nivel hidden" id="era-403">
+      <div class="periodo" id="40301">Paleógeno</div>
+      <div class="periodo" id="40302">Neógeno</div>
+      <div class="periodo" id="40303">Quaternário</div>
+    </div>
+
+    <!-- "Oi achou" -->
+    <div class="nivel hidden" id="achou">
+      <div class="final">Oi, achou!</div>
+    </div>
+  </div>
+</body>
+</html>
