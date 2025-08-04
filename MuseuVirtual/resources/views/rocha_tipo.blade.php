@@ -16,17 +16,17 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
-    <div class="w-[1600px] mx-auto">
-        <x-menu_site />
+    <div class="2xl:px-80"><x-menu_site /></div>
+    <div class="w-full mx-auto 2xl:px-80 xl:px-32 lg:px-20 md:px-10">
         <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>
-                @if ($tipo == '1')
-                    Ígneas
-                @elseif ($tipo == '2')
-                    Metamórficas
-                @else
-                    Sedimentares
-                @endif
-            </strong></h1>
+        @if ($tipo=='1') 
+            Ígneas
+        @elseif ($tipo=="2")
+            Metamórficas
+        @else 
+            Sedimentares
+        @endif   
+        </strong></h1>
 
         {{-- @dd($rochastipo) --}}
 
@@ -51,37 +51,29 @@
                                 }
                             @endphp
 
-                            @if ($fotoExibir)
-                                {{-- Verifica se uma foto foi encontrada para exibir --}}
-                                <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
-                                    src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem do mineral tal">
-                                <div class="flex">
-                                    {{-- <div class="flex">
-                                <img class="" src="/assets/img/Vector.png" alt="curtir">
-                                <img class="" src="/assets/img/Vector (1).png" alt="salvar">
-                            </div> --}}
-                                    <figcaption>
-                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                            <strong>{{ $item->nome }}</strong>
-                                        </h2>
-                                    </figcaption>
-                                </div>
-                            @else
-                                {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
-                                <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
-                                    src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
-                                <div class="flex">
-                                    {{-- <div class="flex">
-                                <img class="" src="/assets/img/Vector.png" alt="curtir">
-                                <img class="" src="/assets/img/Vector (1).png" alt="salvar">
-                            </div> --}}
-                                    <figcaption>
-                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                            <strong>{{ $item->nome }}</strong>
-                                        </h2>
-                                    </figcaption>
-                                </div>
-                            @endif
+                        @if ($fotoExibir)
+                            {{-- Verifica se uma foto foi encontrada para exibir --}}
+                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
+                                src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem do mineral tal">
+                            <div class="flex">
+                                <figcaption>
+                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                        <strong>{{ $item->nome }}</strong>
+                                    </h2>
+                                </figcaption>
+                            </div>
+                        @else
+                            {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
+                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
+                                src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
+                            <div class="flex">
+                                <figcaption>
+                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                        <strong>{{ $item->nome }}</strong>
+                                    </h2>
+                                </figcaption>
+                            </div>
+                        @endif
 
                         </figure>
                     </a>

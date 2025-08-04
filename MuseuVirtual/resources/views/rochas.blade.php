@@ -215,10 +215,10 @@
         </div>
     </div>
     {{-- tipo 3 --}}
-    <div class="flex grid grid-cols-2 gap-6 mt-20">
+    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10">
         <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Sedimentares</strong></h2>
     </div>
-    <div class="w-full xl:mx-auto">
+    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10">
         <div class="grid grid-cols-2 gap-8 ">
             @foreach ($rochastipo3 as $item)
                 <a href="{{ route('Rocha.show', $item->id) }}">

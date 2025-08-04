@@ -49,26 +49,27 @@ onMounted(()=>{
                         <form @submit.prevent="submit">
                             <!-- Localização -->
                             <div class="mb-4">
-                                <InputLabel for="localizacao" value="Localização" />
+                                <label for="localizacao" class="block font-medium">Localização</label>
                                 <TextInput id="localizacao" v-model="form.localizacao" type="text"
-                                    class="block mt-1 w-full" />
+                                    class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm"/>
                                 <span v-if="form.errors.localizacao" class="text-red-500 text-sm">{{
                                     form.errors.localizacao }}</span>
                             </div>
 
                             <!-- Descrição -->
                             <div class="mb-4">
-                                <InputLabel for="descricao" value="Descrição" />
+                                 <label for="descricao" class="block font-medium">Descrição</label>
                                 <TinyMCEEditor v-model="form.descricao" />
                     
                                 <span v-if="form.errors.descricao" class="text-red-500 text-sm">{{ form.errors.descricao
                                 }}</span>
                             </div>
 
-                            <div class="flex items-center justify-end mt-6">
-                                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            <div class="flex items-center justify-center mt-6">
+                                <button type="submit"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
                                     Salvar Alterações
-                                </PrimaryButton>
+                                </button>
                             </div>
                         </form>
 

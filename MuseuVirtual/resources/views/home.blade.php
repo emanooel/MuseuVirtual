@@ -21,7 +21,7 @@
     <br>
     <div class="flex justify-center mt-10">
         <div class="w-[1200px]">
-            <div class="grid grid-cols-2 grid-rows-2  gap-x-8 gap-y-4 justify-items-center items-center">
+            <div class="grid xl:grid-cols-2 grid-rows-2 gap-x-8 gap-y-4 grid-cols-1 justify-items-center items-center">
                 <figure data-aos="fade-right">
                     <a href="{{route('site.jazidas')}}"><img class="cursor-pointer" src="/assets/img/JazidaInicial.png" alt=""></a>
                     <figcaption>

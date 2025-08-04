@@ -43,7 +43,7 @@ function submit() {
   <Head title="Cadastrar Jazida" />
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
         Cadastrar Jazida
       </h2>
     </template>
@@ -54,8 +54,8 @@ function submit() {
           <div class="p-6 text-gray-900 dark:text-gray-100">
             <form @submit.prevent="submit" enctype="multipart/form-data">
               <div class="mb-4">
-                <InputLabel for="localizacao" value="Localização" />
-                <TextInput id="localizacao" v-model="form.localizacao" type="text" class="block mt-1 w-full" required autocomplete="off" />
+                <label for="localizacao" class="block font-medium">Localização</label>
+                <TextInput id="localizacao" v-model="form.localizacao" type="text" class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" required autocomplete="off" />
               </div>
 
               <div class="mb-4">
@@ -84,9 +84,9 @@ function submit() {
               <input type="hidden" name="capa_nome" :value="form.capa_nome">
 
               <div class="mt-6">
-                <PrimaryButton class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
                   Criar Jazida
-                </PrimaryButton>
+                </button>
               </div>
             </form>
           </div>

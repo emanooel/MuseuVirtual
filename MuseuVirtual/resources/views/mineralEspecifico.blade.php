@@ -1,54 +1,3 @@
-<style>
-    .swiper-container-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-width: 800px;
-        margin: 50px auto;
-        position: relative;
-    }
-
-    .mySwiper {
-        width: 600px;
-        height: 400px;
-    }
-
-    .swiper-slide img {
-        width: 100%;
-        height: 20%;
-        object-fit: cover;
-    }
-
-    .swiper-button-prev,
-    .swiper-button-next {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        flex-shrink: 0;
-    }
-
-    .swiper-button-prev::after,
-    .swiper-button-next::after {
-        font-size: 20px;
-        color: #d8d4c0
-    }
-</style>
-
-<script>
-    const swiper = new Swiper(".mySwiper", {
-        loop: true,
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-    });
-</script>
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -56,19 +5,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MineralEspecifico</title>{{-- Título ajustado para MineralEspecifico --}}
+    <title>MineralEspecifico</title>
     {{-- Inclui os estilos e scripts do Vite (Tailwind CSS, etc.) --}}
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
-    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <!-- Fancybox JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+
+    <style>
+        /* Estilos para o contêiner principal do carrossel e seus botões */
+        .swiper-container-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 800px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        /* Estilos para o próprio carrossel (a área visível dos slides) */
+        .mySwiper {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        /* Estilos para cada slide individual do carrossel */
+        .swiper-slide {
+            width: 240px;
+            /* Largura explícita para cada slide (corresponde ao size-60 da imagem) */
+        }
+
+        /* Estilos para as imagens dentro dos slides do carrossel */
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.75rem;
+        }
+
+        /* Estilos para os botões de navegação (setas) do carrossel */
+        .swiper-button-prev,
+        .swiper-button-next {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            position: static;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Efeito de HOVER para o fundo dos botões de navegação */
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos para as setas (o conteúdo gerado por ::after) dentro dos botões */
+        .swiper-button-prev::after,
+        .swiper-button-next::after {
+            font-size: 20px;
+            color: #F1EEDD;
+            transition: color 0.3s ease;
+        }
+
+        /* Efeito de HOVER para a cor das SETAS */
+        .swiper-button-prev:hover::after,
+        .swiper-button-next:hover::after {
+            color: #FFFFFF;
+        }
+
+        /* ----- Estilos para a IMAGEM PRINCIPAL (Do Mineral Específico) ----- */
+        .main-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .main-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: 0.75rem;
+        }
+    </style>
 </head>
 
 {{-- Classe para o fundo gradiente de toda a página --}}
@@ -108,9 +139,9 @@
         @if ($fotoExibir)
             {{-- Contêiner para centralizar a imagem principal e aplicar estilos --}}
             <div class="main-image-container">
-                <img class="2xl:w-full rounded-xl main-image" {{-- Aplica bordas arredondadas e a classe CSS 'main-image' --}}
-                    src="{{ asset('storage/' . $fotoExibir->caminho) }}" {{-- Caminho para a imagem --}}
-                    alt="Imagem principal de {{ $mineral->nome }}"> {{-- Texto alternativo para acessibilidade --}}
+                <img class="2xl:w-full rounded-xl main-image"
+                    src="{{ asset('storage/' . $fotoExibir->caminho) }}"
+                    alt="Imagem principal de {{ $mineral->nome }}">
             </div>
         @endif
 
@@ -122,13 +153,13 @@
                     {{-- Loop pelas fotos do mineral para criar os slides do carrossel --}}
                     @foreach ($mineral->fotos as $item)
                         {{-- Cada slide do carrossel. pr-4 foi removido aqui pois 'spaceBetween' é configurado no JS --}}
-                        <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                            <div class="swiper-slide">
-                                <img class=" size-60 rounded-xl" {{-- Imagem do slide (240x240px com arredondamento) --}}
+                        <div class="swiper-slide">
+                            <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
+                                <img class="size-60 rounded-xl"
                                     src="{{ asset('storage/' . $item->caminho) }}"
                                     alt="Miniatura de {{ $mineral->nome }}">
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -138,7 +169,7 @@
         {{-- Seção de descrição e composição do mineral --}}
         <div class="pt-6">
             <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
-                </strong>{{ $mineral->descricao }}</h2>
+                </strong>{!! $mineral->descricao !!}</h2>
             <br>
             <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição do mineral: </strong>
                 {{ $mineral->composicao }}</h2>
@@ -150,8 +181,7 @@
 
     {{-- Inclui o JavaScript do Swiper do CDN (idealmente no final do <body> para melhor performance) --}}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    {{-- Script para inicializar o Swiper --}}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const swiper = new Swiper(".mySwiper", {
@@ -163,11 +193,8 @@
                     prevEl: ".swiper-button-prev", // Seletor para o botão "anterior"
                 },
             });
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-    <script>
-        Fancybox.bind("[data-fancybox]", {
+
+            Fancybox.bind("[data-fancybox]", {});
         });
     </script>
 </body>
