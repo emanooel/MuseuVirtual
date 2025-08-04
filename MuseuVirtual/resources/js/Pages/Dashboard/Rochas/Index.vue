@@ -37,10 +37,10 @@ function deleteRocha(id) {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between">
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Stones List
+                <h2 class="font-semibold text-xl text-gray-900 leading-tight">
+                    Lista de Rochas
                 </h2>
-                <a :href="route('Rocha.create')" class="bg-[#9B9FB5] text-black px-4 py-2 rounded hover:bg-blue-700">
+                <a :href="route('Rocha.create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Cadastrar Rocha
                 </a>
             </div>
@@ -61,9 +61,9 @@ function deleteRocha(id) {
                         <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-100 dark:bg-gray-700">
                                 <tr>
-                                    <th class="w-1/4 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Foto</th>
-                                    <th class="w-1/2 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nome</th>
-                                    <th class="w-1/4 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                                    <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Foto</th>
+                                    <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nome</th>
+                                    <th class="w-1/3 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -86,11 +86,11 @@ function deleteRocha(id) {
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <div class="flex items-center justify-center gap-2">
-                                            <a :href="route('Rocha.edit', rocha.id)" class="inline-flex items-center px-2 py-1 text-sm bg-[#9B9FB5] text-black dark:text-white hover:underline rounded">
+                                            <a :href="route('Rocha.edit', rocha.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
                                                 Editar
                                             </a>
                                             <button @click="deleteRocha(rocha.id)"
-                                                class="inline-flex items-center px-2 py-1 bg-[#9B9FB5] text-sm text-red-600 dark:text-red-400 hover:underline rounded">
+                                                class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">
                                                 Excluir
                                             </button>
                                         </div>
