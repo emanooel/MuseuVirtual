@@ -170,10 +170,39 @@
                         alt="Imagem principal de {{ $rocha->nome }}"> {{-- Texto alternativo para acessibilidade --}}
                 </div>
             @endif
-            <a href="{{ route('rochas.qrcode', $rocha->id) }}"
-            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-            Baixar QR Code da Rocha 📥
-            </a>
+        <!-- Botão que abre o modal -->
+        <div x-data="{ modalAberto: false }">
+            <button @click="modalAberto = true" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-4">
+                Ver QR Code da Rocha 📥
+            </button>
+
+            <!-- Modal do QR Code -->
+            <div 
+                x-show="modalAberto" 
+                x-transition 
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                style="display: none;"
+            >
+                <div class="bg-white p-6 rounded-lg max-w-sm w-full text-center relative">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">QR Code da Rocha</h2>
+
+                    <img 
+                        src="{{ route('rochas.qrcode', $rocha->id) }}" 
+                        alt="QR Code da Rocha" 
+                        class="mx-auto mb-4"
+                    >
+
+                    <button 
+                        @click="modalAberto = false" 
+                        class="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-2xl font-bold">
+                        &times;
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alpine.js (caso não esteja carregado no layout principal) -->
+        <script src="//unpkg.com/alpinejs" defer></script>
 
 
             {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}
@@ -202,6 +231,7 @@
                 <br>
                 <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição da rocha: </strong>
                     {{ $rocha->composicao }}</h2>
+                    
             </div>
         </div>
     </div>

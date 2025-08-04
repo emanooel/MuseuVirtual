@@ -79,9 +79,13 @@ class RochaController extends Controller
     public function show($rocha)
     {
         $rocha = Rocha::with('fotos')->findOrFail($rocha);
-        return view('rochaEspecifica',compact('rocha'));
-    }
+        $url = route('rochas.show', $rocha->id);
 
+        // Gera QR como SVG para exibir diretamente no Blade
+        $qrSvg = QrCode::size(180)->generate($url);
+
+        return view('rochaEspecifica', compact('rocha', 'qrSvg'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
