@@ -27,6 +27,10 @@ Route::get('/dashboardPublica', function () {
     return Inertia::render('DashboardPublica');
 })->middleware(['auth', 'verified'])->name('dashboardPublica');
 
+Route::get('/timeline', function () {
+    return Inertia::render('Dashboard/Timeline/Timeline');
+})->middleware(['auth', 'verified'])->name('Timeline');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
