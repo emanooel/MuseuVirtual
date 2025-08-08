@@ -85,7 +85,7 @@
         <div class="">
             <img class= "2xl:pb-40 pb-10 w-full " src="/assets/img/image (3).png" alt="Foto da rocha tal">
         </div>
-
+        
         {{-- tipo 1 --}}
         <div class="flex grid grid-cols-2 gap-6 mt-20">
             <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Igneas</strong></h2>
