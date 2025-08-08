@@ -1,3 +1,24 @@
+-- Registros de teste (IDs fixos). Ajuste os textos de localizacao se desejar.
+INSERT INTO `jazidas` (`id`, `localizacao`, `descricao`, `created_at`, `updated_at`) VALUES
+  (1, 'Jazida Teste A - Belo Horizonte/MG', 'Seed para FKs de fotos/minerais.', NOW(), NOW()),
+  (2, 'Jazida Teste B - Curvelo/MG',        'Seed para FKs de fotos/minerais.', NOW(), NOW()),
+  (3, 'Jazida Teste C - Cuiabá/MT',         'Extra para desenvolvimento.',      NOW(), NOW()),
+  (4, 'Jazida Teste D - Itabira/MG',        'Extra para desenvolvimento.',      NOW(), NOW()),
+  (5, 'Jazida Teste E - Parauapebas/PA',    'Extra para desenvolvimento.',      NOW(), NOW()),
+  (6, 'Jazida Teste F - Catalão/GO',        'Extra para desenvolvimento.',      NOW(), NOW())
+ON DUPLICATE KEY UPDATE
+  `localizacao` = VALUES(`localizacao`),
+  `descricao`   = VALUES(`descricao`),
+  `updated_at`  = NOW();
+
+-- Dica de uso:
+--   sail mysql -u root -p laravel < seed_jazidas_match_schema.sql
+
+-- Observações:
+-- - Se a tabela já existe com esse mesmo esquema, os inserts acima apenas vão criar/atualizar os IDs 1..6.
+-- - Se seu dump usa IDs específicos (ex.: só 1 e 2), esses já são cobertos aqui.
+
+
 INSERT INTO `minerals` (`jazida_id`,`created_at`,`updated_at`,`nome`,`descricao`,`propriedades`) VALUES (NULL,'2025-08-01 12:44:28','2025-08-01 12:46:33','Actinolita','<p>A actinolita &eacute; um inosilicato do Supergrupo dos Anfib&oacute;lios. &Eacute; um mineral muito comum, t&iacute;pico de rochas metam&oacute;rficas. Possui aplica&ccedil;&atilde;o restrita &ndash; e cada vez mais reduzida &ndash; quando ocorre fibrosa e &eacute; comercializada como asbesto. A variedade &ldquo;nefrita&rdquo; &eacute; um dos tipos de jade, extremamente cara.Para a classifica&ccedil;&atilde;o detalhada de anfib&oacute;lios, consultar outras fontes. H&aacute; uma variedade de actinolita de cor verde intensa devido a um teor em Cr, denominada de &ldquo;smaragdita&rdquo;, que ocorre em eclogitos com metamorfismo retr&oacute;grado como pseudomorfose sobre omfacita. &ldquo;Nefrita&rdquo; &eacute; uma rocha verde composta basicamente por actinolita fibrosa micro- a criptocristalina, sendo um dos dois minerais (com jadeita) comercializada como jade.&nbsp;</p>','Ca2(Mg Fe+2)5Si8O22(OH)2'),
 (NULL,'2025-08-01 12:48:09','2025-08-01 12:48:09','Albita Com Turmalina Preta','<p>As albitas s&atilde;o normalmente tricl&iacute;nicas, mas pode haver uma transi&ccedil;&atilde;o destes&nbsp; minerais para simetrias monocl&iacute;nicas por um forte aquecimento. O termo extremo puro em s&oacute;dio &eacute; chamado de albita de baixa temperatura ou albita de alta temperatura. A diferen&ccedil;a principal, na estrutura, ente as albitas de baixa e de alta temperatura, est&aacute; na distribui&ccedil;&atilde;o dos &aacute;tomos de alum&iacute;nio entre as quatro posi&ccedil;&otilde;es tetra&eacute;dricas n&atilde;o equivalentes. A albita de alta temperatura possui distribui&ccedil;&atilde;o de (sil&iacute;cio , alum&iacute;nio)&nbsp; altamente desordenada, enquanto a albita de baixa temperatura possui um grau consider&aacute;vel de ordem.</p>','NaAlSi3O8'),
 (NULL,'2025-08-01 12:50:00','2025-08-01 12:50:00','Amazonita','<p><span class=\"C9DxTc \">A</span><span class=\"C9DxTc \">mazonita</span><span class=\"C9DxTc \">&nbsp;&Eacute; uma variedade de feldspato pot&aacute;ssico de cor verde a verde-azulada. Na defini&ccedil;&atilde;o o feldspato &eacute; tricl&iacute;nico e, portanto, &eacute; uma variedade de microclina.&nbsp;</span></p>','KAlSi3O8'),
