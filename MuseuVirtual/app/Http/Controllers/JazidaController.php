@@ -145,3 +145,4 @@ class JazidaController extends Controller
     }
 
 }
+

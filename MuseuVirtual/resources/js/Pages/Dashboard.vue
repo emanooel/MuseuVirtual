@@ -122,3 +122,4 @@ const estatisticasList = computed(() => [
     </div>
   </AuthenticatedLayout>
 </template>
+

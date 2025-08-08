@@ -187,3 +187,4 @@ class RochaController extends Controller
             ->header('Content-Disposition', 'attachment; filename="rocha_'.$rocha->id.'_qr.png"');
     }
 }
+

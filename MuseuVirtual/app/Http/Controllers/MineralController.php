@@ -153,3 +153,4 @@ class MineralController extends Controller
     }
 
 }
+

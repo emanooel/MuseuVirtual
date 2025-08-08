@@ -38,7 +38,7 @@ function deleteRocha(id) {
         <template #header>
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Stones List
+                    Stones Lit
                 </h2>
                 <a :href="route('Rocha.create')" class="bg-[#9B9FB5] text-black px-4 py-2 rounded hover:bg-blue-700">
                     Cadastrar Rocha

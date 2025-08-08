@@ -62,3 +62,4 @@ Route::get('/rochas/{id}/qrcode', [RochaController::class, 'gerarQrCode'])->name
 
 
 require __DIR__.'/auth.php';
+

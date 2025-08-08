@@ -189,4 +189,8 @@ watch(
 
 <style scoped>
 /* Estilos adicionais podem ser inseridos aqui se quiser */
+
 </style>
+
+
+
