@@ -1,6 +1,7 @@
 <script setup>
+import { onMounted } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, usePage, router } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
   minerais: {
@@ -9,65 +10,58 @@ const props = defineProps({
   },
 });
 
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    // Função para mostrar ou esconder grandes níveis (eons, eras)
-    function hideAllNiveisExcept(showIds = []) {
-        const niveis = document.querySelectorAll(".nivel");
-        niveis.forEach(div => {
-            if (showIds.includes(div.id) || div.id === "eons") {
-                div.classList.remove("escondido");
-            } else {
-                div.classList.add("escondido");
-            }
-        });
+function hideAllNiveisExcept(showIds = []) {
+  const niveis = document.querySelectorAll('.nivel');
+  niveis.forEach(div => {
+    if (showIds.includes(div.id) || div.id === 'eons') {
+      div.classList.remove('escondido');
+    } else {
+      div.classList.add('escondido');
     }
+  });
+}
 
-    // Clique em eon: modo substitutivo, mostra eons + eras do eon
-    document.querySelectorAll(".eon").forEach(eon => {
-        eon.addEventListener("click", () => {
-            const eonTarget = eon.id;
-            if (document.getElementById(eonTarget)) {
-                hideAllNiveisExcept(["eons", eonTarget]);
-                // Esconde todos períodos e achou
-                document.querySelectorAll('.nivel[id^="era-"]').forEach(div => div.classList.add("escondido"));
-                document.getElementById("achou").classList.add("escondido");
-            } else {
-                hideAllNiveisExcept(["eons", "achou"]);
-            }
-        });
+onMounted(() => {
+  // EON
+  document.querySelectorAll('.eon').forEach(eon => {
+    eon.addEventListener('click', () => {
+      const eonTarget = eon.id;
+      if (document.getElementById(eonTarget)) {
+        hideAllNiveisExcept(['eons', eonTarget]);
+        document.querySelectorAll('.nivel[id^="era-"]').forEach(div =>
+          div.classList.add('escondido')
+        );
+        document.getElementById('achou').classList.add('escondido');
+      } else {
+        hideAllNiveisExcept(['eons', 'achou']);
+      }
     });
+  });
 
-    // Clique em era: mostra os períodos dessa era só, mantém tudo acima visível
-    document.querySelectorAll(".era").forEach(era => {
-        era.addEventListener("click", () => {
-            const periodoContainerId = "era-" + era.id;
-
-            // Esconde todos os períodos primeiro
-            document.querySelectorAll('.nivel[id^="era-"]').forEach(div => {
-                div.classList.add("escondido");
-            });
-
-            if (document.getElementById(periodoContainerId)) {
-                document.getElementById(periodoContainerId).classList.remove("escondido");
-                document.getElementById("achou").classList.add("escondido");
-            } else {
-                document.getElementById("achou").classList.remove("escondido");
-            }
-        });
+  // ERA
+  document.querySelectorAll('.era').forEach(era => {
+    era.addEventListener('click', () => {
+      const periodoContainerId = 'era-' + era.id;
+      document.querySelectorAll('.nivel[id^="era-"]').forEach(div =>
+        div.classList.add('escondido')
+      );
+      if (document.getElementById(periodoContainerId)) {
+        document.getElementById(periodoContainerId).classList.remove('escondido');
+        document.getElementById('achou').classList.add('escondido');
+      } else {
+        document.getElementById('achou').classList.remove('escondido');
+      }
     });
+  });
 
-    // Clique em período: mostra a mensagem final "achou"
-    document.querySelectorAll(".periodo").forEach(periodo => {
-        periodo.addEventListener("click", () => {
-            document.getElementById("achou").classList.remove("escondido");
-        });
+  // PERÍODO
+  document.querySelectorAll('.periodo').forEach(periodo => {
+    periodo.addEventListener('click', () => {
+      document.getElementById('achou').classList.remove('escondido');
     });
+  });
 });
-  </script>
-
+</script>
 
 <template>
   <Head title="Lista de Minerais" />
@@ -87,12 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Escala do Tempo Geológico</title>
-</head>
-<body>
   <div class="maior">
     <!-- EONS -->
     <div class="nivel" id="eons">
@@ -154,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="final">Oi, achou!</div>
     </div>
   </div>
-</body>
+
 
           </div>
         </div>
