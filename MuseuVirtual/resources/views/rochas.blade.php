@@ -3,12 +3,16 @@
     <x-slot name="title">Rochas</x-slot>
     <style>
         /* Estilos para o contêiner principal do carrossel e seus botões */
+        /* Estilos gerais para o carrossel e seus componentes */
         .swiper-container-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
             max-width: 1200px;
             /* Aumentado de 800px para 1200px */
+            /* Aumentando a largura máxima para acomodar 4 slides de 500px (2000px) + espaçamento */
+            max-width: 2100px;
+            margin: 50px auto;
             position: relative;
         }
 
@@ -22,22 +26,31 @@
         }
 
         /* Estilos para cada slide individual do carrossel */
+        /* Removendo a largura fixa do slide para que o Swiper a calcule automaticamente */
         .swiper-slide {
             width: 400px;
             /* Aumentado de 240px para 400px */
             /* O espaço entre os slides será controlado pelo 'spaceBetween' no JS do Swiper */
+            height: 700px;
         }
 
         /* Estilos para as imagens dentro dos slides do carrossel */
         .swiper-slide img {
             width: 100%;
-            /* min-width: 500px; */
-            /* height: 100%; */
+            height: 100%;
+            width: 500px;
+            height: 500px;
             object-fit: cover;
             border-radius: 0.75rem;
+            transition: transform 0.3s ease-in-out;
         }
 
         /* Estilos para os botões de navegação (setas) do carrossel */
+        .swiper-slide img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Botões de navegação do carrossel */
         .swiper-button-prev,
         .swiper-button-next {
             width: 50px;
@@ -46,6 +59,7 @@
             /* Aumentado de 40px para 50px */
             border-radius: 50%;
             background-color: rgba(0, 0, 0, 0);
+            background-color: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,6 +75,7 @@
         .swiper-button-prev:hover,
         .swiper-button-next:hover {
             background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         /* Estilos para as setas (o conteúdo gerado por ::after) dentro dos botões */
