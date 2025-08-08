@@ -4,6 +4,7 @@ use App\Http\Controllers\FotosController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\JazidaController;
 use App\Http\Controllers\MineralController;
+use App\Http\Controllers\EraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RochaController;
 use App\Http\Controllers\SiteController;
@@ -74,6 +75,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/fotos', [FotosController::class,'index'])->name('fotos.index');
     Route::get('/jazidas', [JazidaController::class,'index'])->name('jazidas.index');
     Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
+    Route::get('/timeline', [EraController::class,'index'])->name('timeline.index');
 });
 
 require __DIR__.'/auth.php';

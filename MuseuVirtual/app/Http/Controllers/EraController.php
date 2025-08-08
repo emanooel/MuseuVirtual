@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Era;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EraController extends Controller
 {
@@ -12,7 +13,7 @@ class EraController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Dashboard/Timeline/Timeline');
     }
 
     /**
