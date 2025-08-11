@@ -1,15 +1,14 @@
 <?php
-
+// app/Models/Periodo.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Periodo extends Model
 {
-    protected $fillable = [
-        'id',
-        'nome',
-        'descricao',
-        'era_id',
-    ];
+    public function era()
+    {
+        return $this->belongsTo(Era::class);
+    }
 }
+

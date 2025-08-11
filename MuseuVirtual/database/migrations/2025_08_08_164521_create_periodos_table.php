@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('periodos', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->text('descricao')->nullable();
+            $table->unsignedBigInteger('era_id');
             $table->timestamps();
-            $table->string("nome");
-            $table->text("descricao");
-            $table->foreignId("era_id");
+
+            $table->foreign('era_id')->references('id')->on('eras')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('periodos');
