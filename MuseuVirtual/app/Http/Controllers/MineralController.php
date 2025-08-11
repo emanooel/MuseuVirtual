@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Mineral;
 use App\Models\Jazida;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class MineralController extends Controller
     {
         $minerais = Mineral::with('fotos')->get();
         // dd($minerais);
-        return Inertia::render('Dashboard/Minerais/Index', ['minerais'=>$minerais]);
+        return Inertia::render('Dashboard/Minerais/Index', ['minerais' => $minerais]);
     }
 
     /**
@@ -38,12 +39,12 @@ class MineralController extends Controller
     {
         $mineral = new Mineral;
 
-        $mineral -> nome = $request -> nome;
-        $mineral -> descricao = $request -> descricao;
-        $mineral -> propriedades = $request -> propriedades;
-        $mineral -> jazida_id = $request -> idJazida;
-        $mineral -> save();
-        
+        $mineral->nome = $request->nome;
+        $mineral->descricao = $request->descricao;
+        $mineral->propriedades = $request->propriedades;
+        $mineral->jazida_id = $request->idJazida;
+        $mineral->save();
+
         if ($request->hasFile('foto')) {
             $fotosRequest = new Request([
                 "idMineral" => $mineral->id,
@@ -65,7 +66,7 @@ class MineralController extends Controller
     public function show($mineral)
     {
         $mineral = Mineral::with('fotos')->findOrFail($mineral);
-        return view('mineralEspecifico',compact('mineral'));
+        return view('mineralEspecifico', compact('mineral'));
     }
 
     /**
@@ -81,7 +82,7 @@ class MineralController extends Controller
             'jazidas' => $jazidas,
         ]);
     }
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -110,7 +111,7 @@ class MineralController extends Controller
         }
 
         if ($request->has('jazida_id')) { # has aceita valores nulos
-           $mineral->jazida_id = $request->jazida_id;
+            $mineral->jazida_id = $request->jazida_id;
         }
 
         $mineral->save();
@@ -126,18 +127,17 @@ class MineralController extends Controller
         $mineral = Mineral::findOrFail($mineral);  // Buscar o mineral, antes de alterar os dados
         foreach ($mineral->fotos as $foto) {
             app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
-
         }
-        
+
         $mineral->delete();
         $minerais = Mineral::paginate(10);  // 10 rochas por página
 
         return redirect()->route('minerais.index', 'minerals')->with('success', 'Mineral deletado com sucesso!');
     }
-    public function site(){
+    public function site()
+    {
         $minerais = Mineral::with("fotos")->paginate(10);
-        return view('Minerais',compact("minerais"));
-    
+        return view('Minerais', compact("minerais"));
     }
 
 }
