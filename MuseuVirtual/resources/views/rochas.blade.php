@@ -176,14 +176,16 @@
         </div>
 
         {{-- tipo 2 - Metamórficas --}}
-        <div class="flex grid grid-cols-2 gap-6 mt-20">
-            <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Metamórficas</strong></h2>
-        </div>
         <div class="w-full xl:mx-auto">
             <div class="swiper-container-wrapper">
-                <div class="swiper-button-prev swiper-button-prev-2"></div>
-                <div class="swiper-button-next swiper-button-next-2"></div>
                 <div class="swiper SwiperRochas">
+                    <div class="flex justify-between items-center">
+                        <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Metamórficas</strong></h2>
+                        <div class="flex">
+                            <div class="swiper-button-prev swiper-button-prev-2"></div>
+                            <div class="swiper-button-next swiper-button-next-2"></div>
+                        </div>
+                    </div>
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo2 as $item)
                             <div class="swiper-slide"> {{-- IMPORTANTE: Cada item deve ser um swiper-slide --}}
@@ -237,18 +239,20 @@
     </div>
     {{-- tipo 3 --}}
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10">
-        <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Sedimentares</strong></h2>
-    </div>
-    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10">
         <div class="swipper-container-wrapper">
-            <div class="swiper-button-prev swiper-button-prev-3"></div>
-            <div class="swiper-button-next swiper-button-next-3"></div>
             <div class="swiper SwiperMetamorficas">
+                <div class="flex justify-between items-center">
+                    <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Sedimentares</strong></h2>
+                    <div class="flex">
+                        <div class="swiper-button-prev swiper-button-prev-3"></div>
+                        <div class="swiper-button-next swiper-button-next-3"></div>
+                    </div>
+                </div>
                 <div class="swiper-wrapper">
                     @foreach ($rochastipo3 as $item)
                         <div class="swiper-slide"> {{-- IMPORTANTE: Cada item deve ser um swiper-slide --}}
                             <a href="{{ route('Rocha.show', $item->id) }}">
-                                <figure class="w-full ">
+                                <figure class="w-full">
                                     @php
                                         $fotoExibir = null; // Inicializa como nulo
                                         // Tenta encontrar uma foto com capa
@@ -316,7 +320,7 @@
             </div>
         </div>
     </div>
-   
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const swiper = new Swiper(".SwiperRochas", {
@@ -335,7 +339,7 @@
                         slidesPerView: 2
                     }, // 2 slides em telas médias
                     1024: {
-                        slidesPerView: 3
+                        slidesPerView: 4
                     }, // 3 slides em telas maiores
                 },
             });
@@ -377,7 +381,7 @@
                         slidesPerView: 2
                     }, // 2 slides em telas médias
                     1024: {
-                        slidesPerView: 3
+                        slidesPerView: 4
                     }, // 3 slides em telas maiores
                 },
             });
