@@ -13,6 +13,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TimelineController;
 
 Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
@@ -28,9 +29,7 @@ Route::get('/dashboardPublica', function () {
     return Inertia::render('DashboardPublica');
 })->middleware(['auth', 'verified'])->name('dashboardPublica');
 
-Route::get('/timeline', function () {
-    return Inertia::render('Dashboard/Timeline/Timeline');
-})->middleware(['auth', 'verified'])->name('Timeline');
+Route::get('/timeline', [TimelineController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,6 +40,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 
 Route::resource('rochas', RochaController::class)->names('Rocha');
+
+Route::resource('timeline', RochaController::class)->names('Timeline');
+
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 Route::resource('/minerais', MineralController::class);
@@ -75,7 +77,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/fotos', [FotosController::class,'index'])->name('fotos.index');
     Route::get('/jazidas', [JazidaController::class,'index'])->name('jazidas.index');
     Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
-    Route::get('/timeline', [EraController::class,'index'])->name('timeline.index');
+    Route::resource('/timeline', TimelineController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Era;
+use App\Models\Eon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class EraController extends Controller
+class TimelineController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Dashboard/Timeline/Timeline');
+        $eons = Eon::with(['eras.periodos'])->get();
+        return Inertia::render('Dashboard/Timeline/Timeline', ['eons' => $eons]);
     }
 
     /**
