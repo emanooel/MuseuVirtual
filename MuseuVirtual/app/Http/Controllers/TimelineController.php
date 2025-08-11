@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Era;
-
 use App\Models\Eon;
+use App\Models\Era;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Jazida;
