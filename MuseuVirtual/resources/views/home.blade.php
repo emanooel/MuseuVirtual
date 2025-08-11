@@ -126,14 +126,12 @@
     <br>
     <p class="text-center"><a href="{{ route('dashboardPublica') }}"
             class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
-    <figure class="w-100 mt-20">
-        <div class="carousel-container">
+    <figure class="w-100 mt-20 carousel-container">
             <div class="carousel-slide">
                 @foreach ($fotosRecentes as $item)
                     <img src="{{ asset('storage/' . $item->caminho) }}" alt="">
                 @endforeach
             </div>
-        </div>
     </figure>
 
 
