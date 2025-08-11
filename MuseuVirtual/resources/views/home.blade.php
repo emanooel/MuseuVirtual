@@ -1,5 +1,6 @@
 <x-layouts.BaseLayout>
 
+    
     <style>
         .swiper-slide {
             width: 100%;
