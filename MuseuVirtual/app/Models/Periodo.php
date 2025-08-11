@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Periodo extends Model
 {
-    //
+    protected $fillable = [
+        'id',
+        'nome',
+        'descricao',
+        'era_id',
+    ];
 }

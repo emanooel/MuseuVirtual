@@ -72,6 +72,9 @@ onMounted(() => {
         <h2 class="font-semibold text-xl text-gray-900 leading-tight">
           Timeline
         </h2>
+         <a :href="route('timeline.create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Associar
+          </a>
       </div>
     </template>
 

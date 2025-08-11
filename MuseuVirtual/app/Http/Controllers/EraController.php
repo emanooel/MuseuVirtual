@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Era;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Jazida;
+use App\Models\Mineral;
+use App\Models\Rocha;
 
 class EraController extends Controller
 {
@@ -21,7 +23,12 @@ class EraController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Dashboard/Timeline/Create', [
+            'rochas' => Rocha::all(),
+            'minerais' => Mineral::all(),
+            'jazidas' => Jazida::all(),
+            'idRochas' => request('idRocha'),
+        ]);
     }
 
     /**
