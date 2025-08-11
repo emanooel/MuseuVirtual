@@ -17,7 +17,7 @@ class JazidaController extends Controller
     {
         $jazidas = Jazida::with('fotos')->get();
         # return view('dashboard.jazidas.index', compact('jazidas'));
-        return Inertia::render('Dashboard/Jazidas/Index',['jazidas'=>$jazidas]);
+        return Inertia::render('Dashboard/Jazidas/Index', ['jazidas' => $jazidas]);
     }
 
     /**
@@ -73,8 +73,8 @@ class JazidaController extends Controller
     public function edit(Jazida $jazida)
     {
         $jazida->load('fotos');
-       # return view('dashboard.jazidas.edit', compact('jazida'));
-       return Inertia::render('Dashboard/Jazidas/Edit',['jazida'=>$jazida]);
+        # return view('dashboard.jazidas.edit', compact('jazida'));
+        return Inertia::render('Dashboard/Jazidas/Edit', ['jazida' => $jazida]);
     }
 
     /**
@@ -113,9 +113,8 @@ class JazidaController extends Controller
     {
         foreach ($jazida->fotos as $foto) {
             app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
-
         }
-        
+
         $jazida->delete();
         $jazidas = Jazida::with('fotos')->paginate(10);  // 10 jazidas por página
 
@@ -124,7 +123,7 @@ class JazidaController extends Controller
 
     public function site()
     {
-        $jazidas = Jazida::with("fotos")->paginate(6); // ou 9, 6... como preferir
+        $jazidas = Jazida::with("fotos")->get();
         return view('_Jazidas', compact("jazidas"));
     }
 
@@ -136,16 +135,12 @@ class JazidaController extends Controller
         );
     }
 
-    public function gerarQrCode($id)
+    public function mostrarJazidaEspecifica($id)
     {
+        // Busca a jazida pelo ID
         $jazida = Jazida::findOrFail($id);
-        $url = route('jazidas.show', $jazida->id); // ou use slug se tiver
-        $qrCode = QrCode::format('png')->size(300)->generate($url);
 
-        return response($qrCode)
-            ->header('Content-Type', 'image/png')
-            ->header('Content-Disposition', 'attachment; filename="jazida_'.$jazida->id.'_qr.png"');
+        // Passa a jazida para a view
+        return view('jazida_específica', ['jazida' => $jazida]);
     }
-    
-
 }
