@@ -4,24 +4,33 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class AdminSeeder extends Seeder
 {
     public function run()
     {
-        $user = User::where('email', 'admin@admin.com')->first();
-        if ($user) {
-            $user->assignRole('admin');
-        }
+        // Garante que o papel 'admin' existe
+        $adminRole = Role::firstOrCreate(
+            ['name' => 'admin', 'guard_name' => 'web']
+        );
 
-        $user = User::where('email', 'caiomottabarcelos13@gmail.com')->first();
-        if ($user) {
-            $user->assignRole('admin');
-        }
+        // Lista de e-mails que devem ser admins
+        $adminEmails = [
+            'admin@admin.com',
+            'caiomottabarcelos13@gmail.com',
+            'emanoelmartinsv@gmail.com',
+            'walpxt2006@gmail.com',
+        ];
 
-        $user = User::where('email', 'emanoelmartinsv@gmail.com')->first(); //Coloca o aqui teu email e rode o seeder com ./vendor/bin/sail artisan db:seed --class=AdminSeeder
-        if ($user) {
-            $user->assignRole('admin');
+        foreach ($adminEmails as $email) {
+            $user = User::where('email', $email)->first();
+            if ($user) {
+                $user->assignRole($adminRole);
+                $this->command->info("Usuário {$email} recebeu o papel admin.");
+            } else {
+                $this->command->warn("Usuário com e-mail {$email} não encontrado.");
+            }
         }
     }
 }

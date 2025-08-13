@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import { aparelhoUso } from '@/Composables/aparelhoUso.js';
 
 const props = defineProps({
@@ -13,7 +13,6 @@ const props = defineProps({
 });
 
 const { Mobile, Desktop } = aparelhoUso();
-
 const jazidas = props.jazidas;
 const page = usePage();
 const successMessage = computed(() => page.props?.flash?.success ?? null);
@@ -27,6 +26,34 @@ function submitDelete(id) {
             },
         });
     }
+}
+
+// Função para limitar texto mas preservar HTML válido
+function truncateHTML(html, maxLength) {
+    const div = document.createElement('div');
+    div.innerHTML = html || '';
+
+    let charCount = 0;
+    function truncateNode(node) {
+        if (charCount >= maxLength) {
+            node.remove();
+            return;
+        }
+        if (node.nodeType === Node.TEXT_NODE) {
+            const remaining = maxLength - charCount;
+            if (node.textContent.length > remaining) {
+                node.textContent = node.textContent.slice(0, remaining) + '...';
+                charCount = maxLength;
+            } else {
+                charCount += node.textContent.length;
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            Array.from(node.childNodes).forEach(truncateNode);
+        }
+    }
+
+    Array.from(div.childNodes).forEach(truncateNode);
+    return div.innerHTML;
 }
 </script>
 
@@ -59,18 +86,17 @@ function submitDelete(id) {
                                 <thead class="bg-gray-100 dark:bg-gray-700">
                                     <tr>
                                         <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Foto</th>
-                                        <th class="w-1/3 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Localização</th>
+                                        <th class="w-1/3 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Descrição</th>
                                         <th class="w-1/3 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     <tr v-for="jazida in jazidas" :key="jazida.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        
                                         <td class="px-6 py-4 text-center">
                                             <p v-if="!jazida.fotos || jazida.fotos.length === 0">Não existe fotos cadastradas</p>
                                             <img v-else :src="`/storage/${jazida.fotos[0].caminho}`" alt="Foto das jazidas" class="h-[144px] w-[128px] object-cover" />
                                         </td>
-                                        <td class="px-6 py-4 text-center">{{ jazida.localizacao ?? 'Sem localização' }}</td>
+                                        <td class="px-6 py-4 text-sm" v-html="truncateHTML(jazida.descricao, 120)"></td>
                                         <td class="px-6 py-4 text-center">
                                             <div class="flex items-center justify-center gap-2">
                                                 <a :href="route('jazidas.edit', jazida.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">Editar</a>
@@ -105,7 +131,10 @@ function submitDelete(id) {
                             </div>
 
                             <p class="text-sm text-gray-600 dark:text-gray-300 mb-1"><strong>Localização:</strong> {{ jazida.localizacao ?? 'Sem localização' }}</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-2"><strong>Descrição:</strong> {{ jazida.descricao ?? 'Sem descrição' }}</p>
+                            <div class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                                <strong>Descrição:</strong>
+                                <div v-html="truncateHTML(jazida.descricao, 100)"></div>
+                            </div>
 
                             <div class="flex justify-center gap-2 mt-2">
                                 <a :href="route('jazidas.edit', jazida.id)" class="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Editar</a>
