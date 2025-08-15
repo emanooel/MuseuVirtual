@@ -28,4 +28,5 @@ class Jazida extends Model
     {
         return $this->hasMany(Mineral::class);
     }
+    
 }

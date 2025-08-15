@@ -148,5 +148,8 @@ class JazidaController extends Controller
     {
         $jazida = Jazida::with('minerais')->findOrFail($id);
         return view('jazidas.jazida_especifica', compact('jazida'));
+        
     }
+
+
 }

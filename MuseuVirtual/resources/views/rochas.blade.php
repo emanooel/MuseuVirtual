@@ -416,7 +416,6 @@
         </div>
     </div>
 
-    {{-- Scripts do Swiper --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const swiperOptions = {
