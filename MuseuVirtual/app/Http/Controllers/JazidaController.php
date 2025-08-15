@@ -143,4 +143,10 @@ class JazidaController extends Controller
         // Passa a jazida para a view
         return view('jazida_específica', ['jazida' => $jazida]);
     }
+
+    public function view($id)
+    {
+        $jazida = Jazida::with('minerais')->findOrFail($id);
+        return view('jazidas.jazida_especifica', compact('jazida'));
+    }
 }

@@ -20,7 +20,8 @@
 
         <div class="grid grid-cols-2 gap-8 ">
             @foreach ($jazidas as $item)
-                <figure class="pl-80 w-full">
+                <a href="{{ route('jazida_específica', $item->id) }}">
+                    <figure class="pl-80 w-full hover:w-">
                     @php
                         $fotoExibir = null; // Inicializa como nulo
                         // Tenta encontrar uma foto com capa
@@ -43,7 +44,8 @@
                         <h3 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Localização:
                                 {{ $item->localizacao }}</strong></h3>
                     </figcaption>
-                </figure>
+                    </figure>
+            </a>
             @endforeach
         </div>
 
