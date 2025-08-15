@@ -1,12 +1,10 @@
 <x-layouts.BaseLayout>
     <x-slot name="title">RochaEspecifica</x-slot>
 
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script>
-        Fancybox.bind("[data-fancybox]", {
-        });
+        Fancybox.bind("[data-fancybox]", {});
     </script>
 
     <style>
@@ -169,6 +167,35 @@
             }
         @endphp
 
+        {{-- Substitua seu HTML do container por: --}}
+        <div class="container">
+            {{-- Swiper Principal --}}
+            <div class="swiper swiper-main">
+                <div class="swiper-wrapper">
+                    @foreach ($rocha->fotos as $foto)
+                        <div class="swiper-slide">
+                            <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Imagem da Rocha"
+                                data-fancybox="gallery">
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next swiper-button-next2"></div>
+                <div class="swiper-button-prev swiper-button-prev2"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            {{-- Swiper de Miniaturas --}}
+            <div class="swiper swiper-thumbs">
+                <div class="swiper-wrapper">
+                    @foreach ($rocha->fotos as $foto)
+                        <div class="swiper-slide">
+                            <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Miniatura da Rocha">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
         <div class="text-white">
             {{-- Exibe a imagem principal se houver alguma foto para exibir --}}
             @if ($fotoExibir)
@@ -180,26 +207,6 @@
                 </div>
             @endif
 
-            {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}
-            <div class="swiper-container-wrapper">
-                <div class="swiper-button-prev"></div> {{-- Botão "anterior" do Swiper --}}
-                <div class="swiper mySwiper"> {{-- Contêiner do carrossel Swiper --}}
-                    <div class="swiper-wrapper"> {{-- Wrapper interno para os slides do Swiper --}}
-                        {{-- Loop pelas fotos da rocha para criar os slides do carrossel --}}
-                        @foreach ($rocha->fotos as $item)
-                            {{-- Cada slide do carrossel. pr-4 foi removido aqui pois 'spaceBetween' é configurado no JS --}}
-                            <div class="swiper-slide">
-                                <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                                    <img class="size-60 rounded-xl" {{-- Imagem do slide (240x240px com arredondamento) --}}
-                                        src="{{ asset('storage/' . $item->caminho) }}"
-                                        alt="Miniatura de {{ $rocha->nome }}">
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="swiper-button-next"></div> {{-- Botão "próximo" do Swiper --}}
-            </div>
 
             {{-- Seção de descrição e composição da rocha --}}
             <div class="pt-6">
@@ -211,4 +218,31 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Inicializar Swiper de Miniaturas PRIMEIRO
+        const swiperThumbs = new Swiper('.swiper-thumbs', {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+
+        // Depois inicializar Swiper Principal
+        const swiperMain = new Swiper('.swiper-main', {
+            spaceBetween: 10,
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next2',
+                prevEl: '.swiper-button-prev2',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            thumbs: {
+                swiper: swiperThumbs, // Referência para o swiper de thumbs
+            },
+        });
+    </script>
 </x-layouts.BaseLayout>

@@ -56,13 +56,16 @@ class JazidaController extends Controller
         return redirect()->route('jazidas.index')->with('success', 'Jazida cadastrada com sucesso!');
     }
 
-
     /**
      * Display the specified resource.
      */
-    public function show(Jazida $jazida)
+    public function show($id)
     {
-        //
+        // Busca a jazida pelo ID
+        $jazida = Jazida::findOrFail($id);
+
+        // Passa a jazida para a view
+        return view('jazida_específica', ['jazida' => $jazida]);
     }
 
     /**
@@ -130,14 +133,5 @@ class JazidaController extends Controller
         return response()->json(
             \App\Models\Jazida::select('id', 'localizacao')->get()
         );
-    }
-
-    public function mostrarJazidaEspecifica($id)
-    {
-        // Busca a jazida pelo ID
-        $jazida = Jazida::findOrFail($id);
-
-        // Passa a jazida para a view
-        return view('jazida_específica', ['jazida' => $jazida]);
     }
 }

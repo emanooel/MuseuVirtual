@@ -31,6 +31,5 @@
             <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
                 </strong>{!! $jazida->descricao !!}</h2>
 
-        
     </body>
 </x-layouts.BaseLayout>

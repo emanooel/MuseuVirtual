@@ -29,6 +29,7 @@
     {{ $slot }}
     <x-rodape_site></x-rodape_site>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
     <script>
         //Inicia o AOS
         AOS.init();
@@ -44,11 +45,12 @@
                     prevEl: ".swiper-button-prev", // Seletor para o botão "anterior"
                 },
             });
+
         });
     </script>
+
     {{-- Inclui o JavaScript do Swiper do CDN (idealmente no final do <body> para melhor performance) --}}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 </body>
 
 </html>
