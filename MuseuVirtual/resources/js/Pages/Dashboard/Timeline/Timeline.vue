@@ -1,116 +1,33 @@
-<template>
-  <div class="timeline">
-    <!-- EONS -->
-    <div class="nivel" id="eons">
-      <div
-        v-for="eon in eons"
-        :key="eon.id"
-        class="eon"
-        @click="selectEon(eon.id)"
-      >
-        {{ eon.nome }}
-      </div>
-    </div>
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head } from '@inertiajs/vue3'
+import Timeline from '@/Components/Timeline.vue'
 
-    <!-- ERAS -->
-    <div
-      v-if="activeEon"
-      class="nivel"
-    >
-      <div
-        v-for="era in erasFiltradas"
-        :key="era.id"
-        class="era"
-        @click="selectEra(era.id)"
-      >
-        {{ era.nome }}
-      </div>
-    </div>
-
-    <!-- PERÍODOS -->
-    <div
-      v-if="activeEra"
-      class="nivel"
-    >
-      <div
-        v-for="periodo in periodosFiltrados"
-        :key="periodo.id"
-        class="periodo"
-      >
-        {{ periodo.nome }}
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  props: {
-    eons: Array // [{ id, nome, eras: [{ id, nome, periodos: [{id, nome}] }] }]
-  },
-  data() {
-    return {
-      activeEon: null,
-      activeEra: null
-    };
-  },
-  computed: {
-    erasFiltradas() {
-      if (!this.activeEon) return [];
-      const eon = this.eons.find(e => e.id === this.activeEon);
-      return eon ? eon.eras : [];
-    },
-    periodosFiltrados() {
-      if (!this.activeEra) return [];
-      for (const eon of this.eons) {
-        const era = eon.eras.find(er => er.id === this.activeEra);
-        if (era) return era.periodos;
-      }
-      return [];
-    }
-  },
-  methods: {
-    selectEon(eonId) {
-      this.activeEon = eonId;
-      this.activeEra = null;
-    },
-    selectEra(eraId) {
-      this.activeEra = eraId;
-    }
+// Aqui você pode receber os dados vindos do Laravel via props
+const props = defineProps({
+  eons: {
+    type: Array,
+    default: () => []
   }
-};
+})
 </script>
 
-<style scoped>
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+<template>
+  <Head title="Linha do Tempo" />
 
-/* Todas as divs de nível */
-.nivel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  background-color: #41334d;
-  padding: 15px;
-  border-radius: 10px;
-  width: 100%;
-}
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
+        Linha do Tempo Geológica
+      </h2>
+    </template>
 
-/* Botões */
-.eon, .era, .periodo {
-  background-color: #603985;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.eon:hover, .era:hover, .periodo:hover {
-  background-color: #8159a7;
-}
-</style>
+    <div class="py-6">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg p-6">
+          <Timeline :eons="eons" />
+        </div>
+      </div>
+    </div>
+  </AuthenticatedLayout>
+</template>
