@@ -139,10 +139,13 @@
         @if ($fotoExibir)
             {{-- Contêiner para centralizar a imagem principal e aplicar estilos --}}
             <div class="main-image-container">
-                <img class="2xl:w-full rounded-xl main-image"
-                    src="{{ asset('storage/' . $fotoExibir->caminho) }}"
+                <img class="2xl:w-full rounded-xl main-image" src="{{ asset('storage/' . $fotoExibir->caminho) }}"
                     alt="Imagem principal de {{ $mineral->nome }}">
             </div>
+            <a href="{{ route('minerais.qrcode', $mineral->id) }}"
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Baixar QR Code da Rocha
+            </a>
         @endif
 
         {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}
@@ -155,8 +158,7 @@
                         {{-- Cada slide do carrossel. pr-4 foi removido aqui pois 'spaceBetween' é configurado no JS --}}
                         <div class="swiper-slide">
                             <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                                <img class="size-60 rounded-xl"
-                                    src="{{ asset('storage/' . $item->caminho) }}"
+                                <img class="size-60 rounded-xl" src="{{ asset('storage/' . $item->caminho) }}"
                                     alt="Miniatura de {{ $mineral->nome }}">
                             </a>
                         </div>

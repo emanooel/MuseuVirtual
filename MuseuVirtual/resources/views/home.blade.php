@@ -1,13 +1,30 @@
 <x-layouts.BaseLayout>
+
+    
+    <style>
+        .swiper-slide {
+            width: 100%;
+            height: 800px;
+            background-size: contain;
+        }
+    </style>
+
     <x-slot name="title">Home</x-slot>
     <h1 class="font-[arial] pt-40 font-bold text-[80px] text-center text-[#F1EEDD]">Museu Virtual</h1>
     <h2 class="text-center text-[20px] font-[arial] text-[#F1EEDD]">Bem-vindo ao Museu Virtual das Rochas, um <br>espaço
         interativo e educativo dedicado à incrível<br> diversidade geológica da nossa região. </h2>
     <br>
-    <p class="text-center"><a href="{{route('dashboardPublica')}}" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
-    <figure class="w-100 mt-20">
-        <img class="w-full" src="/assets/img/image 1.png" alt="Imagem de uma jazida ">
+    <p class="text-center"><a href="{{ route('dashboardPublica') }}"
+            class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
+    <figure class="w-100 mt-20 swiper mySwiper">
+        <div class="swiper-wrapper">
+            @foreach ($fotosRecentes as $item)
+                <img src="{{ asset('storage/' . $item->caminho) }}" class="swiper-slide bg-cover">
+            @endforeach
+            {{-- <div class="swiper-pagination"></div> --}}
+        </div>
     </figure>
+
 
     <div class="flex justify-center mr-60 pt-40">
         <h2
@@ -23,7 +40,8 @@
         <div class="w-[1200px]">
             <div class="grid xl:grid-cols-2 grid-rows-2 gap-x-8 gap-y-4 grid-cols-1 justify-items-center items-center">
                 <figure data-aos="fade-right">
-                    <a href="{{route('site.jazidas')}}"><img class="cursor-pointer" src="/assets/img/JazidaInicial.png" alt=""></a>
+                    <a href="{{ route('site.jazidas') }}"><img class="cursor-pointer"
+                            src="/assets/img/JazidaInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Jazidas</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de jazidas.</h3>
@@ -31,7 +49,8 @@
                 </figure>
 
                 <figure data-aos="fade-left">
-                    <a href="{{route('site.rochas')}}"><img class="cursor-pointer" src="/assets/img/RochaInicial.png" alt=""></a>
+                    <a href="{{ route('site.rochas') }}"><img class="cursor-pointer" src="/assets/img/RochaInicial.png"
+                            alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Rochas</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de rochas.</h3>
@@ -39,7 +58,8 @@
                 </figure>
 
                 <figure data-aos="fade-right">
-                    <a href="{{route('site.minerais')}}"><img class="cursor-pointer" src="/assets/img/MineraisInicial.png" alt=""></a>
+                    <a href="{{ route('site.minerais') }}"><img class="cursor-pointer"
+                            src="/assets/img/MineraisInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Minerais</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de minerais.</h3>
@@ -47,7 +67,8 @@
                 </figure>
 
                 <figure data-aos="fade-left">
-                    <a href="#"><img class="cursor-pointer" src="/assets/img/CatalogoInicial.png" alt=""></a>
+                    <a href="#"><img class="cursor-pointer" src="/assets/img/CatalogoInicial.png"
+                            alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Catálogo</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">O catálogo é uma coleção organizada de
@@ -59,4 +80,19 @@
             </div>
         </div>
     </div>
+
 </x-layouts.BaseLayout>
+
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1, // Número de slides visíveis por vez
+        // spaceBetween: 10, // Espaço entre os slides em pixels
+        loop: true, // Faz o slider ser infinito (volta para o início após o último)
+
+        // Configura o autoplay
+        autoplay: {
+            delay: 2000, // Tempo de espera em milissegundos para a transição
+            disableOnInteraction: false, // O autoplay não para se o usuário interagir
+        },
+    });
+</script>

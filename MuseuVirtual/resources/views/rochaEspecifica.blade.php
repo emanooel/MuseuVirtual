@@ -1,12 +1,11 @@
 <x-layouts.BaseLayout>
     <x-slot name="title">RochaEspecifica</x-slot>
 
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script>
-        Fancybox.bind("[data-fancybox]", {
-        });
+        Fancybox.bind("[data-fancybox]", {});
     </script>
 
     <style>
@@ -178,6 +177,10 @@
                         src="{{ asset('storage/' . $fotoExibir->caminho) }}" {{-- Caminho para a imagem --}}
                         alt="Imagem principal de {{ $rocha->nome }}"> {{-- Texto alternativo para acessibilidade --}}
                 </div>
+                <a href="{{ route('rochas.qrcode', $rocha->id) }}"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Baixar QR Code da Rocha
+                </a>
             @endif
 
             {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}
