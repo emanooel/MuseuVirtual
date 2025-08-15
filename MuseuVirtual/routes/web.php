@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 
-Route::resource('rochas', RochaController::class)->names('rochas');
+Route::resource('rocha', RochaController::class)->names('Rocha');
 
 Route::resource('timeline', RochaController::class)->names('Timeline');
 
