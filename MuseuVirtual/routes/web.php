@@ -16,7 +16,9 @@ use App\Http\Controllers\DashboardController;
 Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
+Route::get('/minerais/{id}/qrcode', [MineralController::class, 'gerarQrCode'])->name('minerais.qrcode');
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");
+Route::get('/rochas/{id}/qrcode', [RochaController::class, 'gerarQrCode'])->name('rochas.qrcode');
 
 Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/api/rochas", [RochaController::class, 'apiListRocha']);
@@ -35,11 +37,12 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 
-Route::resource('rochas', RochaController::class)->names('Rocha');
+Route::resource('rochas', RochaController::class)->names('rochas');
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 Route::resource('/minerais', MineralController::class);
 Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
+Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');
 
 Route::prefix('fotos')->group(function() {
     Route::get('/', [FotosController::class, 'index'])->name('fotos-index');
