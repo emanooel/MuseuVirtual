@@ -20,6 +20,9 @@ const props = defineProps({
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
         Linha do Tempo Geológica
       </h2>
+      <a :href="route('timeline.create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Adicionar à Linha do Tempo
+      </a>
     </template>
 
     <div class="py-6">
