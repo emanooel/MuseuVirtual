@@ -115,7 +115,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo1 as $item)
                             <div class="swiper-slide"> {{-- IMPORTANTE: Cada item deve ser um swiper-slide --}}
-                                <a href="{{ route('Rocha.show', $item->id) }}">
+                                <a href="{{ route('rochas.show', $item->id) }}">
                                     <figure class="w-full ">
                                         @php
                                             $fotoExibir = null; // Inicializa como nulo
@@ -187,7 +187,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo2 as $item)
                             <div class="swiper-slide"> {{-- IMPORTANTE: Cada item deve ser um swiper-slide --}}
-                                <a href="{{ route('Rocha.show', $item->id) }}">
+                                <a href="{{ route('rochas.show', $item->id) }}">
                                     <figure class="w-full">
                                         @php
                                             $fotoExibir = null;
@@ -247,7 +247,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($rochastipo3 as $item)
                         <div class="swiper-slide"> {{-- IMPORTANTE: Cada item deve ser um swiper-slide --}}
-                            <a href="{{ route('Rocha.show', $item->id) }}">
+                            <a href="{{ route('rochas.show', $item->id) }}">
                                 <figure class="w-full ">
                                     @php
                                         $fotoExibir = null; // Inicializa como nulo

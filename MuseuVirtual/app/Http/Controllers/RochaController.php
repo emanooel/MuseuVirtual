@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
 use Inertia\Inertia;
+use SimpleSoftwareIO\QrCode\Facades\QrCode; // Certifique-se de ter o pacote instalado
 
 class RochaController extends Controller
 {
@@ -166,6 +167,17 @@ class RochaController extends Controller
         $rochastipo3 = Rocha::where("tipo", 3)->with("fotos")->get();
         // dd($rochas);
         return view('rochas', compact("rochastipo1", "rochastipo2", "rochastipo3"));
+    }
+
+     public function gerarQrCode($id)
+    {
+        $rocha = Rocha::findOrFail($id);
+        $url = route('rochas.show', $rocha->id); // ou use slug se tiver
+        $qrCode = QrCode::format('png')->size(300)->generate($url);
+
+        return response($qrCode)
+            ->header('Content-Type', 'image/png')
+            ->header('Content-Disposition', 'attachment; filename="rocha_'.$rocha->id.'_qr.png"');
     }
 
 }
