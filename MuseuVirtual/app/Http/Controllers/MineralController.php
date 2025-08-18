@@ -16,7 +16,7 @@ class MineralController extends Controller
      */
     public function index()
     {
-        $minerais = Mineral::with('fotos')->get();
+        $minerais = Mineral::with('fotos')->paginate(12);
         // dd($minerais);
         return Inertia::render('Dashboard/Minerais/Index', ['minerais'=>$minerais]);
     }

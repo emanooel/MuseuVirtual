@@ -1,126 +1,149 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<x-layouts.BaseLayout>
+    <x-slot name="title">RochaEspecifica</x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MineralEspecifico</title>
-    {{-- Inclui os estilos e scripts do Vite (Tailwind CSS, etc.) --}}
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endif
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+    <!-- Fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        Fancybox.bind("[data-fancybox]", {});
+    </script>
 
+    <!-- Estilos personalizados -->
     <style>
-        /* Estilos para o contêiner principal do carrossel e seus botões */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #1c1f1a;
+            color: #F1EEDD;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #ACB18E, #73785C);
+            border-radius: 30px;
+            padding: 50px 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #F1EEDD;
+            margin-bottom: 10px;
+        }
+
+        .main-image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .main-image-container img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+
+        .main-image-container img:hover {
+            transform: scale(1.03);
+        }
+
+        .rock-type-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .rock-description {
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 6px solid #ACB18E;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .rock-description p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #F1EEDD;
+        }
+
         .swiper-container-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            max-width: 800px;
+            max-width: 2100px;
             margin: 50px auto;
             position: relative;
         }
 
-        /* Estilos para o próprio carrossel (a área visível dos slides) */
-        .mySwiper {
+        .swiper {
             width: 100%;
-            height: 240px;
+            height: auto;
             overflow: hidden;
         }
 
-        /* Estilos para cada slide individual do carrossel */
         .swiper-slide {
-            width: 240px;
-            /* Largura explícita para cada slide (corresponde ao size-60 da imagem) */
+            width: 400px;
+            height: auto;
         }
 
-        /* Estilos para as imagens dentro dos slides do carrossel */
         .swiper-slide img {
             width: 100%;
-            height: 100%;
+            height: 300px;
             object-fit: cover;
             border-radius: 0.75rem;
+            transition: transform 0.6s ease-in-out;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
-        /* Estilos para os botões de navegação (setas) do carrossel */
+        .swiper-slide img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
         .swiper-button-prev,
         .swiper-button-next {
-            width: 40px;
-            height: 40px;
+            background: #73785C;
             border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            flex-shrink: 0;
-            position: static;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
+            width: 45px;
+            height: 45px;
+            color: #F1EEDD;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
         }
 
-        /* Efeito de HOVER para o fundo dos botões de navegação */
         .swiper-button-prev:hover,
         .swiper-button-next:hover {
-            background-color: rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            background: #363C27;
         }
 
-        /* Estilos para as setas (o conteúdo gerado por ::after) dentro dos botões */
-        .swiper-button-prev::after,
-        .swiper-button-next::after {
-            font-size: 20px;
-            color: #F1EEDD;
-            transition: color 0.3s ease;
-        }
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
 
-        /* Efeito de HOVER para a cor das SETAS */
-        .swiper-button-prev:hover::after,
-        .swiper-button-next:hover::after {
-            color: #FFFFFF;
-        }
+            .rock-description {
+                padding: 20px;
+            }
 
-        /* ----- Estilos para a IMAGEM PRINCIPAL (Do Mineral Específico) ----- */
-        .main-image-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .main-image {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            border-radius: 0.75rem;
+            .swiper-slide img {
+                height: 200px;
+            }
         }
     </style>
-</head>
 
-{{-- Classe para o fundo gradiente de toda a página --}}
+    <!-- Conteúdo -->
+    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
+        <div class="hero-section">
+            <h1><strong>{{ $mineral->nome }}</strong></h1>
+        </div>
 
-<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
-
-    {{-- Contêiner para o menu (com paddings responsivos do Tailwind) --}}
-    <div class="2xl:px-80">
-        <x-menu_site /> {{-- Componente do menu do seu site (Laravel Blade) --}}
-    </div>
-
-    {{-- Contêiner principal para o conteúdo da página (com paddings responsivos) --}}
-    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 ">
-
-        {{-- Comentário para depuração (Laravel Blade) --}}
-        {{-- @dd($mineral) --}}
-
-        {{-- Título da página, exibindo o nome do mineral --}}
-        <h1 class="font-[Arial] text-[50px] text-[#F1EEDD] pt-16"><strong>{{ $mineral->nome }}</strong></h1>
-
-        {{-- Lógica PHP para encontrar a foto de capa (se existir) ou a primeira foto --}}
         @php
             $fotoExibir = null;
             foreach ($mineral->fotos as $item) {
@@ -129,76 +152,68 @@
                     break;
                 }
             }
-            // Se nenhuma capa foi definida, usa a primeira foto disponível
             if (is_null($fotoExibir) && count($mineral->fotos) > 0) {
                 $fotoExibir = $mineral->fotos[0];
             }
         @endphp
 
-        {{-- Exibe a imagem principal se houver alguma foto para exibir --}}
         @if ($fotoExibir)
-            {{-- Contêiner para centralizar a imagem principal e aplicar estilos --}}
             <div class="main-image-container">
-                <img class="2xl:w-full rounded-xl main-image" src="{{ asset('storage/' . $fotoExibir->caminho) }}"
-                    alt="Imagem principal de {{ $mineral->nome }}">
+                <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem principal de {{ $mineral->nome }}">
             </div>
-            <a href="{{ route('minerais.qrcode', $mineral->id) }}"
-                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                Baixar QR Code da Rocha
-            </a>
+            <div class="text-center mb-6">
+                <a href="{{ route('minerais.qrcode', $mineral->id) }}"
+                   class="inline-block bg-gray-700 px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300 shadow-md">
+                    <span class="text-white font-semibold">Ver QR Code</span>
+                </a>
+            </div>
         @endif
 
-        {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}
-        <div class="swiper-container-wrapper">
-            <div class="swiper-button-prev"></div> {{-- Botão "anterior" do Swiper --}}
-            <div class="swiper mySwiper"> {{-- Contêiner do carrossel Swiper --}}
-                <div class="swiper-wrapper"> {{-- Wrapper interno para os slides do Swiper --}}
-                    {{-- Loop pelas fotos do mineral para criar os slides do carrossel --}}
-                    @foreach ($mineral->fotos as $item)
-                        {{-- Cada slide do carrossel. pr-4 foi removido aqui pois 'spaceBetween' é configurado no JS --}}
-                        <div class="swiper-slide">
-                            <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                                <img class="size-60 rounded-xl" src="{{ asset('storage/' . $item->caminho) }}"
-                                    alt="Miniatura de {{ $mineral->nome }}">
-                            </a>
-                        </div>
-                    @endforeach
+        <div class="rock-type-section">
+            <!-- Galeria Swiper -->
+            <div class="swiper-container-wrapper">
+                <div class="swiper-button-prev swiper-prev-rocha"></div>
+                <div class="swiper SwiperRochas">
+                    <div class="swiper-wrapper">
+                        @foreach ($mineral->fotos as $item)
+                            <div class="swiper-slide">
+                                <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
+                                    <img src="{{ asset('storage/' . $item->caminho) }}" alt="Miniatura de {{ $mineral->nome }}">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
+                <div class="swiper-button-next swiper-next-rocha"></div>
             </div>
-            <div class="swiper-button-next"></div> {{-- Botão "próximo" do Swiper --}}
-        </div>
 
-        {{-- Seção de descrição e composição do mineral --}}
-        <div class="pt-6">
-            <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
-                </strong>{!! $mineral->descricao !!}</h2>
-            <br>
-            <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição do mineral: </strong>
-                {{ $mineral->composicao }}</h2>
+            <!-- Descrição -->
+            <div class="rock-description">
+                <p><strong>Descrição:</strong> {!! $mineral->descricao !!}</p>
+                <br>
+                <p><strong>Composição do mineral:</strong> <br>{{ $mineral->composicao }}</p>
+            </div>
         </div>
-
-        {{-- Componente do rodapé do seu site (Laravel Blade) --}}
-        <x-rodape_site></x-rodape_site>
     </div>
 
-    {{-- Inclui o JavaScript do Swiper do CDN (idealmente no final do <body> para melhor performance) --}}
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <!-- Swiper JS -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const swiper = new Swiper(".mySwiper", {
-                loop: true, // Ativa o loop infinito do carrossel
-                slidesPerView: 'auto', // Mostra automaticamente quantos slides cabem na tela
-                spaceBetween: 16, // Espaçamento entre os slides em pixels
-                navigation: { // Configura os botões de navegação
-                    nextEl: ".swiper-button-next", // Seletor para o botão "próximo"
-                    prevEl: ".swiper-button-prev", // Seletor para o botão "anterior"
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper(".SwiperRochas", {
+                loop: true,
+                slidesPerView: 4,
+                spaceBetween: 20,
+                breakpoints: {
+                    640: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1280: { slidesPerView: 4 },
+                },
+                navigation: {
+                    nextEl: ".swiper-next-rocha",
+                    prevEl: ".swiper-prev-rocha",
                 },
             });
-
-            Fancybox.bind("[data-fancybox]", {});
         });
     </script>
-</body>
-
-</html>
+</x-layouts.BaseLayout>

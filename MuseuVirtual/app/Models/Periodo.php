@@ -9,6 +9,13 @@ class Periodo extends Model
     public function era()
     {
         return $this->belongsTo(Era::class);
+        
     }
+
+    public function rochas()
+    {
+        return $this->hasMany(Rocha::class);
+    }
+
 }
 

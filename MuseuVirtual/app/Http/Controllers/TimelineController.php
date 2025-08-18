@@ -16,7 +16,7 @@ class TimelineController extends Controller
      */
     public function index()
     {
-        $eons = Eon::with(['eras.periodos'])->get();
+        $eons = Eon::with(['eras.periodos.rochas'])->get();
         return Inertia::render('Dashboard/Timeline/Timeline', ['eons' => $eons]);
     }
 
