@@ -60,13 +60,13 @@ class TimelineController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $request->validate([
-        'era' => 'required|string',
-        'periodo' => 'required|string',
+        'era' => 'required|string|max:255',
+        'periodo' => 'required|string|max:255',
         'idRocha' => 'nullable|exists:rochas,id',
-        'idMineral' => 'nullable|exists:minerais,id',
+        'idMineral' => 'nullable|exists:minerais,id'
     ]);
 
     if ($request->filled('idRocha')) {
@@ -81,7 +81,8 @@ class TimelineController extends Controller
         $mineral->save();
     }
 
-    return redirect()->back()->with('success', 'Associação atualizada com sucesso!');
+    return back()->with('success', 'Associação atualizada!');
+
 
     }
 

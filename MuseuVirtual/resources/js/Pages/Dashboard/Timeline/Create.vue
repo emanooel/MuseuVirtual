@@ -5,6 +5,7 @@ import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 
 const form = reactive({
+    eon: '',
     era: '',
     periodo: '',
     idRocha: '',
@@ -16,25 +17,6 @@ const props = defineProps({
   minerais: Array,
 });
 
-onMounted(() => {
-    axios.get('/api/jazidas').then(res => {
-        jazidas.value = res.data;
-    });
-});
-
-function handleFileChange(event) {
-    const files = Array.from(event.target.files);
-    form.fotos = files;
-    previewFotos.value = files.map((file, index) => ({
-        file,
-        url: URL.createObjectURL(file),
-        isCapa: false,
-        name: file.name
-    }));
-    form.capa_nome = ''; // reset
-}
-
-
 function submitForm() {
     const payload = new FormData();
 
@@ -44,13 +26,11 @@ function submitForm() {
 
     if (form.idRocha) {
         payload.append('idRocha', form.idRocha);
-    }
-
-    if (form.idMineral) {
+    } else if (form.idMineral) {
         payload.append('idMineral', form.idMineral);
     }
 
-    router.post(route('Rocha.store'), payload);
+    router.put(route('Timeline.update', id), payload);
 }
 
 
@@ -80,7 +60,6 @@ function submitForm() {
                                     <option value="2">Arqueano</option>
                                     <option value="3">Proterozoico</option>
                                     <option value="4">Fanerozoico</option>
-                                    let
                                 </select>
                             </div>
 
