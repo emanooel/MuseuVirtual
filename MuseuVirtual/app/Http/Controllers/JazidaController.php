@@ -15,7 +15,7 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::with('fotos')->get();
+        $jazidas = Jazida::with('fotos')->paginate(12);
         # return view('dashboard.jazidas.index', compact('jazidas'));
         return Inertia::render('Dashboard/Jazidas/Index',['jazidas'=>$jazidas]);
     }
@@ -61,9 +61,10 @@ class JazidaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Jazida $jazida)
+    public function show($jazida)
     {
-        //
+        $jazida = Jazida::with('fotos')->findOrFail($jazida);
+        return view('jazidaEspecifica',compact('jazida'));
     }
 
     /**
