@@ -1,6 +1,146 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
+<style>
+        .swiper-container-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 2100px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .swiper-slide {
+            width: 400px;
+            height: 700px;
+        }
+
+        .swiper-slide img {
+            width: 500px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .swiper-slide img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Botões do Swiper */
+        .swiper-button-prev,
+        .swiper-button-next {
+            position: static !important;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ACB18E, #73785C);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+            background: linear-gradient(135deg, #73785C, #363C27);
+            transform: scale(1.1);
+        }
+
+        .swiper-button-prev::after,
+        .swiper-button-next::after {
+            font-size: 22px;
+            color: #F1EEDD;
+            font-weight: bold;
+        }
+
+        .rock-type-section {
+            background: rgba(54, 60, 39, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(241, 238, 221, 0.1);
+        }
+
+        .rock-description {
+            background: rgba(241, 238, 221, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ACB18E;
+        }
+
+        .rock-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ACB18E, #73785C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #F1EEDD;
+            margin-right: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(172, 177, 142, 0.2), rgba(115, 120, 92, 0.2));
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 50px;
+            text-align: center;
+            border: 2px solid rgba(241, 238, 221, 0.2);
+        }
+
+        .ver-mais-btn {
+            background: linear-gradient(135deg, #F1EEDD, #ACB18E);
+            color: #363C27;
+            font-weight: bold;
+            padding: 12px 35px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ver-mais-btn:hover {
+            background: linear-gradient(135deg, #ACB18E, #73785C);
+            color: #F1EEDD;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .rock-type-section {
+                padding: 25px;
+            }
+            
+            .rock-description {
+                padding: 20px;
+            }
+            
+            .rock-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+            }
+        }
+</style>
+
 <head>
     @push('styles')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -33,7 +173,7 @@
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
                 @foreach ($rochastipo as $item)
-                    <a href="{{ route('Rocha.show', $item->id) }}">
+                    <a href="{{ route('rochas.show', $item->id) }}">
                         <figure class="w-full hover:w-">
                             @php
                                 $fotoExibir = null; // Inicializa como nulo

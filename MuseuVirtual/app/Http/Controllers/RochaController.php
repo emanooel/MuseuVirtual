@@ -179,5 +179,9 @@ class RochaController extends Controller
             ->header('Content-Type', 'image/png')
             ->header('Content-Disposition', 'attachment; filename="rocha_'.$rocha->id.'_qr.png"');
     }
-
+    public function site_tipo_rocha($tipo)
+    {
+        $rochastipo = Rocha::where('tipo', $tipo)->with('fotos')->get();
+        return view('rocha_tipo', compact('rochastipo', 'tipo'));
+    }
 }
