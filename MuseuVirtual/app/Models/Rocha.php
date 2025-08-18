@@ -15,6 +15,11 @@ class Rocha extends Model
         'jazida_id', // Adicionado para permitir preenchimento via create/update
     ];
 
+    public function periodo()
+    {
+        return $this->belongsTo(Periodo::class);
+    }
+
     public function fotos()
     {
         return $this->hasMany(Fotos::class, 'idRocha');

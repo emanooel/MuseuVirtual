@@ -37,4 +37,6 @@ import { Head } from '@inertiajs/vue3';
     }
             </pre>
             <p><em>ps: Ainda precisa adicionar uma forma de sair da conta sem ter acesso ao dashboard.</em></p>
+            <p><em>ps2: Se não estiver funcionando, rode ./vendor/bin/sail artisan db:seed --class=RolesSeeder</em></p>
+
         </template>

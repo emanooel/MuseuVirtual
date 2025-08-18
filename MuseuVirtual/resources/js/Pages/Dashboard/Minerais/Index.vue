@@ -13,7 +13,7 @@ const props = defineProps({
 
 const { Mobile, Desktop } = aparelhoUso();
 
-const minerais = props.minerais;
+const minerais = props.minerais.data;
 const page = usePage();
 const successMessage = computed(() => page.props?.flash?.success ?? null);
 

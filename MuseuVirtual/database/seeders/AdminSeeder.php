@@ -23,9 +23,16 @@ class AdminSeeder extends Seeder
         if ($user) {
             $user->assignRole('admin');
         }
-        $user = User::where('email', 'gabrag0987a@gmail.com')->first(); //Coloca o aqui teu email e rode o seeder com ./vendor/bin/sail artisan db:seed --class=AdminSeeder
+
+        $user = User::where('email', 'marlonvicentinisilva@gmail.com')->first();
         if ($user) {
             $user->assignRole('admin');
         }
+
+        $user = User::where('email', 'gabrag0987a@gmail.com')->first();
+        if ($user) {
+            $user->assignRole('admin');
+        }
+
     }
 }
