@@ -4,6 +4,7 @@ use App\Http\Controllers\FotosController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\JazidaController;
 use App\Http\Controllers\MineralController;
+use App\Http\Controllers\EraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RochaController;
 use App\Http\Controllers\SiteController;
@@ -12,10 +13,11 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TimelineController;
 
 Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
-Route::get('/site/jazidas/{id}', [JazidaController::class, 'show'])->name('jazidas.site.show');
+Route::get("/site/jazidas/{id}", [JazidaController::class, 'site'])->name("site.jazidas.show");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 Route::get('/minerais/{id}/qrcode', [MineralController::class, 'gerarQrCode'])->name('minerais.qrcode');
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");
@@ -30,6 +32,10 @@ Route::get('/dashboardPublica', function () {
     return Inertia::render('DashboardPublica');
 })->middleware(['auth', 'verified'])->name('dashboardPublica');
 
+Route::get('/timeline', [TimelineController::class, 'index']);
+
+Route::resource('/timeline', EraController::class);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -38,7 +44,10 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 
-Route::resource('rochas', RochaController::class)->names('rochas');
+Route::resource('rocha', RochaController::class)->names('rochas');
+
+Route::resource('timeline', RochaController::class)->names('Timeline');
+
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 Route::resource('/minerais', MineralController::class);
@@ -74,6 +83,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/fotos', [FotosController::class,'index'])->name('fotos.index');
     Route::get('/jazidas', [JazidaController::class,'index'])->name('jazidas.index');
     Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
+    Route::resource('/timeline', TimelineController::class);
 });
 
 

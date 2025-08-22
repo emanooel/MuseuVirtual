@@ -15,7 +15,7 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::with('fotos')->get();
+        $jazidas = Jazida::with('fotos')->paginate(12);
         # return view('dashboard.jazidas.index', compact('jazidas'));
         return Inertia::render('Dashboard/Jazidas/Index', ['jazidas' => $jazidas]);
     }
@@ -60,13 +60,10 @@ class JazidaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($jazida)
     {
-        // Busca a jazida pelo ID
-        $jazida = Jazida::findOrFail($id);
-
-        // Passa a jazida para a view
-        return view('jazida_específica', ['jazida' => $jazida]);
+        $jazida = Jazida::with('fotos')->findOrFail($jazida);
+        return view('jazidaEspecifica',compact('jazida'));
     }
 
     /**

@@ -1,11 +1,11 @@
 <x-layouts.BaseLayout>
     <x-slot name="title">RochaEspecifica</x-slot>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-    <script>
-        Fancybox.bind("[data-fancybox]", {});
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
     <style>
         /* Estilos para o contêiner principal do carrossel e seus botões */
@@ -138,10 +138,6 @@
         /* ------------------------------------------------------------- */
     </style>
 
-    {{-- Classe para o fundo gradiente de toda a página --}}
-
-
-
     {{-- Contêiner principal para o conteúdo da página (com paddings responsivos) --}}
 
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 ">
@@ -170,22 +166,24 @@
         {{-- Substitua seu HTML do container por: --}}
         <div class="container">
             {{-- Swiper Principal --}}
-            <div class="swiper swiper-main">
+            <div class="swiper mySwiper2">
                 <div class="swiper-wrapper">
                     @foreach ($rocha->fotos as $foto)
-                        <div class="swiper-slide">
-                            <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Imagem da Rocha"
-                                data-fancybox="gallery">
+                        <div class=" swiper-slide">
+                            <a href=""data-fancybox="gallery"><img src="{{ asset('storage/' . $foto->caminho) }}"
+                                    alt="Imagem da Rocha"></a>
+
                         </div>
                     @endforeach
                 </div>
+                <div class="swiper-pagination"></div>
                 <div class="swiper-button-next swiper-button-next2"></div>
                 <div class="swiper-button-prev swiper-button-prev2"></div>
-                <div class="swiper-pagination"></div>
+
             </div>
 
             {{-- Swiper de Miniaturas --}}
-            <div class="swiper swiper-thumbs">
+            <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     @foreach ($rocha->fotos as $foto)
                         <div class="swiper-slide">
@@ -197,20 +195,6 @@
         </div>
 
         <div class="text-white">
-            {{-- Exibe a imagem principal se houver alguma foto para exibir --}}
-            @if ($fotoExibir)
-                {{-- Contêiner para centralizar a imagem principal e aplicar estilos --}}
-                <div class="main-image-container">
-                    <img class="2xl:w-full rounded-xl main-image" {{-- Aplica bordas arredondadas e a classe CSS 'main-image' --}}
-                        src="{{ asset('storage/' . $fotoExibir->caminho) }}" {{-- Caminho para a imagem --}}
-                        alt="Imagem principal de {{ $rocha->nome }}"> {{-- Texto alternativo para acessibilidade --}}
-                </div>
-                <a href="{{ route('rochas.qrcode', $rocha->id) }}"
-                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    Baixar QR Code da Rocha
-                </a>
-            @endif
-
 
             {{-- Seção de descrição e composição da rocha --}}
             <div class="pt-6">
@@ -224,29 +208,31 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Inicializar Swiper de Miniaturas PRIMEIRO
-        const swiperThumbs = new Swiper('.swiper-thumbs', {
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
             spaceBetween: 10,
             slidesPerView: 4,
             freeMode: true,
             watchSlidesProgress: true,
         });
-
-        // Depois inicializar Swiper Principal
-        const swiperMain = new Swiper('.swiper-main', {
-            spaceBetween: 10,
+        var swiper2 = new Swiper(".mySwiper2", {
             loop: true,
+            spaceBetween: 10,
             navigation: {
-                nextEl: '.swiper-button-next2',
-                prevEl: '.swiper-button-prev2',
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
             },
             thumbs: {
-                swiper: swiperThumbs, // Referência para o swiper de thumbs
+                swiper: swiper,
             },
+        });
+        // $('[data-fancybox]').fancybox({
+        // // Desabilita o retorno de foco para evitar conflito com o Swiper
+        // backFocus: false
+        // });
+        // Configuração do Fancybox 4
+        Fancybox.bind('[data-fancybox]', {
+            placeFocusBack: false
         });
     </script>
 </x-layouts.BaseLayout>

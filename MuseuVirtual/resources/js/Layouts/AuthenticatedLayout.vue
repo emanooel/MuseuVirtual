@@ -59,6 +59,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Minerais
                                 </NavLink>
+                                <NavLink
+                                    :href="route('timeline.index')"
+                                    :active="route().current('timeline.*')"
+                                >
+                                    Timeline
+                                </NavLink>
                             </div>
                         </div>
 

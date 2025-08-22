@@ -1,5 +1,5 @@
 <x-layouts.BaseLayout>
-    <x-slot name="title">RochaEspecifica</x-slot>
+    <x-slot name="title">Jazida Específica</x-slot>
 
     <!-- Fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
@@ -141,28 +141,28 @@
     <!-- Conteúdo -->
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <div class="hero-section">
-            <h1><strong>{{ $mineral->nome }}</strong></h1>
+            <h1><strong>{{ $jazida->localizacao }}</strong></h1>
         </div>
 
         @php
             $fotoExibir = null;
-            foreach ($mineral->fotos as $item) {
+            foreach ($jazida->fotos as $item) {
                 if ($item->capa) {
                     $fotoExibir = $item;
                     break;
                 }
             }
-            if (is_null($fotoExibir) && count($mineral->fotos) > 0) {
-                $fotoExibir = $mineral->fotos[0];
+            if (is_null($fotoExibir) && count($jazida->fotos) > 0) {
+                $fotoExibir = $jazida->fotos[0];
             }
         @endphp
 
         @if ($fotoExibir)
             <div class="main-image-container">
-                <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem principal de {{ $mineral->nome }}">
+                <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem principal de {{ $jazida->localizacao }}">
             </div>
-            <div class="text-center mb-6 h-[300px]">
-                <a href="{{ route('minerais.qrcode', $mineral->id) }}"
+            <div class="text-center mb-6">
+                <a href="{{ route('minerais.qrcode', $jazida->id) }}"
                    class="inline-block bg-gray-700 px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300 shadow-md">
                     <span class="text-white font-semibold">Ver QR Code</span>
                 </a>
@@ -175,10 +175,10 @@
                 <div class="swiper-button-prev swiper-prev-rocha"></div>
                 <div class="swiper SwiperRochas">
                     <div class="swiper-wrapper">
-                        @foreach ($mineral->fotos as $item)
+                        @foreach ($jazida->fotos as $item)
                             <div class="swiper-slide">
                                 <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                                    <img src="{{ asset('storage/' . $item->caminho) }}" alt="Miniatura de {{ $mineral->nome }}">
+                                    <img src="{{ asset('storage/' . $item->caminho) }}" alt="Miniatura de {{ $jazida->localizacao }}">
                                 </a>
                             </div>
                         @endforeach
@@ -189,9 +189,9 @@
 
             <!-- Descrição -->
             <div class="rock-description">
-                <p><strong>Descrição:</strong> {!! $mineral->descricao !!}</p>
+                <p><strong>Descrição:</strong> {!! $jazida->descricao !!}</p>
                 <br>
-                <p><strong>Composição do mineral:</strong> <br>{{ $mineral->composicao }}</p>
+                <p><strong>Composição do mineral:</strong> <br>{{ $jazida->composicao }}</p>
             </div>
         </div>
     </div>
