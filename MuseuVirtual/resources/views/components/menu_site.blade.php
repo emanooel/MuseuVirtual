@@ -103,12 +103,12 @@
                 <li><a href="{{ route('site.jazidas') }}" class="p-5 text-[#565851]">Jazidas</a></li>
                 <li><a href="{{ route('site.rochas') }}" class="p-5 text-[#565851]">Rochas</a></li>
                 <li><a href="{{ route('site.minerais') }}" class="p-5 pr-40 text-[#565851] ">Minerais</a></li>
-                <li><a href="{{ route('dashboard') }}" id="cadastro"
+                {{-- <li><a href="{{ route('dashboard') }}" id="cadastro"
                         class="p-2 pl-5 pr-5 rounded-full bg-[#ACB18E] mr-5 text-[#F1EEDD] bg-[#ACB18E] hover:bg-[#A39D8C]">Cadastrar</a>
                 </li>
                 <li><a href="{{ route('dashboard') }}" id="login"
                         class="p-2 pl-5 pr-5 rounded-full bg-[#ACB18E] text-[#F1EEDD] bg-[#ACB18E] hover:bg-[#A39D8C]">Login</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </nav>
