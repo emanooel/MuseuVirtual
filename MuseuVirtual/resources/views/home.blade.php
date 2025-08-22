@@ -1,123 +1,12 @@
 <x-layouts.BaseLayout>
 
-    <STYLE>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            /* Evita a barra de rolagem horizontal */
+    <style>
+        .swiper-slide {
+            width: 100%;
+            height: 800px;
+            background-size: contain;
         }
-
-        .carousel-container {
-            width: 100vw;
-            height: 60vh;
-            /* Para ocupar a altura total da tela, se desejado */
-            position: relative;
-            overflow: hidden;
-        }
-
-        .carousel-slide {
-            display: flex;
-            width: 600vw;
-            /* 3 imagens, cada uma com 100vw */
-            height: 100%;
-            animation: slide-animation 18s infinite;
-            /* 3s por imagem */
-        }
-
-        .carousel-slide img {
-            width: 100vw;
-            /* Cada imagem ocupa 100% da largura da tela */
-            height: 100%;
-            object-fit: cover;
-            /* Garante que a imagem preencha o espaço sem distorcer */
-        }
-
-        .carousel-slide {
-            /* ... outros estilos ... */
-            width: 600vw;
-            /* 6 fotos, cada uma com 100vw */
-            animation: slide-animation 18s infinite;
-            /* 3 segundos por foto * 6 fotos */
-        }
-
-        @keyframes slide-animation {
-
-            /* Foto 1 */
-            0%,
-            14.28% {
-                /* 100 / 7 = ~14.28%. Tempo de pausa na foto */
-                transform: translateX(0);
-            }
-
-            /* Transição para a Foto 2 */
-            16.66% {
-                /* 100 / 6 = 16.66% */
-                transform: translateX(-100vw);
-            }
-
-            /* Foto 2 */
-            16.66%,
-            30.94% {
-                /* Pausa na foto 2 */
-                transform: translateX(-100vw);
-            }
-
-            /* Transição para a Foto 3 */
-            33.32% {
-                transform: translateX(-200vw);
-            }
-
-            /* Foto 3 */
-            33.32%,
-            47.6% {
-                /* Pausa na foto 3 */
-                transform: translateX(-200vw);
-            }
-
-            /* Transição para a Foto 4 */
-            49.98% {
-                transform: translateX(-300vw);
-            }
-
-            /* Foto 4 */
-            49.98%,
-            64.26% {
-                /* Pausa na foto 4 */
-                transform: translateX(-300vw);
-            }
-
-            /* Transição para a Foto 5 */
-            66.64% {
-                transform: translateX(-400vw);
-            }
-
-            /* Foto 5 */
-            66.64%,
-            80.92% {
-                /* Pausa na foto 5 */
-                transform: translateX(-400vw);
-            }
-
-            /* Transição para a Foto 6 */
-            83.3% {
-                transform: translateX(-500vw);
-            }
-
-            /* Foto 6 */
-            83.3%,
-            97.58% {
-                /* Pausa na foto 6 */
-                transform: translateX(-500vw);
-            }
-
-            /* Transição final para o início */
-            100% {
-                transform: translateX(0);
-            }
-        }
-    </STYLE>
+    </style>
 
     <x-slot name="title">Home</x-slot>
     <h1 class="font-[arial] pt-40 font-bold text-[80px] text-center text-[#F1EEDD]">Museu Virtual</h1>
@@ -126,13 +15,12 @@
     <br>
     {{-- <p class="text-center"><a href="{{ route('dashboardPublica') }}"
             class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p> --}}
-    <figure class="w-100 mt-20">
-        <div class="carousel-container">
-            <div class="carousel-slide">
-                @foreach ($fotosRecentes as $item)
-                    <img src="{{ asset('storage/' . $item->caminho) }}" alt="">
-                @endforeach
-            </div>
+    <figure class="w-100 mt-20 swiper mySwiper">
+        <div class="swiper-wrapper">
+            @foreach ($fotosRecentes as $item)
+                <img src="{{ asset('storage/' . $item->caminho) }}" class="swiper-slide bg-cover">
+            @endforeach
+            {{-- <div class="swiper-pagination"></div> --}}
         </div>
     </figure>
 
@@ -191,4 +79,19 @@
             </div>
         </div>
     </div>
+
 </x-layouts.BaseLayout>
+
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1, // Número de slides visíveis por vez
+        // spaceBetween: 10, // Espaço entre os slides em pixels
+        loop: true, // Faz o slider ser infinito (volta para o início após o último)
+
+        // Configura o autoplay
+        autoplay: {
+            delay: 2000, // Tempo de espera em milissegundos para a transição
+            disableOnInteraction: false, // O autoplay não para se o usuário interagir
+        },
+    });
+</script>

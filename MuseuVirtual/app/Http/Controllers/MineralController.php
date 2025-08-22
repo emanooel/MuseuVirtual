@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
 use Inertia\Inertia;
+use SimpleSoftwareIO\QrCode\Facades\QrCode; // Certifique-se de ter o pacote instalado
 
 class MineralController extends Controller
 {
@@ -16,7 +17,7 @@ class MineralController extends Controller
      */
     public function index()
     {
-        $minerais = Mineral::with('fotos')->get();
+        $minerais = Mineral::with('fotos')->paginate(12);
         // dd($minerais);
         return Inertia::render('Dashboard/Minerais/Index', ['minerais' => $minerais]);
     }
@@ -140,4 +141,14 @@ class MineralController extends Controller
         return view('Minerais', compact("minerais"));
     }
 
+    public function gerarQrCode($id)
+    {
+        $mineral = Mineral::findOrFail($id);
+        $url = route('minerais.show', $mineral->id); // ou use slug se tiver
+        $qrCode = QrCode::format('png')->size(300)->generate($url);
+
+        return response($qrCode)
+            ->header('Content-Type', 'image/png')
+            ->header('Content-Disposition', 'attachment; filename="mineral_'.$mineral->id.'_qr.png"');
+    }
 }

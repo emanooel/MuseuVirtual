@@ -1,21 +1,24 @@
 <x-layouts.BaseLayout>
-
     <x-slot name="title">Rochas</x-slot>
 
     <style>
-        /* Estilos gerais para o carrossel e seus componentes */
         .swiper-container-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Aumentando a largura máxima para acomodar 4 slides de 500px (2000px) + espaçamento */
             max-width: 2100px;
             margin: 50px auto;
             position: relative;
         }
 
-        /* Removendo a largura fixa do slide para que o Swiper a calcule automaticamente */
+        .swiper {
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+        }
+
         .swiper-slide {
+            width: 400px;
             height: 700px;
         }
 
@@ -24,194 +27,351 @@
             height: 500px;
             object-fit: cover;
             border-radius: 0.75rem;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.6s ease-in-out;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
         .swiper-slide img:hover {
-            transform: scale(0.95);
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
-        /* Botões de navegação do carrossel */
+        /* Botões do Swiper */
         .swiper-button-prev,
         .swiper-button-next {
+            position: static !important;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: transparent;
+            background: linear-gradient(135deg, #ACB18E, #73785C);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            flex-shrink: 0;
-            position: static;
-            margin: 0 15px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .swiper-button-prev:hover,
         .swiper-button-next:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, #73785C, #363C27);
+            transform: scale(1.1);
         }
 
         .swiper-button-prev::after,
         .swiper-button-next::after {
-            font-size: 24px;
+            font-size: 22px;
             color: #F1EEDD;
-            transition: color 0.3s ease;
+            font-weight: bold;
         }
 
-        .swiper-button-prev:hover::after,
-        .swiper-button-next:hover::after {
-            color: #FFFFFF;
+        .rock-type-section {
+            background: rgba(54, 60, 39, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(241, 238, 221, 0.1);
         }
 
-        /* Estilos para a legenda da imagem */
-        .figcaption {
-            color: #F1EEDD;
-            font-size: 1.5rem;
-            margin-top: 1rem;
+        .rock-description {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ACB18E;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(172, 177, 142, 0.2), rgba(115, 120, 92, 0.2));
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 50px;
             text-align: center;
+            border: 2px solid rgba(241, 238, 221, 0.2);
         }
 
-        .link-ver-mais {
-            display: inline-block;
-            padding: 0.5rem 2.25rem;
-            border-radius: 9999px;
-            background-color: #F1EEDD;
-            color: #565851;
-            transition: background-color 0.3s ease;
-            margin-top: 2.5rem;
+        .ver-mais-btn {
+            background: linear-gradient(135deg, #F1EEDD, #ACB18E);
+            color: #363C27;
+            font-weight: bold;
+            padding: 12px 35px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .link-ver-mais:hover {
-            background-color: #ACB18E;
+        .ver-mais-btn:hover {
+            background: linear-gradient(135deg, #ACB18E, #73785C);
+            color: #F1EEDD;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .rock-type-section {
+                padding: 25px;
+            }
+            
+            .rock-description {
+                padding: 20px;
+            }
+ 
         }
     </style>
 
-    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10">
-
-        <h1 class="font-sans text-5xl text-[#F1EEDD] pb-6 pt-16 font-bold">Rochas</h1>
-        <div class="mb-40">
-            <img class="pb-10 w-full" src="/assets/img/image (3).png" alt="Imagem principal de rochas">
+    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="font-[Arial] text-[50px] md:text-[60px] text-[#F1EEDD] pb-4">
+                <strong>Museu Mineral - Rochas</strong>
+            </h1>
+            <p class="font-[Arial] text-[18px] text-[#F1EEDD] opacity-90 max-w-3xl mx-auto leading-relaxed">
+                Conheça os três principais tipos de rochas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
+            </p>
         </div>
 
-        {{-- Carrossel de Rochas Ígneas --}}
-        <h2 class="font-sans text-4xl text-[#F1EEDD] pb-8 font-bold">Ígneas</h2>
-        <div class="swiper-container-wrapper flex items-center">
-            <div class="swiper-button-prev swiper-button-prev-1"></div>
-            <div class="swiper SwiperIgneas">
-                <div class="swiper-wrapper">
-                    @foreach ($rochastipo1 as $item)
-                        <div class="swiper-slide">
-                            <a href="{{ route('Rocha.show', $item->id) }}" class="block">
-                                @php
-                                    $fotoExibir = $item->fotos->where('capa', true)->first() ?? $item->fotos->first();
-                                @endphp
+        <div class="mb-10">
+            <img class="w-full max-h-96 object-cover rounded-2xl shadow-2xl" src="/storage/app/public/fotos/rochas/1.jpg" alt="Formações rochosas espetaculares">
+        </div>
 
-                                @if ($fotoExibir)
-                                    <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
-                                @else
-                                    <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
-                                @endif
-                                <h3 class="figcaption font-sans font-bold">{{ $item->nome }}</h3>
-                            </a>
-                        </div>
-                    @endforeach
+        {{-- Rochas Ígneas --}}
+        <div class="rock-type-section">
+            <div class="rock-description">
+                <div class="flex items-start mb-4">
+                    <div>
+                        <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] mb-3">
+                            <strong>Rochas Ígneas</strong>
+                        </h2>
+                        <p class="font-[Arial] text-[16px] text-[#F1EEDD] opacity-90 leading-relaxed">
+                            <strong>Formadas pelo fogo.</strong> As rochas ígneas se formam quando o magma ou lava esfria e endurece. 
+                            Podem ser formadas no interior da Terra (como o granito) ou na superfície (como o basalto).
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="swiper-button-next swiper-button-next-1"></div>
-        </div>
-        <div class="text-center mt-10">
-            <a href="{{ route('site.rochas.tipo', 1) }}" class="link-ver-mais">Ver mais</a>
-        </div>
-        
-        ---
 
-        {{-- Carrossel de Rochas Metamórficas --}}
-        <h2 class="font-sans text-4xl text-[#F1EEDD] pb-8 font-bold mt-20">Metamórficas</h2>
-        <div class="swiper-container-wrapper">
-            <div class="swiper-button-prev swiper-button-prev-2"></div>
-            <div class="swiper SwiperMetamorficas">
-                <div class="swiper-wrapper">
-                    @foreach ($rochastipo2 as $item)
-                        <div class="swiper-slide">
-                            <a href="{{ route('Rocha.show', $item->id) }}" class="block">
-                                @php
-                                    $fotoExibir = $item->fotos->where('capa', true)->first() ?? $item->fotos->first();
-                                @endphp
-                                @if ($fotoExibir)
-                                    <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
-                                @else
-                                    <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
-                                @endif
-                                <h3 class="figcaption font-sans font-bold">{{ $item->nome }}</h3>
-                            </a>
-                        </div>
-                    @endforeach
+            <div class="flex items-center justify-between pb-8">
+                <div class="flex gap-4">
+                    <div class="swiper-button-prev swiper-prev-ignea"></div>
+                    <div class="swiper-button-next swiper-next-ignea"></div>
                 </div>
             </div>
-            <div class="swiper-button-next swiper-button-next-2"></div>
-        </div>
-        <div class="text-center mt-10">
-            <a href="{{ route('site.rochas.tipo', 2) }}" class="link-ver-mais">Ver mais</a>
-        </div>
-        
-        ---
 
-        {{-- Carrossel de Rochas Sedimentares --}}
-        <h2 class="font-sans text-4xl text-[#F1EEDD] pb-8 font-bold mt-20">Sedimentares</h2>
-        <div class="swiper-container-wrapper">
-            <div class="swiper-button-prev swiper-button-prev-3"></div>
-            <div class="swiper SwiperSedimentares">
-                <div class="swiper-wrapper">
-                    @foreach ($rochastipo3 as $item)
-                        <div class="swiper-slide">
-                            <a href="{{ route('Rocha.show', $item->id) }}" class="block">
-                                @php
-                                    $fotoExibir = $item->fotos->where('capa', true)->first() ?? $item->fotos->first();
-                                @endphp
-                                @if ($fotoExibir)
-                                    <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
-                                @else
-                                    <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
-                                @endif
-                                <h3 class="figcaption font-sans font-bold">{{ $item->nome }}</h3>
-                            </a>
-                        </div>
-                    @endforeach
+            <div class="swiper-container-wrapper">
+                <div class="swiper SwiperIgneas">
+                    <div class="swiper-wrapper">
+                        @foreach ($rochastipo1 as $item)
+                            <div class="swiper-slide">
+                                <a href="{{ route('rochas.show', $item->id) }}">
+                                    <figure class="w-full">
+                                        @php
+                                            $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
+                                        @endphp
+
+                                        @if ($fotoExibir)
+                                            <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
+                                        @else
+                                            <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
+                                        @endif
+
+                                        <figcaption>
+                                            <h4 class="font-[Arial] text-[28px] text-[#F1EEDD] pt-4">
+                                                <strong>{{ $item->nome }}</strong>
+                                            </h4>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-            <div class="swiper-button-next swiper-button-next-3"></div>
-        </div>
-        <div class="text-center mt-10">
-            <a href="{{ route('site.rochas.tipo', 3) }}" class="link-ver-mais">Ver mais</a>
+
+            <div class="text-center mt-8">
+                <a href="{{ route('site.rochas.tipo', 1) }}" class="ver-mais-btn inline-block">
+                    Conheça todas →
+                </a>
+            </div>
         </div>
 
+        {{-- Rochas Metamórficas --}}
+        <div class="rock-type-section">
+            <div class="rock-description">
+                <div class="flex items-start mb-4">
+                    <div>
+                        <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] mb-3">
+                            <strong>Rochas Metamórficas</strong>
+                        </h2>
+                        <p class="font-[Arial] text-[16px] text-[#F1EEDD] opacity-90 leading-relaxed">
+                            <strong>Transformadas pelo calor e pressão.</strong> Estas rochas se formam quando rochas existentes 
+                            são modificadas por alta temperatura e pressão no interior da Terra. O mármore e o gnaisse são exemplos comuns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pb-8">
+                <div class="flex gap-4">
+                    <div class="swiper-button-prev swiper-prev-metamorf"></div>
+                    <div class="swiper-button-next swiper-next-metamorf"></div>
+                </div>
+            </div>
+
+            <div class="swiper-container-wrapper">
+                <div class="swiper SwiperMetamorficas">
+                    <div class="swiper-wrapper">
+                        @foreach ($rochastipo2 as $item)
+                            <div class="swiper-slide">
+                                <a href="{{ route('rochas.show', $item->id) }}">
+                                    <figure class="w-full">
+                                        @php
+                                            $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
+                                        @endphp
+
+                                        @if ($fotoExibir)
+                                            <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
+                                        @else
+                                            <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
+                                        @endif
+
+                                        <figcaption>
+                                            <h4 class="font-[Arial] text-[28px] text-[#F1EEDD] pt-4">
+                                                <strong>{{ $item->nome }}</strong>
+                                            </h4>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="{{ route('site.rochas.tipo', 2) }}" class="ver-mais-btn inline-block">
+                    Conheça todas →
+                </a>
+            </div>
+        </div>
+
+        {{-- Rochas Sedimentares --}}
+        <div class="rock-type-section">
+            <div class="rock-description">
+                <div class="flex items-start mb-4">
+                    <div>
+                        <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] mb-3">
+                            <strong>Rochas Sedimentares</strong>
+                        </h2>
+                        <p class="font-[Arial] text-[16px] text-[#F1EEDD] opacity-90 leading-relaxed">
+                            <strong>Formadas por sedimentos acumulados.</strong> Estas rochas se formam quando pedaços de outras rochas, 
+                            areia e outros materiais se acumulam e se compactam ao longo do tempo. Arenito e calcário são exemplos conhecidos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pb-8">
+                <div class="flex gap-4">
+                    <div class="swiper-button-prev swiper-prev-sedim"></div>
+                    <div class="swiper-button-next swiper-next-sedim"></div>
+                </div>
+            </div>
+
+            <div class="swiper-container-wrapper">
+                <div class="swiper SwiperSedimentares">
+                    <div class="swiper-wrapper">
+                        @foreach ($rochastipo3 as $item)
+                            <div class="swiper-slide">
+                                <a href="{{ route('rochas.show', $item->id) }}">
+                                    <figure class="w-full">
+                                        @php
+                                            $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
+                                        @endphp
+
+                                        @if ($fotoExibir)
+                                            <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
+                                        @else
+                                            <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
+                                        @endif
+
+                                        <figcaption>
+                                            <h4 class="font-[Arial] text-[28px] text-[#F1EEDD] pt-4">
+                                                <strong>{{ $item->nome }}</strong>
+                                            </h4>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="{{ route('site.rochas.tipo', 3) }}" class="ver-mais-btn inline-block">
+                    Conheça todas →
+                </a>
+            </div>
+        </div>
+
+        <!-- Seção educativa -->
+        <div class="hero-section mt-16">
+            <h3 class="font-[Arial] text-[32px] text-[#F1EEDD] mb-4">
+                <strong>Como as rochas se transformam</strong>
+            </h3>
+            <p class="font-[Arial] text-[16px] text-[#F1EEDD] opacity-90 max-w-4xl mx-auto leading-relaxed">
+                As rochas podem se transformar umas nas outras ao longo do tempo. Uma rocha ígnea pode se tornar metamórfica 
+                com calor e pressão, e qualquer rocha pode ser quebrada em pedaços que formam novas rochas sedimentares.
+            </p>
+        </div>
     </div>
 
+    {{-- Scripts do Swiper --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            function initializeSwiper(selector, nextEl, prevEl) {
-                return new Swiper(selector, {
-                    loop: true,
-                    slidesPerView: 4, // Alterado de 3 para 4
-                    spaceBetween: 16,
-                    navigation: {
-                        nextEl: nextEl,
-                        prevEl: prevEl,
-                    },
-                    breakpoints: {
-                        640: { slidesPerView: 1 },
-                        768: { slidesPerView: 2 },
-                        1024: { slidesPerView: 3 },
-                        1280: { slidesPerView: 4 }, // Adicionada nova breakpoint para telas grandes
-                    },
-                });
-            }
+            const swiperOptions = {
+                loop: true,
+                slidesPerView: 4,
+                spaceBetween: 20,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                breakpoints: {
+                    640: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1280: { slidesPerView: 4 },
+                },
+            };
 
-            initializeSwiper(".SwiperIgneas", ".swiper-button-next-1", ".swiper-button-prev-1");
-            initializeSwiper(".SwiperMetamorficas", ".swiper-button-next-2", ".swiper-button-prev-2");
-            initializeSwiper(".SwiperSedimentares", ".swiper-button-next-3", ".swiper-button-prev-3");
+            new Swiper(".SwiperIgneas", {
+                ...swiperOptions,
+                navigation: {
+                    nextEl: ".swiper-next-ignea",
+                    prevEl: ".swiper-prev-ignea",
+                },
+            });
+
+            new Swiper(".SwiperMetamorficas", {
+                ...swiperOptions,
+                navigation: {
+                    nextEl: ".swiper-next-metamorf",
+                    prevEl: ".swiper-prev-metamorf",
+                },
+            });
+
+            new Swiper(".SwiperSedimentares", {
+                ...swiperOptions,
+                navigation: {
+                    nextEl: ".swiper-next-sedim",
+                    prevEl: ".swiper-prev-sedim",
+                },
+            });
         });
     </script>
+
 </x-layouts.BaseLayout>

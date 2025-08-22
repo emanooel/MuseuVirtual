@@ -205,6 +205,10 @@
                         src="{{ asset('storage/' . $fotoExibir->caminho) }}" {{-- Caminho para a imagem --}}
                         alt="Imagem principal de {{ $rocha->nome }}"> {{-- Texto alternativo para acessibilidade --}}
                 </div>
+                <a href="{{ route('rochas.qrcode', $rocha->id) }}"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Baixar QR Code da Rocha
+                </a>
             @endif
 
 
