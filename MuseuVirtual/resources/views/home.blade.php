@@ -124,8 +124,8 @@
     <h2 class="text-center text-[20px] font-[arial] text-[#F1EEDD]">Bem-vindo ao Museu Virtual das Rochas, um <br>espaço
         interativo e educativo dedicado à incrível<br> diversidade geológica da nossa região. </h2>
     <br>
-    <p class="text-center"><a href="{{ route('dashboardPublica') }}"
-            class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
+    {{-- <p class="text-center"><a href="{{ route('dashboardPublica') }}"
+            class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p> --}}
     <figure class="w-100 mt-20">
         <div class="carousel-container">
             <div class="carousel-slide">
