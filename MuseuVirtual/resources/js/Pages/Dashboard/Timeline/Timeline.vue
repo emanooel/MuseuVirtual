@@ -82,7 +82,12 @@ function selectPeriodo(periodo) {
 
               <!-- Imagem da Rocha -->
               <template v-if="item.rocha">
-                <img v-if="item.rocha.fotos?.length" :src="`/storage/${(item.rocha.fotos.find(f => f.capa) || item.rocha.fotos[0]).caminho}`" class="w-full h-full object-cover" />
+                <template v-if="!item.rocha.fotos || item.rocha.fotos.length === 0">
+                    <p>Não existe fotos cadastradas</p>
+                </template>
+                <template v-else>
+                    <img :src="`/storage/${(item.rocha.fotos.find(f => f.capa) || item.rocha.fotos[0]).caminho}`">
+                </template>
                 <div class="absolute bottom-0 w-full bg-black bg-opacity-50 text-white text-xs text-center">
                   {{ item.rocha.nome }}
                 </div>
@@ -90,12 +95,16 @@ function selectPeriodo(periodo) {
 
               <!-- Imagem do Mineral -->
               <template v-else-if="item.mineral">
-                <img v-if="item.mineral.fotos?.length" :src="`/storage/${(item.mineral.fotos.find(f => f.capa) || item.mineral.fotos[0]).caminho}`" class="w-full h-full object-cover" />
+                <template v-if="!item.mineral.fotos || item.mineral.fotos.length === 0">
+                    <p>Não existe fotos cadastradas</p>
+                </template>
+                <template v-else>
+                    <img :src="`/storage/${(item.mineral.fotos.find(f => f.capa) || item.mineral.fotos[0]).caminho}`">
+                </template>
                 <div class="absolute bottom-0 w-full bg-black bg-opacity-50 text-white text-xs text-center">
                   {{ item.mineral.nome }}
                 </div>
               </template>
-
             </div>
           </div>
 

@@ -18,10 +18,10 @@ class TimelineController extends Controller
     public function index()
     {
         $eons = Eon::with([
-            'eras.aquisicoes.rocha',
-            'eras.aquisicoes.mineral',
-            'eras.periodos.aquisicoes.rocha',
-            'eras.periodos.aquisicoes.mineral'
+            'eras.aquisicoes.rocha.fotos',
+            'eras.aquisicoes.mineral.fotos',
+            'eras.periodos.aquisicoes.rocha.fotos',
+            'eras.periodos.aquisicoes.mineral.fotos'
         ])->get();
 
         return Inertia::render('Dashboard/Timeline/Timeline', [
