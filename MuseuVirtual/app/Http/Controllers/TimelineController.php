@@ -51,7 +51,7 @@ class TimelineController extends Controller
             'era_id'     => 'nullable|exists:eras,id',
             'periodo_id' => 'nullable|exists:periodos,id',
             'rocha_id'   => 'nullable|exists:rochas,id',
-            'mineral_id' => 'nullable|exists:minerais,id',
+            'mineral_id' => 'nullable|exists:minerals,id',
         ]);
 
         // Garante que ao menos era ou período esteja preenchido
@@ -96,7 +96,7 @@ class TimelineController extends Controller
         'era' => 'required|string|max:255',
         'periodo' => 'required|string|max:255',
         'idRocha' => 'nullable|exists:rochas,id',
-        'idMineral' => 'nullable|exists:minerais,id'
+        'idMineral' => 'nullable|exists:minerals,id'
     ]);
 
     if ($request->filled('idRocha')) {
