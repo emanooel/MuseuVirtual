@@ -82,7 +82,7 @@ Route::fallback(function() {
 // Admin:
 Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
-    Route::get('/rochas', [RochaController::class,'index'])->name('rochas.index');
+    // Route::get('/rochas', [RochaController::class,'index'])->name('rochas.index');
     Route::get('/fotos', [FotosController::class,'index'])->name('fotos.index');
     Route::get('/jazidas', [JazidaController::class,'index'])->name('jazidas.index');
     Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
