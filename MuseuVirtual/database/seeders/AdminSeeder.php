@@ -39,7 +39,7 @@ class AdminSeeder extends Seeder
             $user->assignRole('admin');
         }
 
-        $user = User::where('email', 'liviacahos@gmail.com')->first();
+        $user = User::where('email', 'liviavieira@gmail.com')->first();
         if ($user) {
             $user->assignRole('admin');
         }
