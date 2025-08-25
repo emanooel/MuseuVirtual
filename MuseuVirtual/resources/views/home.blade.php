@@ -38,8 +38,8 @@
     <div class="flex justify-center mt-10">
         <div class="grid xl:grid-cols-3  gap-x-8 gap-y-4 grid-cols-1 justify-items-center items-center items-stretch pb-40 ">
             <figure data-aos="fade-right">
-                    <a href="{{ route('site.jazidas') }}"><img class="cursor-pointer h-full hover:scale-95 duration-300"
-                            src="/assets/img/JazidaInicial.png" alt=""></a>
+                    <a href="{{ route('site.jazidas') }}"><img class="rounded-lg w-[584px] h-[876px] cursor-pointer h-full hover:scale-95 duration-300"
+                        src="/assets/img/JAZIDAinicial(2).png" alt=""></a>
                             <figcaption>
                                 <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Jazidas</h2>
                                 <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de jazidas.
@@ -49,7 +49,7 @@
 
 
             <figure data-aos="fade-left">
-                <a href="{{ route('site.rochas') }}"><img class="cursor-pointer h-full hover:scale-95 duration-300" src="/assets/img/RochaInicial.png"
+                <a href="{{ route('site.rochas') }}"><img class="cursor-pointer h-full rounded-lg hover:scale-95 w-[584px] h-[876px] duration-300" src="/assets/img/rochaINICIAL.jpg"
                         alt=""></a>
                 <figcaption>
                     <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Rochas</h2>
@@ -59,7 +59,7 @@
             </figure>
 
             <figure data-aos="fade-right">
-                <a href="{{ route('site.minerais') }}"><img class="cursor-pointer h-full hover:scale-95 duration-300" src="/assets/img/MineraisInicial.png"
+                <a href="{{ route('site.minerais') }}"><img class="cursor-pointer h-full rounded-lg hover:scale-95 w-[584px] h-[876px] duration-300" src="/assets/img/MINERALinicial.jpg"
                         alt=""></a>
                 <figcaption>
                     <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Minerais</h2>
