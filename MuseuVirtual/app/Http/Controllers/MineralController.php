@@ -43,8 +43,6 @@ class MineralController extends Controller
         $mineral -> descricao = $request -> descricao;
         $mineral -> propriedades = $request -> propriedades;
         $mineral -> jazida_id = $request -> idJazida;
-        $mineral -> periodo_id = $request -> periodo_id;
-        $mineral -> era_id = $request -> era_id;
         $mineral -> save();
         
         if ($request->hasFile('foto')) {
