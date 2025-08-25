@@ -16,7 +16,7 @@ class MineralController extends Controller
      */
     public function index()
     {
-        $minerais = Mineral::with('fotos')->paginate(12);
+        $minerais = Mineral::with('fotos')->paginate(10);
         // dd($minerais);
         return Inertia::render('Dashboard/Minerais/Index', ['minerais'=>$minerais]);
     }
@@ -43,6 +43,8 @@ class MineralController extends Controller
         $mineral -> descricao = $request -> descricao;
         $mineral -> propriedades = $request -> propriedades;
         $mineral -> jazida_id = $request -> idJazida;
+        $mineral -> periodo_id = $request -> periodo_id;
+        $mineral -> era_id = $request -> era_id;
         $mineral -> save();
         
         if ($request->hasFile('foto')) {
@@ -89,7 +91,6 @@ class MineralController extends Controller
      */
     public function update(Request $request, Mineral $mineral)
     {
-        // dd($mineral);
         $mineral = Mineral::with('fotos')->findOrFail($request->id);
         $request->validate([
             'nome' => 'sometimes|required|string|max:255',
@@ -131,7 +132,7 @@ class MineralController extends Controller
         }
         
         $mineral->delete();
-        $minerais = Mineral::paginate(10);  // 10 rochas por página
+        $minerais = Mineral::paginate(10);
 
         return redirect()->route('minerais.index', 'minerals')->with('success', 'Mineral deletado com sucesso!');
     }

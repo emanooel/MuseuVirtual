@@ -1,15 +1,14 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref, reactive, onMounted } from 'vue';
-import axios from 'axios';
+import { reactive } from 'vue';
 
 const form = reactive({
-    eon: '',
-    era: '',
-    periodo: '',
-    idRocha: '',
-    idMineral: ''
+  eon: '',
+  era: '',
+  periodo: '',
+  idRocha: '',
+  idMineral: '',
 });
 
 const props = defineProps({
@@ -17,24 +16,43 @@ const props = defineProps({
   minerais: Array,
 });
 
+
 function submitForm() {
-    const payload = new FormData();
+  if (!form.era || !form.periodo) {
+    alert('Selecione era e período.');
+    return;
+  }
+  if (!form.idRocha && !form.idMineral) {
+    alert('Selecione um mineral ou uma rocha.');
+    return;
+  }
+  if (form.idRocha && form.idMineral) {
+    alert('Selecione apenas um: mineral OU rocha.');
+    return;
+  }
 
-    // eons não são enviados
-    payload.append('era', form.era);
-    payload.append('periodo', form.periodo);
+  const payload = {
+    era: form.era,
+    periodo: form.periodo,
+    eon: form.eon,
+  };
 
-    if (form.idRocha) {
-        payload.append('idRocha', form.idRocha);
-    } else if (form.idMineral) {
-        payload.append('idMineral', form.idMineral);
-    }
+  if (form.idRocha) {
+    router.put(route('rochas.update', form.idRocha), payload, {
+      preserveScroll: true,
+    });
+    return;
+  }
 
-    router.put(route('Timeline.update', id), payload);
+  if (form.idMineral) {
+    router.put(route('minerais.update', form.idMineral), payload, {
+      preserveScroll: true,
+    });
+  }
 }
-
-
 </script>
+
+
 
 <template>
     <Head title="Associar" />

@@ -42,15 +42,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 
-Route::resource('rocha', RochaController::class)->names('Rocha');
+
+Route::resource('rochas', RochaController::class)->names('Rocha');
 
 Route::resource('timeline', RochaController::class)->names('Timeline');
 
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
-Route::resource('/minerais', MineralController::class);
+Route::resource('/minerais', MineralController::class)
+    ->parameters(['minerais' => 'mineral']);
+
 Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');
 
@@ -66,9 +68,6 @@ Route::prefix('fotos')->group(function() {
     Route::post('/{foto}/anotacoes', [FotosController::class, 'salvarAnotacoes'])->name('fotos.anotacoes.store');
 });
 
-// Route::get('/emanoel', function(){
-//     return view("emanoel");
-// });
 
 Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
 Route::get('/image-picker/{type?}', [ImageUploadController::class, 'picker'])->name('image.picker');
