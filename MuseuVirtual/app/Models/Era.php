@@ -11,9 +11,15 @@ class Era extends Model
         return $this->belongsTo(Eon::class);
     }
 
+    public function aquisicoes()
+    {
+        return $this->hasMany(Aquisicoes::class);
+    }
+
     public function periodos()
     {
         return $this->hasMany(Periodo::class);
     }
+
 }
 

@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Jazida;
 use App\Models\Mineral;
 use App\Models\Rocha;
+use App\Models\Aquisicoes;
 
 class TimelineController extends Controller
 {
@@ -16,8 +17,16 @@ class TimelineController extends Controller
      */
     public function index()
     {
-        $eons = Eon::with(['eras.periodos.rochas'])->get();
-        return Inertia::render('Dashboard/Timeline/Timeline', ['eons' => $eons]);
+        $eons = Eon::with([
+            'eras.aquisicoes.rocha',
+            'eras.aquisicoes.mineral',
+            'eras.periodos.aquisicoes.rocha',
+            'eras.periodos.aquisicoes.mineral'
+        ])->get();
+
+        return Inertia::render('Dashboard/Timeline/Timeline', [
+            'eons' => $eons
+        ]);
     }
 
     /**
@@ -28,9 +37,9 @@ class TimelineController extends Controller
         return Inertia::render('Dashboard/Timeline/Create', [
             'rochas' => Rocha::all(),
             'minerais' => Mineral::all(),
-            'jazidas' => Jazida::all(),
-            'idRochas' => request('idRocha'),
+            'eons' => Eon::with('eras.periodos')->get(),
         ]);
+
     }
 
     /**
@@ -38,8 +47,29 @@ class TimelineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'era_id'     => 'nullable|exists:eras,id',
+            'periodo_id' => 'nullable|exists:periodos,id',
+            'rocha_id'   => 'nullable|exists:rochas,id',
+            'mineral_id' => 'nullable|exists:minerais,id',
+        ]);
+
+        // Garante que ao menos era ou período esteja preenchido
+        if (!$data['era_id'] && !$data['periodo_id']) {
+            return back()->withErrors(['error' => 'É necessário informar uma Era ou Período.']);
+        }
+
+        // Garante que ao menos rocha ou mineral esteja preenchido
+        if (!$data['rocha_id'] && !$data['mineral_id']) {
+            return back()->withErrors(['error' => 'É necessário informar uma Rocha ou Mineral.']);
+        }
+        
+        Aquisicoes::create($data);
+
+
+        return back()->with('success', 'Aquisição associada com sucesso!');
     }
+
 
     /**
      * Display the specified resource.

@@ -32,10 +32,6 @@ Route::get('/dashboardPublica', function () {
     return Inertia::render('DashboardPublica');
 })->middleware(['auth', 'verified'])->name('dashboardPublica');
 
-Route::get('/timeline', [TimelineController::class, 'index']);
-
-Route::resource('/timeline', EraController::class);
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -46,8 +42,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('rochas', RochaController::class)->names('Rocha');
 
-Route::resource('timeline', RochaController::class)->names('Timeline');
-
+Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
+Route::post('/timeline', [TimelineController::class, 'store'])->name('timeline.store');
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 Route::resource('/minerais', MineralController::class)
