@@ -83,12 +83,12 @@ onMounted(()=>{
                                     <img :src="`/storage/${foto.caminho}`" alt="Foto da Jazida"
                                         class="h-32 w-32 object-cover mb-2" />
                                     <div class="flex gap-2">
-                                        <a :href="route('fotos-edit', foto.id)" class="text-blue-500">Editar</a>
-                                        <form :action="route('fotos-destroy', foto.id)" method="POST"
-                                            @submit.prevent="$inertia.delete(route('fotos-destroy', foto.id))">
+                                        <a :href="route('fotos.edit', foto.id)" class="text-blue-500">Editar</a>
+                                        <form :action="route('fotos.destroy', foto.id)" method="POST"
+                                            @submit.prevent="$inertia.delete(route('fotos.destroy', foto.id))">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button type="submit" class="text-red-500"
-                                                @click.prevent="$inertia.delete(route('fotos-destroy', foto.id))">
+                                                @click.prevent="$inertia.delete(route('fotos.destroy', foto.id))">
                                                 Excluir
                                             </button>
                                         </form>

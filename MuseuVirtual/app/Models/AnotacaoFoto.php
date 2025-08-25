@@ -16,7 +16,7 @@ class AnotacaoFoto extends Model
     ];
 
     public function foto(){
-        return $this->belongsTo(Foto::class);
+        return $this->belongsTo(Fotos::class);
     }
     
 }

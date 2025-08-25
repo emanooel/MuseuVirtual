@@ -25,7 +25,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route('fotos-update', props.fotos.id), {
+  form.post(route('fotos.update', props.fotos.id), {
     forceFormData: true,
   });
 };

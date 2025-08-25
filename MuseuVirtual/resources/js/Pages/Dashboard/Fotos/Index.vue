@@ -29,7 +29,7 @@ const fecharModalVisualizacao = () => {
 
 function deletar(id) {
   if (confirm('Tem certeza que deseja deletar?')) {
-    router.delete(route('fotos-destroy', id), {
+    router.delete(route('fotos.destroy', id), {
       preserveState: true,
       // onSuccess: () => alert('Foto excluída com sucesso!'),
     });
@@ -69,7 +69,7 @@ watch(
     <template #header>
       <div class="flex justify-between items-center">
         <h2 class="font-semibold text-xl text-black leading-tight">Lista de Fotos</h2>
-        <a :href="route('fotos-create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <a :href="route('fotos.create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
           Adicionar foto
         </a>
       </div>
@@ -144,7 +144,7 @@ watch(
               <td class="px-6 py-4 dark:text-white">{{ foto.capa ? 'Sim' : 'Não' }}</td>
               <td class="px-6 py-4">
                 <div class="flex justify-center gap-2">
-                  <a :href="route('fotos-edit', foto.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                  <a :href="route('fotos.edit', foto.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
                     Editar
                   </a>
                   <button @click="deletar(foto.id)" class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">

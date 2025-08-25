@@ -17,9 +17,10 @@ use App\Http\Controllers\TimelineController;
 
 Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
-Route::get("/site/jazidas/{id}", [JazidaController::class, 'site'])->name("site.jazidas.show");
+Route::get("/site/jazidas/{id}", [JazidaController::class, 'show'])->name("site.jazidas.show");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 Route::get('/minerais/{id}/qrcode', [MineralController::class, 'gerarQrCode'])->name('minerais.qrcode');
+Route::get('/rochas/{rocha}', [RochaController::class, 'show'])->name('rochas.show');
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");
 Route::get('/rochas/{id}/qrcode', [RochaController::class, 'gerarQrCode'])->name('rochas.qrcode');
 
@@ -55,14 +56,12 @@ Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');
 
 Route::prefix('fotos')->group(function() {
-    Route::get('/', [FotosController::class, 'index'])->name('fotos-index');
-    Route::get('/create', [FotosController::class, 'create'])->name('fotos-create');
-    Route::post('/', [FotosController::class, 'store'])->name('fotos-store');
-    Route::get('/{id}/edit', [FotosController::class, 'edit'])->name('fotos-edit');
-    Route::put('/{id}', [FotosController::class, 'update'])->name('fotos-update');
-    Route::delete('/{id}', [FotosController::class, 'destroy'])->name('fotos-destroy');
-
-    // Rota única para salvar/criar/atualizar/deletar todas as anotações
+    Route::get('/', [FotosController::class, 'index'])->name('fotos.index');
+    Route::get('/create', [FotosController::class, 'create'])->name('fotos.create');
+    Route::post('/', [FotosController::class, 'store'])->name('fotos.store');
+    Route::get('/{id}/edit', [FotosController::class, 'edit'])->name('fotos.edit');
+    Route::put('/{id}', [FotosController::class, 'update'])->name('fotos.update');
+    Route::delete('/{id}', [FotosController::class, 'destroy'])->name('fotos.destroy');
     Route::post('/{foto}/anotacoes', [FotosController::class, 'salvarAnotacoes'])->name('fotos.anotacoes.store');
 });
 

@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Listagem de fotos') }}
             </h2>
-            <a href="{{ route('fotos-create') }}"
+            <a href="{{ route('fotos.create') }}"
                class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-xl transition duration-200">Adicionar foto
             </a>
         </div>
@@ -53,10 +53,10 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{{ $foto->capa ? 'Sim' : 'Não' }}</td>
                             <td class="px-6 py-4 whitespace-nowrap flex items-center gap-3">
-                                <a href="{{ route('fotos-edit', $foto->id) }}"
+                                <a href="{{ route('fotos.edit', $foto->id) }}"
                                    class="text-blue-500 hover:underline">Editar</a>
-                                   
-                                <form action="{{ route('fotos-destroy', $foto->id) }}" method="POST"
+
+                                <form action="{{ route('fotos.destroy', $foto->id) }}" method="POST"
                                       onsubmit="return confirm('Tem certeza que deseja deletar?')">
                                     @csrf
                                     @method('DELETE')

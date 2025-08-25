@@ -71,7 +71,7 @@
                             {{ __('Fotos da rocha') }}
                         </h2>
                         
-                        <a href="{{ route('fotos-create', ['idRocha' =>$rocha->id]) }}" class="bg-[#9B9FB5] inline-block self-end text-black px-4 bg-blue-600 rounded hover:bg-blue-700">
+                        <a href="{{ route('fotos.create', ['idRocha' =>$rocha->id]) }}" class="bg-[#9B9FB5] inline-block self-end text-black px-4 bg-blue-600 rounded hover:bg-blue-700">
                             Adicionar fotos
                         </a>
 
@@ -93,11 +93,11 @@
                                     {{-- Botões abaixo da imagem --}}
                                     <div class="flex items-center gap-2">
 
-                                        <a href="{{ route('fotos-edit', $foto->id) }}" class="inline-flex items-center px-2 py-1 text-sm bg-[#9B9FB5] text-black dark:text-white hover:underline rounded">
+                                        <a href="{{ route('fotos.edit', $foto->id) }}" class="inline-flex items-center px-2 py-1 text-sm bg-[#9B9FB5] text-black dark:text-white hover:underline rounded">
                                             Editar
                                             <x-icons.pencil />
                                         </a>
-                                        <form action="{{ route('fotos-destroy', $foto->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta rocha?');" class="inline">
+                                        <form action="{{ route('fotos.destroy', $foto->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta rocha?');" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="inline-flex items-center px-2 py-1 bg-[#9B9FB5] text-sm text-red-600 dark:text-red-400 hover:underline rounded">

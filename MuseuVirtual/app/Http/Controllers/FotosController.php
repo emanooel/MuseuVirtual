@@ -225,33 +225,41 @@ class FotosController extends Controller
         return redirect()->back()->with('success', 'Foto excluída com sucesso!');
     }
 
-    public function salvarAnotacoes(Request $request, $fotoId)
-    {
-        $anotacoes = $request->input('anotacoes', []);
-        $deletadas = $request->input('deletadas', []);
+   public function salvarAnotacoes(Request $request, $fotoId)
+   {
+       $anotacoes = $request->input('anotacoes', []);
+       $deletadas = $request->input('deletadas', []);
 
-        if (!empty($deletadas)) {
-            AnotacaoFoto::whereIn('id', $deletadas)->delete();
-        }
+       if (!empty($deletadas)) {
+           AnotacaoFoto::whereIn('id', $deletadas)->delete();
+       }
 
-        foreach ($anotacoes as $anotacao) {
-            if (!empty($anotacao['id'])) {
-                $registro = AnotacaoFoto::find($anotacao['id']);
-                if ($registro) {
-                    $registro->update([
-                        'x' => $anotacao['x'],
-                        'y' => $anotacao['y'],
-                        'texto' => $anotacao['texto'],
-                    ]);
-                }
-            } else {
-                AnotacaoFoto::create([
-                    'foto_id' => $fotoId,
-                    'x' => $anotacao['x'],
-                    'y' => $anotacao['y'],
-                    'texto' => $anotacao['texto'],
-                ]);
-            }
-        }
-    }   
+       foreach ($anotacoes as $anotacao) {
+           if (!empty($anotacao['id'])) {
+               $registro = AnotacaoFoto::find($anotacao['id']);
+               if ($registro) {
+                   $registro->update([
+                       'x' => $anotacao['x'], // Certifique-se de que 'x' está sendo passado
+                       'y' => $anotacao['y'], // Certifique-se de que 'y' está sendo passado
+                       'texto' => $anotacao['texto'],
+                   ]);
+               }
+           } else {
+               AnotacaoFoto::create([
+                   'foto_id' => $fotoId,
+                   'x' => $anotacao['x'], // Certifique-se de que 'x' está sendo passado
+                   'y' => $anotacao['y'], // Certifique-se de que 'y' está sendo passado
+                   'texto' => $anotacao['texto'],
+               ]);
+           }
+       }
+   }
+   
+
+   public function listarAnotacoes($fotoId)
+   {
+       $anotacoes = AnotacaoFoto::where('foto_id', $fotoId)->get();
+       return response()->json($anotacoes);
+   }
+
 }

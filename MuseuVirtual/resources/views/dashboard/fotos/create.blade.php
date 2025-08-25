@@ -10,7 +10,7 @@
     <x-slot name="slot">
         <div class="container mx-auto px-4 mt-6">
             <div class="max-w-3xl mx-auto mt-2 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
-                <form action="{{ route('fotos-store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form action="{{ route('fotos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
 
                     <div>

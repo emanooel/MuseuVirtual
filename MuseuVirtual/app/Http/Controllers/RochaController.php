@@ -18,7 +18,6 @@ class RochaController extends Controller
     public function index()
     {
         $rochas = Rocha::with('fotos')->paginate(10);
-
         return Inertia::render('Dashboard/Rochas/Index', [
             'rochas' => $rochas
         ]);
@@ -79,7 +78,7 @@ class RochaController extends Controller
      */
     public function show($rocha)
     {
-        $rocha = Rocha::with('fotos')->findOrFail($rocha);
+        $rocha = Rocha::with(['fotos.anotacoes'])->findOrFail($rocha);
         return view('rochaEspecifica', compact('rocha'));
     }
 

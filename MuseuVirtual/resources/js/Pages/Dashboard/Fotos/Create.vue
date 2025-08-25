@@ -43,7 +43,7 @@ function toggleCapa(fileName) {
 }
 
 function submit() {
-  form.post(route('fotos-store'), {
+  form.post(route('fotos.store'), {
     forceFormData: true
   })
 }

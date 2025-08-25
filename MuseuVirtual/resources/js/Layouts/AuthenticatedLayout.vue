@@ -49,7 +49,7 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                                 <NavLink
                                     :href="route('fotos.index')"
-                                    :active="route().current('fotos-*')"
+                                    :active="route().current('fotos.*')"
                                 >
                                     Fotos
                                 </NavLink>

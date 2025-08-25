@@ -52,8 +52,8 @@
                                     <div class="p-2 border rounded-md mx-2">
                                         <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Foto da Jazida" class="h-32 w-32 object-cover mb-2">
                                         <div class="flex gap-2">
-                                            <a href="{{ route('fotos-edit', $foto->id) }}" class="text-blue-500">Editar</a>
-                                            <form action="{{ route('fotos-destroy', $foto->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta foto?');">
+                                            <a href="{{ route('fotos.edit', $foto->id) }}" class="text-blue-500">Editar</a>
+                                            <form action="{{ route('fotos.destroy', $foto->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta foto?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-500">Excluir</button>

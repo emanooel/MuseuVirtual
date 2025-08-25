@@ -11,7 +11,7 @@
 
             <img src="{{ asset('storage/' . $fotos->caminho) }}" alt="Foto da Rocha" class="h-[144px] w-[128px] object-cover">
             
-                <form method="POST" action="{{ route('fotos-update', $fotos->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('fotos.update', $fotos->id) }}" enctype="multipart/form-data">
                 @method('PUT')    
                 @csrf
 
