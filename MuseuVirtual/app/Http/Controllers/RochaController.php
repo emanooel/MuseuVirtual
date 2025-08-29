@@ -172,7 +172,7 @@ class RochaController extends Controller
      public function gerarQrCode($id)
     {
         $rocha = Rocha::findOrFail($id);
-        $url = route('rochas.show', $rocha->id); // ou use slug se tiver
+        $url = route('Rocha.show', $rocha->id); // ou use slug se tiver
         $qrCode = QrCode::format('png')->size(300)->generate($url);
 
         return response($qrCode)
