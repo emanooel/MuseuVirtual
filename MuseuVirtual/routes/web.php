@@ -45,7 +45,7 @@ Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verif
 Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 
 // Rochas:
-Route::resource('rochas', RochaController::class)->names('Rocha');
+Route::resource('rochas', RochaController::class)->names('rochas');
 
 // Minerais:
 Route::resource('/minerais', MineralController::class)
