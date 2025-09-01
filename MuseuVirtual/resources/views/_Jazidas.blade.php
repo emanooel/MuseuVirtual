@@ -1,10 +1,10 @@
 <x-layouts.BaseLayout>
-    <x-slot name="title">Minerais</x-slot>
+    <x-slot name="title">Jazidas</x-slot>
 
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to bottom, #ACB18E 0.5%, #73785C 5%, #363C27 20%);
+            background: rgb(0, 0, 0);
             color: #F1EEDD;
         }
 
@@ -63,14 +63,14 @@
 
         .minerals-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas grandes */
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-top: 40px;
         }
 
         @media (max-width: 1024px) {
             .minerals-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas de tablet */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -84,7 +84,7 @@
             }
 
             .minerals-grid {
-                grid-template-columns: 1fr; /* 1 coluna em telas de celular */
+                grid-template-columns: 1fr;
             }
         }
 
@@ -117,6 +117,7 @@
             font-weight: bold;
         }
 
+        /* Paginação */
         .pagination-links nav {
             display: flex;
             justify-content: center;
@@ -129,16 +130,14 @@
             margin: 0 5px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
-        }
-
-        .pagination-links nav a {
-            background-color: rgba(241, 238, 221, 0.1);
+            font-family: Arial, sans-serif;
             color: #F1EEDD;
+            background-color: rgba(241, 238, 221, 0.1);
         }
 
         .pagination-links nav a:hover {
             background-color: #73785C;
-            color: #363C27; /* Adicionado para um hover mais completo */
+            color: #F1EEDD;
         }
 
         .pagination-links nav .active span {
@@ -172,6 +171,7 @@
         <div class="rock-type-section">
             <div class="rock-description">
                 <h2><strong>Jazidas</strong></h2>
+                <p>
                     Formadas a partir de processos geológicos. As jazidas são concentrações naturais de minerais ou rochas que possuem valor econômico.
                 </p>
             </div>
@@ -198,9 +198,9 @@
                 @endforeach
             </div>
 
-            {{-- <div class="pagination-links">
+            <div class="pagination-links">
                 {{ $jazidas->links() }}
-            </div> --}}
+            </div>
         </div>
     </div>
 </x-layouts.BaseLayout>

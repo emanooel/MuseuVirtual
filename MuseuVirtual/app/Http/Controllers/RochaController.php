@@ -162,9 +162,9 @@ class RochaController extends Controller
 
     public function site()
     {
-        $rochastipo1 = Rocha::where("tipo", 1)->with("fotos")->get();
-        $rochastipo2 = Rocha::where("tipo", 2)->with("fotos")->get();
-        $rochastipo3 = Rocha::where("tipo", 3)->with("fotos")->get();
+        $rochastipo1 = Rocha::where("tipo", 1)->with("fotos")->paginate(12);
+        $rochastipo2 = Rocha::where("tipo", 2)->with("fotos")->paginate(12);
+        $rochastipo3 = Rocha::where("tipo", 3)->with("fotos")->paginate(12);
         // dd($rochas);
         return view('rochas', compact("rochastipo1", "rochastipo2", "rochastipo3"));
     }
@@ -183,5 +183,11 @@ class RochaController extends Controller
     {
         $rochastipo = Rocha::where('tipo', $tipo)->with('fotos')->get();
         return view('rocha_tipo', compact('rochastipo', 'tipo'));
+    }
+
+    public function site_show($id)
+    {
+        $rocha = Rocha::with('fotos')->findOrFail($id);
+        return view('rochaEspecifica', compact('rocha'));
     }
 }
