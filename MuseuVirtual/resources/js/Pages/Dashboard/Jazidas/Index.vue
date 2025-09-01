@@ -7,14 +7,14 @@ import { aparelhoUso } from '@/Composables/aparelhoUso.js';
 
 const props = defineProps({
     jazidas: {
-        type: Array,
-        default: () => [],
+        type: Object,
+        default: () => [{ data: []}],
     },
 });
 
 const { Mobile, Desktop } = aparelhoUso();
 
-const jazidas = props.jazidas;
+const jazidas = props.jazidas.data;
 const page = usePage();
 const successMessage = computed(() => page.props?.flash?.success ?? null);
 
