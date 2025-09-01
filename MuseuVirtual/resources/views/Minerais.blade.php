@@ -41,26 +41,6 @@
             margin-bottom: 40px;
         }
 
-        .rock-type-section {
-            background: rgba(54, 60, 39, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 60px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(241, 238, 221, 0.1);
-        }
-
-        .rock-description h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .rock-description p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
         .minerals-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas grandes */

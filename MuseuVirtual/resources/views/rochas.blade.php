@@ -2,6 +2,36 @@
     <x-slot name="title">Rochas</x-slot>
 
     <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #ACB18E 0.5%, #73785C 5%, #363C27 20%);
+            color: #F1EEDD;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(172, 177, 142, 0.2), rgba(115, 120, 92, 0.2));
+            border-radius: 25px;
+            padding: 50px 30px;
+            margin-bottom: 50px;
+            text-align: center;
+            border: 2px solid rgba(241, 238, 221, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
         .swiper-container-wrapper {
             display: flex;
             align-items: center;
@@ -125,10 +155,8 @@
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <!-- Hero Section -->
         <div class="hero-section">
-            <h1 class="font-[Arial] text-[50px] md:text-[60px] text-[#F1EEDD] pb-4">
-                <strong>Museu Mineral - Rochas</strong>
-            </h1>
-            <p class="font-[Arial] text-[18px] text-[#F1EEDD] opacity-90 max-w-3xl mx-auto leading-relaxed">
+            <h1><strong>Museu Mineral - Rochas</strong></h1>
+            <p>
                 Conheça os três principais tipos de rochas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
         </div>
