@@ -1,12 +1,16 @@
 <x-layouts.BaseLayout>
+
+
     <x-slot name="title">RochaEspecifica</x-slot>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     <style>
         /* Estilos para o contêiner principal do carrossel e seus botões */
         .swiper-container-wrapper {
@@ -135,7 +139,16 @@
             /* max-width: 1200px; */
         }
 
-        /* ------------------------------------------------------------- */
+
+        body,
+        .font {
+            font-family: 'Segoe UI', sans-serif !important;
+        }
+
+        h1 {
+            font-family: "Italiana", sans-serif;
+            font-weight: 400;
+        }
     </style>
 
     {{-- Contêiner principal para o conteúdo da página (com paddings responsivos) --}}
@@ -146,7 +159,7 @@
         {{-- @dd($rocha) --}}
 
         {{-- Título da página, exibindo o nome da rocha --}}
-        <h1 class="font-[Arial] text-[50px] text-[#F1EEDD] pt-16"><strong>{{ $rocha->nome }}</strong></h1>
+        <h1 class=" text-[50px] text-[#F1EEDD] pt-16"><strong>{{ $rocha->nome }}</strong></h1>
 
         {{-- Lógica PHP para encontrar a foto de capa (se existir) ou a primeira foto --}}
         @php
@@ -170,15 +183,17 @@
                 <div class="swiper-wrapper">
                     @foreach ($rocha->fotos as $foto)
                         <div class=" swiper-slide">
-                            <a href=""data-fancybox="gallery"><img src="{{ asset('storage/' . $foto->caminho) }}"
-                                    alt="Imagem da Rocha"></a>
+                            <a href="{{ asset('storage/' . $foto->caminho) }}" data-fancybox="gallery"><img
+                                    src="{{ asset('storage/' . $foto->caminho) }}" alt="Imagem da Rocha"></a>
 
                         </div>
                     @endforeach
                 </div>
                 <div class="swiper-pagination"></div>
-                <div class="swiper-button-next swiper-button-next2"></div>
-                <div class="swiper-button-prev swiper-button-prev2"></div>
+                <div class="flex">
+                    <div class="swiper-button-prev swiper-button-prev2"></div>
+                    <div class="swiper-button-next swiper-button-next2"></div>
+                </div>
 
             </div>
 
@@ -187,7 +202,8 @@
                 <div class="swiper-wrapper">
                     @foreach ($rocha->fotos as $foto)
                         <div class="swiper-slide">
-                            <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Miniatura da Rocha">
+                            <a href="{{ asset('storage/' . $foto->caminho) }}" data-fancybox="gallery"><img
+                                    src="{{ asset('storage/' . $foto->caminho) }}" alt="Imagem da Rocha"></a>
                         </div>
                     @endforeach
                 </div>
@@ -197,11 +213,11 @@
         <div class="text-white">
 
             {{-- Seção de descrição e composição da rocha --}}
-            <div class="pt-6">
-                <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
+            <div class="font">
+                <h2 class="text-[20px] text-[#F1EEDD]"> <strong> Descrição:
                     </strong>{!! $rocha->descricao !!}</h2>
                 <br>
-                <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição da rocha: </strong>
+                <h2 class="text-[20px] text-[#F1EEDD]"><strong> Composição da rocha: </strong>
                     {{ $rocha->composicao }}</h2>
             </div>
         </div>
@@ -226,11 +242,6 @@
                 swiper: swiper,
             },
         });
-        // $('[data-fancybox]').fancybox({
-        // // Desabilita o retorno de foco para evitar conflito com o Swiper
-        // backFocus: false
-        // });
-        // Configuração do Fancybox 4
         Fancybox.bind('[data-fancybox]', {
             placeFocusBack: false
         });

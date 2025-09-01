@@ -159,11 +159,13 @@
 
         @if ($fotoExibir)
             <div class="main-image-container">
-                <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem principal de {{ $mineral->nome }}">
+                <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
+                    <img src="{{ asset('storage/' . $item->caminho) }}" alt="Miniatura de {{ $mineral->nome }}">
+                </a>
             </div>
             <div class="text-center mb-6 h-[300px]">
                 <a href="{{ route('minerais.qrcode', $mineral->id) }}"
-                   class="inline-block bg-gray-700 px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300 shadow-md">
+                    class="inline-block bg-gray-700 px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300 shadow-md">
                     <span class="text-white font-semibold">Ver QR Code</span>
                 </a>
             </div>
@@ -178,7 +180,8 @@
                         @foreach ($mineral->fotos as $item)
                             <div class="swiper-slide">
                                 <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                                    <img src="{{ asset('storage/' . $item->caminho) }}" alt="Miniatura de {{ $mineral->nome }}">
+                                    <img src="{{ asset('storage/' . $item->caminho) }}"
+                                        alt="Miniatura de {{ $mineral->nome }}">
                                 </a>
                             </div>
                         @endforeach
@@ -198,16 +201,24 @@
 
     <!-- Swiper JS -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             new Swiper(".SwiperRochas", {
                 loop: true,
                 slidesPerView: 4,
                 spaceBetween: 20,
                 breakpoints: {
-                    640: { slidesPerView: 1 },
-                    768: { slidesPerView: 2 },
-                    1024: { slidesPerView: 3 },
-                    1280: { slidesPerView: 4 },
+                    640: {
+                        slidesPerView: 1
+                    },
+                    768: {
+                        slidesPerView: 2
+                    },
+                    1024: {
+                        slidesPerView: 3
+                    },
+                    1280: {
+                        slidesPerView: 4
+                    },
                 },
                 navigation: {
                     nextEl: ".swiper-next-rocha",
