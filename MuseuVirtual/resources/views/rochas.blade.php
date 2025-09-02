@@ -225,9 +225,7 @@
             </p>
         </div>
 
-        <div class="mb-10">
-            <img class="highlight-image" src="/storage/app/public/fotos/rochas/1.jpg" alt="Formações rochosas espetaculares">
-        </div>
+
 
         {{-- Rochas Ígneas --}}
         <div class="rock-type-section">

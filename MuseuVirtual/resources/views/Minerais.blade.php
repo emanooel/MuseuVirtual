@@ -184,6 +184,7 @@
     </style>
 
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
+        <br><br>
         <div class="hero-section">
             <h1><strong>Museu Mineral - Minerais</strong></h1>
             <p>
@@ -191,7 +192,6 @@
             </p>
         </div>
 
-        <img class="highlight-image" src="/storage/app/public/fotos/rochas/1.jpg" alt="Formações rochosas espetaculares">
 
         <div class="rock-type-section">
             <div class="rock-description">
