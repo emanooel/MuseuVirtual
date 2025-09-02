@@ -120,6 +120,7 @@
             color: #F1EEDD;
             margin: 0;
         }
+        
 
         /* Paginação */
         .pagination-links nav {

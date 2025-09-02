@@ -577,6 +577,7 @@
                     <button class="modal-close-button close-only" onclick="hideQRCode()">Fechar</button>
                 </div>
             </div>
+            
         </div>
 
         @if($jazida->descricao)

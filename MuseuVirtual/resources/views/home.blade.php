@@ -265,6 +265,7 @@
             animation: spin 1s linear infinite;
         }
 
+        
         /* AOS Override */
         [data-aos="fade-right"] { opacity: 0; transform: translateX(-50px); transition: all 0.6s ease; }
         [data-aos="fade-right"].aos-animate { opacity: 1; transform: translateX(0); }
