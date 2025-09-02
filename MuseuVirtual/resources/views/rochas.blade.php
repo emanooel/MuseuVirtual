@@ -194,38 +194,73 @@
         .text-center {
             text-align: center;
         }
+        
+        /* Novas regras para a imagem do ciclo */
+        .rock-cycle-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: block; /* Para centralizar com margin: auto */
+        }
+
 
         @media (max-width: 768px) {
+            .hero-section {
+                padding: 30px 20px;
+                margin-bottom: 30px;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
             .rock-type-section {
                 padding: 25px;
+                margin-bottom: 40px;
             }
 
             .rock-description {
                 padding: 20px;
             }
 
+            .rock-description h2 {
+                font-size: 32px;
+            }
+
+            .rock-description p {
+                font-size: 15px;
+            }
+
             .swiper-slide {
-                width: 300px;
+                width: 80%; /* Ajuste para preencher a tela em mobile */
                 height: auto;
             }
 
             .swiper-slide img {
-                height: 400px;
+                height: 350px;
+            }
+
+            .swiper-button-prev,
+            .swiper-button-next {
+                display: none; /* Oculta os botões em mobile, dependendo da necessidade do Swiper */
             }
         }
     </style>
 
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
-        <!-- Hero Section -->
         <div class="hero-section">
             <h1><strong>Museu Mineral - Rochas</strong></h1>
             <p>
                 Conheça os três principais tipos de rochas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
         </div>
-
-
 
         {{-- Rochas Ígneas --}}
         <div class="rock-type-section">
@@ -252,13 +287,11 @@
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
                                         @endphp
-
                                         @if ($fotoExibir)
                                             <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
                                         @else
                                             <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
                                         @endif
-
                                         <figcaption>
                                             <h4><strong>{{ $item->nome }}</strong></h4>
                                         </figcaption>
@@ -302,13 +335,11 @@
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
                                         @endphp
-
                                         @if ($fotoExibir)
                                             <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
                                         @else
                                             <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
                                         @endif
-
                                         <figcaption>
                                             <h4><strong>{{ $item->nome }}</strong></h4>
                                         </figcaption>
@@ -352,13 +383,11 @@
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
                                         @endphp
-
                                         @if ($fotoExibir)
                                             <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
                                         @else
                                             <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
                                         @endif
-
                                         <figcaption>
                                             <h4><strong>{{ $item->nome }}</strong></h4>
                                         </figcaption>
@@ -377,13 +406,13 @@
             </div>
         </div>
 
-        <!-- Seção educativa -->
         <div class="hero-section mt-16">
-            <h3 style="font-size: 32px; color: #F1EEDD; margin-bottom: 16px;"><strong>Como as rochas se transformam</strong></h3>
+            <h3 style="font-size: 32px; color: #F1EEDD; margin-bottom: 16px;"><strong>O Ciclo das Rochas</strong></h3>
             <p style="font-size: 16px; color: #F1EEDD; opacity: 0.9; max-width: 800px; margin: 0 auto; line-height: 1.6;">
                 As rochas podem se transformar umas nas outras ao longo do tempo. Uma rocha ígnea pode se tornar metamórfica 
                 com calor e pressão, e qualquer rocha pode ser quebrada em pedaços que formam novas rochas sedimentares.
             </p>
+            <img src="{{ asset('assets/img/ciclo-das-rochas.png') }}" alt="Diagrama do ciclo das rochas" class="rock-cycle-image">
         </div>
     </div>
 
@@ -392,7 +421,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const swiperOptions = {
                 loop: true,
-                slidesPerView: 4,
+                slidesPerView: 1, // Ajuste para 1 slide em mobile
                 spaceBetween: 20,
                 autoplay: {
                     delay: 4000,
@@ -404,32 +433,15 @@
                     1024: { slidesPerView: 3 },
                     1280: { slidesPerView: 4 },
                 },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
             };
 
-            new Swiper(".SwiperIgneas", {
-                ...swiperOptions,
-                navigation: {
-                    nextEl: ".swiper-next-ignea",
-                    prevEl: ".swiper-prev-ignea",
-                },
-            });
-
-            new Swiper(".SwiperMetamorficas", {
-                ...swiperOptions,
-                navigation: {
-                    nextEl: ".swiper-next-metamorf",
-                    prevEl: ".swiper-prev-metamorf",
-                },
-            });
-
-            new Swiper(".SwiperSedimentares", {
-                ...swiperOptions,
-                navigation: {
-                    nextEl: ".swiper-next-sedim",
-                    prevEl: ".swiper-prev-sedim",
-                },
-            });
+            new Swiper(".SwiperIgneas", swiperOptions);
+            new Swiper(".SwiperMetamorficas", swiperOptions);
+            new Swiper(".SwiperSedimentares", swiperOptions);
         });
     </script>
-
 </x-layouts.BaseLayout>
