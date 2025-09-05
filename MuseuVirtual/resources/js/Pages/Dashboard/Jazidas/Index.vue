@@ -12,6 +12,11 @@ const props = defineProps({
     },
 });
 
+onMounted (()=>{
+    const a = Array.from(props.jazidas)
+    console.log(props.jazidas)
+});
+
 const { Mobile, Desktop } = aparelhoUso();
 
 const jazidas = props.jazidas.data;
@@ -54,7 +59,7 @@ function submitDelete(id) {
 
                     <!-- Desktop View -->
                     <div v-if="Desktop">
-                        <div v-if="jazidas.length > 0">
+                        <div v-if="props.jazidas.length">
                             <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-100 dark:bg-gray-700">
                                     <tr>
@@ -64,7 +69,7 @@ function submitDelete(id) {
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr v-for="jazida in jazidas" :key="jazida.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <tr v-for="jazida in props.jazidas" :key="jazida.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                         
                                         <td class="px-6 py-4 text-center">
                                             <p v-if="!jazida.fotos || jazida.fotos.length === 0">Não existe fotos cadastradas</p>

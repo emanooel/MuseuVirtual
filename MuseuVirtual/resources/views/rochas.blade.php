@@ -3,7 +3,7 @@
 
     <style>
         body {
-            font-family: 'Lato', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: rgb(0, 0, 0);
             color: #F1EEDD;
         }
@@ -207,17 +207,12 @@
 
 
         @media (max-width: 768px) {
-            .hero-section {
-                padding: 30px 20px;
-                margin-bottom: 30px;
-            }
-
             .hero-section h1 {
-                font-size: 2.5rem;
+                font-size: 40px;
             }
 
             .hero-section p {
-                font-size: 1rem;
+                font-size: 16px;
             }
 
             .rock-type-section {
@@ -256,10 +251,7 @@
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
         <div class="hero-section">
-            <h1><strong>Museu Mineral - Rochas</strong></h1>
-            <p>
-            <h1><strong>Museu Mineral - Rochas</strong></h1>
-            <p>
+            <h1 style="font-family: 'Segoe UI', sans-serif"><strong>Museu Mineral - Rochas</strong></h1><p>
                 Conheça os três principais tipos de rochas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
         </div>

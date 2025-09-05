@@ -168,7 +168,7 @@
 
         {{-- Título grande e descrição do topo --}}
         <div class="hero-section">
-            <h1><strong>Museu Mineral - Jazidas</strong></h1>
+            <h1 ><strong>Museu Mineral - Jazidas</strong></h1>
             <p>
                 Conheça as principais jazidas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
