@@ -58,7 +58,7 @@ function submitForm() {
         payload.append('jazida_id', jazida_id.value);
     }
 
-    router.post(route('Rocha.store'), payload);
+    router.post(route('rochas.store'), payload);
 }
 </script>
 

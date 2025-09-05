@@ -91,7 +91,6 @@ class MineralController extends Controller
      */
     public function update(Request $request, Mineral $mineral)
     {
-        // dd($mineral);
         $mineral = Mineral::with('fotos')->findOrFail($request->id);
         $request->validate([
             'nome' => 'sometimes|required|string|max:255',
@@ -133,7 +132,7 @@ class MineralController extends Controller
         }
         
         $mineral->delete();
-        $minerais = Mineral::paginate(10);  // 10 rochas por página
+        $minerais = Mineral::paginate(10);
 
         return redirect()->route('minerais.index', 'minerals')->with('success', 'Mineral deletado com sucesso!');
     }

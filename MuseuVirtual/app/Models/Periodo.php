@@ -12,9 +12,9 @@ class Periodo extends Model
         
     }
 
-    public function rochas()
+    public function aquisicoes()
     {
-        return $this->hasMany(Rocha::class);
+        return $this->hasMany(Aquisicoes::class);
     }
 
 }
