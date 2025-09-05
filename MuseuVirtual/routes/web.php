@@ -17,7 +17,7 @@ use App\Http\Controllers\TimelineController;
 
 Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
-Route::get('/site/jazidas/{id}', [JazidaController::class, 'mostrarJazidaEspecifica']);
+Route::get("/site/jazidas/{id}", [JazidaController::class, 'site'])->name("site.jazidas.show");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 Route::get('/minerais/{id}/qrcode', [MineralController::class, 'gerarQrCode'])->name('minerais.qrcode');
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");

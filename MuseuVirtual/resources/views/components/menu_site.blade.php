@@ -2,15 +2,15 @@
     /* a:hover {
         background: rgba(0, 0, 0, .05);
     } */
-    
+
     #nav #div {
-        background: #F1EEDD;
+        background: #f1eedd;
     }
 
-    @media(max-width:1600px){
-        #nav  {
-        background: #F1EEDD;
-    }
+    @media(max-width:1600px) {
+        #nav {
+            background: #F1EEDD;
+        }
     }
 
     @media (max-width: 768px) {
@@ -90,19 +90,27 @@
         }
     }
 </style>
-<header id="header" >
-    <nav id="nav" class="block"> 
+<header id="header">
+    <nav id="nav" class="block">
         {{-- justify-center no nav --}}
         <div id="div" class="rounded-full">
             <button aria-label="Abrir menu" id="btn-mobile" aria-controls="menu" aria-haspopup="true" aria-expanded="false"
                 class="hidden text-[#565851]">Menu
                 <span id="hamburguer"></span>
             </button>
-            <ul id="menu" role="menu" class="flex justify-center font-[arial] pt-3 pb-3 font-bold">
-                <li><a href="{{ route('home') }}" class="p-5 pr-40 text-[#565851]">Museu Virtual ES</a></li>
-                <li><a href="{{ route('site.jazidas') }}" class="p-5 text-[#565851]">Jazidas</a></li>
-                <li><a href="{{ route('site.rochas') }}" class="p-5 text-[#565851]">Rochas</a></li>
-                <li><a href="{{ route('site.minerais') }}" class="p-5 pr-40 text-[#565851] ">Minerais</a></li>
+            <ul id="menu" role="menu" class="flex justify-center pt-3 pb-3 font-bold">
+                {{-- <li><img src="{{ asset('assets/img/logo12.png') }}" alt="logo" class="opacity-60 h-[50px] pr-4">
+                </li> --}}
+                <div class='flex'>
+                    <li><a href="{{ route('home') }}" class="text-[20px] p-4 pr-40 text-[#565851]">Museu
+                            Virtual ES</a></li>
+                    <li><a href="{{ route('site.jazidas') }}"
+                            class="text-[20px] p-4 text-[#565851]">Jazidas</a></li>
+                    <li><a href="{{ route('site.rochas') }}"
+                            class="text-[20px] p-4 text-[#565851]">Rochas</a></li>
+                    <li><a href="{{ route('site.minerais') }}"
+                            class="text-[20px] p-4 text-[#565851] ">Minerais</a></li>
+                </div>
                 {{-- <li><a href="{{ route('dashboard') }}" id="cadastro"
                         class="p-2 pl-5 pr-5 rounded-full bg-[#ACB18E] mr-5 text-[#F1EEDD] bg-[#ACB18E] hover:bg-[#A39D8C]">Cadastrar</a>
                 </li>
@@ -113,6 +121,8 @@
         </div>
     </nav>
 </header>
+{{-- <hr class="opacity-60 border-t-[#F1EEDD]">
+</hr> --}}
 
 <script>
     const btnMobile = document.getElementById('btn-mobile');
