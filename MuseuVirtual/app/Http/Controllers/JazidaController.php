@@ -15,7 +15,7 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::with('fotos')->paginate(12);
+        $jazidas = Jazida::with('fotos')->get();
         # return view('dashboard.jazidas.index', compact('jazidas'));
         return Inertia::render('Dashboard/Jazidas/Index',['jazidas'=>$jazidas]);
     }
@@ -122,10 +122,12 @@ class JazidaController extends Controller
         return redirect()->route('jazidas.index', 'jazidas')->with('success', 'Jazida deletada com sucesso!');
     }
 
-    public function site(){
-        $jazidas = Jazida::with("fotos")->get();
-        return view('_Jazidas',compact("jazidas"));
+    public function site()
+    {
+        $jazidas = Jazida::with("fotos")->paginate(6); // ou 9, 6... como preferir
+        return view('_Jazidas', compact("jazidas"));
     }
+
 
     public function apiListJazidas()
     {
