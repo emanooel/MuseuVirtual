@@ -1,10 +1,10 @@
 <x-layouts.BaseLayout>
-    <x-slot name="title">Minerais</x-slot>
+    <x-slot name="title">Jazidas</x-slot>
 
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to bottom, #ACB18E 0.5%, #73785C 5%, #363C27 20%);
+            background: rgb(0, 0, 0);
             color: #F1EEDD;
         }
 
@@ -32,15 +32,6 @@
             line-height: 1.6;
         }
 
-        .highlight-image {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            margin-bottom: 40px;
-        }
-
         .rock-type-section {
             background: rgba(54, 60, 39, 0.3);
             border-radius: 20px;
@@ -50,27 +41,37 @@
             border: 1px solid rgba(241, 238, 221, 0.1);
         }
 
+        .rock-description {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ACB18E;
+        }
+
         .rock-description h2 {
-            font-size: 2.5rem;
+            font-size: 40px;
             margin-bottom: 20px;
+            color: #F1EEDD;
         }
 
         .rock-description p {
-            font-size: 1.1rem;
+            font-size: 16px;
             line-height: 1.6;
             opacity: 0.9;
+            color: #F1EEDD;
         }
 
         .minerals-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas grandes */
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-top: 40px;
         }
 
         @media (max-width: 1024px) {
             .minerals-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas de tablet */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -84,27 +85,28 @@
             }
 
             .minerals-grid {
-                grid-template-columns: 1fr; /* 1 coluna em telas de celular */
+                grid-template-columns: 1fr;
             }
         }
 
         figure {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
         }
 
         figure:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
         figure img {
             width: 100%;
             height: 300px;
             object-fit: cover;
-            border-bottom: 1px solid rgba(241, 238, 221, 0.2);
+            border-radius: 0.75rem 0.75rem 0 0;
         }
 
         figcaption {
@@ -113,10 +115,14 @@
         }
 
         figcaption h2 {
-            font-size: 1.5rem;
+            font-size: 28px;
             font-weight: bold;
+            color: #F1EEDD;
+            margin: 0;
         }
+        
 
+        /* Paginação */
         .pagination-links nav {
             display: flex;
             justify-content: center;
@@ -129,16 +135,14 @@
             margin: 0 5px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
-        }
-
-        .pagination-links nav a {
-            background-color: rgba(241, 238, 221, 0.1);
+            font-family: Arial, sans-serif;
             color: #F1EEDD;
+            background-color: rgba(241, 238, 221, 0.1);
         }
 
         .pagination-links nav a:hover {
             background-color: #73785C;
-            color: #363C27; /* Adicionado para um hover mais completo */
+            color: #F1EEDD;
         }
 
         .pagination-links nav .active span {
@@ -160,6 +164,9 @@
     </style>
 
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
+        <br><br>
+
+        {{-- Título grande e descrição do topo --}}
         <div class="hero-section">
             <h1><strong>Museu Mineral - Jazidas</strong></h1>
             <p>
@@ -167,18 +174,18 @@
             </p>
         </div>
 
-        <img class="highlight-image" src="/storage/app/public/fotos/rochas/1.jpg" alt="Formações rochosas espetaculares">
-
+        {{-- Seção estilizada com borda verde, como em Minerais --}}
         <div class="rock-type-section">
             <div class="rock-description">
                 <h2><strong>Jazidas</strong></h2>
-                    Formadas a partir de processos geológicos. As jazidas são concentrações naturais de minerais ou rochas que possuem valor econômico.
+                <p>
+                    As jazidas representam concentrações naturais de minerais que podem ser exploradas economicamente. Explore nossa coleção para conhecer os principais locais e seus minerais característicos.
                 </p>
             </div>
 
             <div class="minerals-grid">
                 @foreach ($jazidas as $item)
-                    <a href="{{ route('site.jazidas.show', $item->id) }}">
+                    <a href="{{ route('jazidas.show', $item->id) }}">
                         <figure>
                             @php
                                 $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
@@ -198,9 +205,9 @@
                 @endforeach
             </div>
 
-            {{-- <div class="pagination-links">
+            <div class="pagination-links">
                 {{ $jazidas->links() }}
-            </div> --}}
+            </div>
         </div>
     </div>
 </x-layouts.BaseLayout>
