@@ -1,5 +1,5 @@
 <x-layouts.BaseLayout>
-    @vite(['resources/css/rochasBlade.css', 'resources/js/app.js'])
+    @vite(['resources/css/rochasBlade.css', 'resources/js/app.js', 'resources/js/rochas.js'])
     <x-slot name="title">Rochas</x-slot>
 
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
@@ -166,32 +166,4 @@
         </div>
     </div>
 
-    {{-- Scripts do Swiper --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const swiperOptions = {
-                loop: true,
-                slidesPerView: 1, // Ajuste para 1 slide em mobile
-                spaceBetween: 20,
-                autoplay: {
-                    delay: 4000,
-                    disableOnInteraction: false,
-                },
-                breakpoints: {
-                    640: { slidesPerView: 1 },
-                    768: { slidesPerView: 2 },
-                    1024: { slidesPerView: 3 },
-                    1280: { slidesPerView: 4 },
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-            };
-
-            new Swiper(".SwiperIgneas", swiperOptions);
-            new Swiper(".SwiperMetamorficas", swiperOptions);
-            new Swiper(".SwiperSedimentares", swiperOptions);
-        });
-    </script>
 </x-layouts.BaseLayout>
