@@ -1,13 +1,29 @@
 <style>
-    /* a:hover {
-        background: rgba(0, 0, 0, .05);
-    } */
-
+    /* Navbar */
     #nav #div {
         background: #f1eedd;
     }
 
-    @media(max-width:1600px) {
+    /* Links da navbar */
+    #menu li a {
+        color: #565851;
+        text-decoration: none;
+        transition: color 0.3s, transform 0.3s;
+    }
+
+    /* Hover na navbar */
+    #menu li a:hover {
+        color: #000;       /* muda a cor da letra no hover */
+        transform: scale(1.05); /* leve zoom */
+    }
+
+    /* Link ativo */
+    #menu li a.active {
+        color: #000;       /* link da página atual fica preto */
+        font-weight: bold; /* opcional: destaca ainda mais */
+    }
+
+    @media(max-width:1600px){
         #nav {
             background: #F1EEDD;
         }
@@ -88,35 +104,26 @@
             background: none;
             color: #565851;
         }
+
+        /* Hover mobile */
+        #menu li a:hover {
+            color: #000;
+        }
     }
 </style>
+
 <header id="header">
     <nav id="nav" class="block">
-        {{-- justify-center no nav --}}
         <div id="div" class="rounded-full">
             <button aria-label="Abrir menu" id="btn-mobile" aria-controls="menu" aria-haspopup="true" aria-expanded="false"
                 class="hidden text-[#565851]">Menu
                 <span id="hamburguer"></span>
             </button>
-            <ul id="menu" role="menu" class="flex justify-center pt-3 pb-3 font-bold">
-                {{-- <li><img src="{{ asset('assets/img/logo12.png') }}" alt="logo" class="opacity-60 h-[50px] pr-4">
-                </li> --}}
-                <div class='flex'>
-                    <li><a href="{{ route('home') }}" class="text-[20px] p-4 pr-40 text-[#565851]">Museu
-                            Virtual ES</a></li>
-                    <li><a href="{{ route('site.jazidas') }}"
-                            class="text-[20px] p-4 text-[#565851]">Jazidas</a></li>
-                    <li><a href="{{ route('site.rochas') }}"
-                            class="text-[20px] p-4 text-[#565851]">Rochas</a></li>
-                    <li><a href="{{ route('site.minerais') }}"
-                            class="text-[20px] p-4 text-[#565851] ">Minerais</a></li>
-                </div>
-                {{-- <li><a href="{{ route('dashboard') }}" id="cadastro"
-                        class="p-2 pl-5 pr-5 rounded-full bg-[#ACB18E] mr-5 text-[#F1EEDD] bg-[#ACB18E] hover:bg-[#A39D8C]">Cadastrar</a>
-                </li>
-                <li><a href="{{ route('dashboard') }}" id="login"
-                        class="p-2 pl-5 pr-5 rounded-full bg-[#ACB18E] text-[#F1EEDD] bg-[#ACB18E] hover:bg-[#A39D8C]">Login</a>
-                </li> --}}
+            <ul id="menu" role="menu" class="flex justify-center font-[arial] pt-3 pb-3 font-bold">
+                <li><a href="{{ route('home') }}" class="p-5 pr-40 {{ request()->routeIs('home') ? 'active' : '' }}">Museu Virtual ES</a></li>
+                <li><a href="{{ route('site.jazidas') }}" class="p-5 {{ request()->routeIs('site.jazidas', 'site.jazidas.show') ? 'active' : '' }}">Jazidas</a></li>
+                <li><a href="{{ route('site.rochas') }}" class="p-5 {{ request()->routeIs('site.rochas', 'site.rochas.show', 'site.rochas.tipo') ? 'active' : '' }}">Rochas</a></li>
+                <li><a href="{{ route('site.minerais') }}" class="p-5 pr-40 {{ request()->routeIs('site.minerais', 'site.minerais.show', 'site.minerais.tipo') ? 'active' : '' }}">Minerais</a></li>
             </ul>
         </div>
     </nav>
