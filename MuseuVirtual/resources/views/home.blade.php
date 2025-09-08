@@ -1,17 +1,5 @@
 <x-layouts.BaseLayout>
-<<<<<<< HEAD
-
-    <style>
-        .swiper-slide {
-            width: 100%;
-            height: 800px;
-            background-size: contain;
-        }
-    </style>
-
-=======
     @vite(['resources/css/homeBlade.css', 'resources/js/app.js'])
->>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
     <x-slot name="title">Home</x-slot>
 
     <!-- Loading Screen -->
@@ -22,41 +10,28 @@
     <!-- Hero Section -->
     <div class="hero-container">
         <div class="hero-content">
-            <h2 class="main-title">Museu Virtual</h2>
-            <h2 class="subtitle">
+            <br>
+            <h1 class="main-title">Museu Virtual</h1>
+            <p class="subtitle">
                 Bem-vindo ao Museu Virtual das Rochas, um espaço interativo e educativo
                 dedicado à incrível diversidade geológica da nossa região.
-            </h2>
+            </p>
         </div>
-
-        <!-- Swiper -->
-        <figure class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://th.bing.com/th/id/R.ad6cba861c6885f765c806b5b7863352?rik=6CY9S7bE5j3spA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f5%2f9%2fd%2f1281292-geology-wallpaper-1920x1080-for-lockscreen.jpg&ehk=19Sopya1egoOmeuV1vNCvXYLXkFfrxtBXMqB1Z9hwvc%3d&risl=&pid=ImgRaw&r=0" alt="Rochas Geologia">
+            <figure class="w-full swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src={{ asset('assets/img/jazida-inicial-final.jpg') }} alt="Rochas Geologia">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src={{ asset('assets/img/jazida-inicia-final2.jpg') }} alt="Rochas Geologia">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src={{ asset('assets/img/jazida-inicial-final3.jpg') }} alt="Rochas Geologia">
+                    </div>
                 </div>
             </div>
         </figure>
     </div>
-<<<<<<< HEAD
-    <div class="flex justify-center ml-60">
-        <h3 class="text-[20px] font-[arial] text-[#F1EEDD] text-left">Explore o universo da geologia em nosso <br>
-            site,onde você encontra informações <br> detalhadas sobre jazidas, rochas e minerais.</h3>
-    </div>
-    <br>
-    <div class="flex justify-center mt-10">
-        <div class="grid xl:grid-cols-3  gap-x-8 gap-y-4 grid-cols-1 justify-items-center items-center items-stretch pb-40 ">
-            <figure data-aos="fade-right">
-                    <a href="{{ route('site.jazidas') }}"><img class="rounded-lg w-[584px] h-[876px] cursor-pointer h-full hover:scale-95 duration-300"
-                            src="/assets/img/JAZIDAinicial(2).png" alt=""></a>
-                            <figcaption>
-                                <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Jazidas</h2>
-                                <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de jazidas.
-                                </h3>
-                            </figcaption>
-                        </figure>
-=======
->>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
 
     <!-- Explore Section -->
     <div class="explore-section">
@@ -94,19 +69,6 @@
                     </a>
                 </figure>
 
-<<<<<<< HEAD
-            {{-- <figure data-aos="fade-left">
-                    <a href="#"><img class="cursor-pointer" src="/assets/img/CatalogoInicial.png"
-                            alt=""></a>
-                            <figcaption>
-                        <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Catálogo</h2>
-                        <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">O catálogo é uma coleção organizada de
-                            amostras
-                            com <br> informações sobre suas características e classificações, confira <br>aqui nosso
-                            catálogo.</h3> --}}
-            {{-- </figcaption>
-            </figure> --}}
-=======
                 <figure class="card-figure" data-aos="fade-right">
                     <a href="{{ route('site.minerais') }}" class="card-link">
                         <img class="card-image" src="/assets/img/MINERALinicial.jpg" alt="Minerais">
@@ -120,7 +82,6 @@
                     </a>
                 </figure>
             </div>
->>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
         </div>
     </div>
 

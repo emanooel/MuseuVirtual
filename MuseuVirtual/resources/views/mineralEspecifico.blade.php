@@ -68,41 +68,12 @@
                 </div>
             @endif
 
-<<<<<<< HEAD
-        @if ($fotoExibir)
-            <div class="main-image-container">
-                <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                    <img src="{{ asset('storage/' . $item->caminho) }}" alt="Miniatura de {{ $mineral->nome }}">
-                </a>
-            </div>
-            <div class="text-center mb-6 h-[300px]">
-                <a href="{{ route('minerais.qrcode', $mineral->id) }}"
-                    class="inline-block bg-gray-700 px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300 shadow-md">
-                    <span class="text-white font-semibold">Ver QR Code</span>
-                </a>
-            </div>
-        @endif
-
-        <div class="rock-type-section">
-            <!-- Galeria Swiper -->
-            <div class="swiper-container-wrapper">
-                <div class="swiper-button-prev swiper-prev-rocha"></div>
-                <div class="swiper SwiperRochas">
-=======
             @if($mineral->fotos->count() > 1)
                 <div class="swiper-container swiper-mineral-thumbs">
->>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
                     <div class="swiper-wrapper">
                         @foreach ($mineral->fotos as $foto)
                             <div class="swiper-slide">
-<<<<<<< HEAD
-                                <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                                    <img src="{{ asset('storage/' . $item->caminho) }}"
-                                        alt="Miniatura de {{ $mineral->nome }}">
-                                </a>
-=======
                                 <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Miniatura do mineral {{ $mineral->nome }}" data-src="{{ asset('storage/' . $foto->caminho) }}">
->>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
                             </div>
                         @endforeach
                     </div>
@@ -145,31 +116,6 @@
 
 
     <script>
-<<<<<<< HEAD
-        document.addEventListener('DOMContentLoaded', function() {
-            new Swiper(".SwiperRochas", {
-                loop: true,
-                slidesPerView: 4,
-                spaceBetween: 20,
-                breakpoints: {
-                    640: {
-                        slidesPerView: 1
-                    },
-                    768: {
-                        slidesPerView: 2
-                    },
-                    1024: {
-                        slidesPerView: 3
-                    },
-                    1280: {
-                        slidesPerView: 4
-                    },
-                },
-                navigation: {
-                    nextEl: ".swiper-next-rocha",
-                    prevEl: ".swiper-prev-rocha",
-                },
-=======
         // Loading screen
         window.addEventListener('load', function() {
             const loadingOverlay = document.getElementById('loading-overlay');
@@ -244,7 +190,6 @@
 
             document.querySelectorAll('.section-container').forEach(el => {
                 observer.observe(el);
->>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
             });
         });
         

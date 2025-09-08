@@ -1,7 +1,7 @@
 <style>
     /* Navbar */
     #nav #div {
-        background: #F1EEDD;
+        background: #f1eedd;
     }
 
     /* Links da navbar */
@@ -128,6 +128,8 @@
         </div>
     </nav>
 </header>
+{{-- <hr class="opacity-60 border-t-[#F1EEDD]">
+</hr> --}}
 
 <script>
     const btnMobile = document.getElementById('btn-mobile');

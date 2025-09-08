@@ -23,4 +23,10 @@ class Jazida extends Model
     {
         return $this->hasMany(Rocha::class);
     }
+    
+    public function minerais()
+    {
+        return $this->hasMany(Mineral::class);
+    }
+    
 }

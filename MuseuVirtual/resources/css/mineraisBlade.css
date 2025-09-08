@@ -1,7 +1,13 @@
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Lato', sans-serif;
             background: rgb(0, 0, 0);
             color: #F1EEDD;
+        }
+
+        h1,
+        h2,
+        .section-title {
+            font-family: 'Cinzel', serif;
         }
 
         .hero-section {
