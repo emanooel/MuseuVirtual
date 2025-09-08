@@ -1,4 +1,5 @@
 <x-layouts.BaseLayout>
+<<<<<<< HEAD
 
     <style>
         .swiper-slide {
@@ -8,27 +9,36 @@
         }
     </style>
 
+=======
+    @vite(['resources/css/homeBlade.css', 'resources/js/app.js'])
+>>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
     <x-slot name="title">Home</x-slot>
-    <h1 class="font-[arial] pt-40 font-bold text-[80px] text-center text-[#F1EEDD]">Museu Virtual</h1>
-    <h2 class="text-center text-[20px] font-[arial] text-[#F1EEDD]">Bem-vindo ao Museu Virtual das Rochas, um <br>espaço
-        interativo e educativo dedicado à incrível<br> diversidade geológica da nossa região. </h2>
-    <br>
-    {{-- z --}}
-    <figure class="w-100 mt-20 swiper mySwiper">
-        <div class="swiper-wrapper">
-            @foreach ($fotosRecentes as $item)
-                <img src="{{ asset('storage/' . $item->caminho) }}" class="swiper-slide bg-cover">
-            @endforeach
-            {{-- <div class="swiper-pagination"></div> --}}
-        </div>
-    </figure>
 
-
-    <div class="flex justify-center mr-60 pt-40">
-        <h2
-            class="font-[arial] font-bold text-[80px] bg-gradient-to-b from-[#F1EEDD] to-[#363C27] bg-clip-text text-transparent">
-            Explore</h2>
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loading">
+        <div class="spinner"></div>
     </div>
+
+    <!-- Hero Section -->
+    <div class="hero-container">
+        <div class="hero-content">
+            <h2 class="main-title">Museu Virtual</h2>
+            <h2 class="subtitle">
+                Bem-vindo ao Museu Virtual das Rochas, um espaço interativo e educativo
+                dedicado à incrível diversidade geológica da nossa região.
+            </h2>
+        </div>
+
+        <!-- Swiper -->
+        <figure class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://th.bing.com/th/id/R.ad6cba861c6885f765c806b5b7863352?rik=6CY9S7bE5j3spA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f5%2f9%2fd%2f1281292-geology-wallpaper-1920x1080-for-lockscreen.jpg&ehk=19Sopya1egoOmeuV1vNCvXYLXkFfrxtBXMqB1Z9hwvc%3d&risl=&pid=ImgRaw&r=0" alt="Rochas Geologia">
+                </div>
+            </div>
+        </figure>
+    </div>
+<<<<<<< HEAD
     <div class="flex justify-center ml-60">
         <h3 class="text-[20px] font-[arial] text-[#F1EEDD] text-left">Explore o universo da geologia em nosso <br>
             site,onde você encontra informações <br> detalhadas sobre jazidas, rochas e minerais.</h3>
@@ -45,28 +55,46 @@
                                 </h3>
                             </figcaption>
                         </figure>
+=======
+>>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
 
+    <!-- Explore Section -->
+    <div class="explore-section">
+        <h2 class="explore-title">Explore</h2>
+        <h3 class="explore-intro">
+            Explore o universo da geologia em nosso site, onde você encontra informações
+            detalhadas sobre jazidas, rochas e minerais.
+        </h3>
 
-            <figure data-aos="fade-left">
-                <a href="{{ route('site.rochas') }}"><img class="cursor-pointer h-full rounded-lg hover:scale-95 w-[584px] h-[876px] duration-300" src="/assets/img/rochaINICIAL.jpg"
-                        alt=""></a>
-                <figcaption>
-                    <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Rochas</h2>
-                    <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de rochas.
-                    </h3>
-                </figcaption>
-            </figure>
+        <div class="cards-container">
+            <div class="cards-grid">
+                <figure class="card-figure" data-aos="fade-right">
+                    <a href="{{ route('site.jazidas') }}" class="card-link">
+                        <img class="card-image" src="/assets/img/JAZIDAinicial(2).png" alt="Jazidas">
+                        <div class="card-content">
+                            <h2 class="card-title">Jazidas</h2>
+                            <h3 class="card-description">
+                                Confira aqui nosso acervo completo de jazidas minerais,
+                                com informações detalhadas sobre sua formação e localização.
+                            </h3>
+                        </div>
+                    </a>
+                </figure>
 
-            <figure data-aos="fade-right">
-                <a href="{{ route('site.minerais') }}"><img class="cursor-pointer h-full rounded-lg hover:scale-95 w-[584px] h-[876px] duration-300" src="/assets/img/MINERALinicial.jpg"
-                        alt=""></a>
-                <figcaption>
-                    <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Minerais</h2>
-                    <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de minerais.
-                    </h3>
-                </figcaption>
-            </figure>
+                <figure class="card-figure" data-aos="fade-left">
+                    <a href="{{ route('site.rochas') }}" class="card-link">
+                        <img class="card-image" src="/assets/img/rochaINICIAL.jpg" alt="Rochas">
+                        <div class="card-content">
+                            <h2 class="card-title">Rochas</h2>
+                            <h3 class="card-description">
+                                Descubra a diversidade de rochas da nossa região,
+                                desde ígneas até metamórficas e sedimentares.
+                            </h3>
+                        </div>
+                    </a>
+                </figure>
 
+<<<<<<< HEAD
             {{-- <figure data-aos="fade-left">
                     <a href="#"><img class="cursor-pointer" src="/assets/img/CatalogoInicial.png"
                             alt=""></a>
@@ -78,22 +106,80 @@
                             catálogo.</h3> --}}
             {{-- </figcaption>
             </figure> --}}
+=======
+                <figure class="card-figure" data-aos="fade-right">
+                    <a href="{{ route('site.minerais') }}" class="card-link">
+                        <img class="card-image" src="/assets/img/MINERALinicial.jpg" alt="Minerais">
+                        <div class="card-content">
+                            <h2 class="card-title">Minerais</h2>
+                            <h3 class="card-description">
+                                Explore nossa coleção de minerais únicos,
+                                com suas propriedades físicas e químicas detalhadas.
+                            </h3>
+                        </div>
+                    </a>
+                </figure>
+            </div>
+>>>>>>> cd021bb2301a400068c3ee814f805670ea617e40
         </div>
     </div>
-    </div>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(() => { document.getElementById('loading').classList.add('fade-out'); }, 300);
+        });
+
+        if (typeof AOS !== 'undefined') {
+            AOS.init({ duration: 1000, once: true, offset: 100 });
+        }
+
+        const swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            loop: true,
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            effect: "fade",
+            fadeEffect: { crossFade: true },
+            speed: 1000,
+        });
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    document.querySelectorAll('.floating-element').forEach(el => {
+                        el.style.transform = `translateY(${-scrolled * 0.3}px)`;
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        document.querySelectorAll('.card-figure').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+
+            card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-15px) scale(1.02)');
+            card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0) scale(1)');
+            card.addEventListener('click', () => {
+                card.style.transform = 'translateY(-5px) scale(0.98)';
+                setTimeout(() => card.style.transform = 'translateY(-15px) scale(1.02)', 150);
+            });
+        });
+
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.card-figure');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 1200 + (index * 200));
+            });
+        });
+    </script>
 </x-layouts.BaseLayout>
-
-<script>
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 1, // Número de slides visíveis por vez
-        // spaceBetween: 10, // Espaço entre os slides em pixels
-        loop: true, // Faz o slider ser infinito (volta para o início após o último)
-
-        // Configura o autoplay
-        autoplay: {
-            delay: 2000, // Tempo de espera em milissegundos para a transição
-            disableOnInteraction: false, // O autoplay não para se o usuário interagir
-        },
-    });
-</script>

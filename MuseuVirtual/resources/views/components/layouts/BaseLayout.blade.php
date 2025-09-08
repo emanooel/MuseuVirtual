@@ -23,7 +23,7 @@
 
 </head>
 
-<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20%">
+<body>
     <div class="2xl:px-80">
         <x-menu_site />
     </div>

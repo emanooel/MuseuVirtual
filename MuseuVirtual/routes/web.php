@@ -22,6 +22,7 @@ Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.min
 Route::get('/minerais/{id}/qrcode', [MineralController::class, 'gerarQrCode'])->name('minerais.qrcode');
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");
 Route::get('/rochas/{id}/qrcode', [RochaController::class, 'gerarQrCode'])->name('rochas.qrcode');
+Route::get("/site/rochas/{id}", [RochaController::class, 'site_show'])->name("site.rochas.show");
 
 Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/api/rochas", [RochaController::class, 'apiListRocha']);
