@@ -1,7 +1,11 @@
+import Swiper from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 document.addEventListener('DOMContentLoaded', function () {
-    const swiperOptions = {
+    const baseOptions = {
         loop: true,
-        slidesPerView: 1, // Ajuste para 1 slide em mobile
+        slidesPerView: 1,
         spaceBetween: 20,
         autoplay: {
             delay: 4000,
@@ -11,15 +15,33 @@ document.addEventListener('DOMContentLoaded', function () {
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
-            1280: { slidesPerView: 4 },
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
         },
     };
 
-    new Swiper(".SwiperIgneas", swiperOptions);
-    new Swiper(".SwiperMetamorficas", swiperOptions);
-    new Swiper(".SwiperSedimentares", swiperOptions);
+    // Rochas Ígneas
+    new Swiper(".SwiperIgneas", {
+        ...baseOptions,
+        navigation: {
+            nextEl: ".swiper-next-ignea",
+            prevEl: ".swiper-prev-ignea",
+        },
+    });
+
+    // Rochas Metamórficas
+    new Swiper(".SwiperMetamorficas", {
+        ...baseOptions,
+        navigation: {
+            nextEl: ".swiper-next-metamorf",
+            prevEl: ".swiper-prev-metamorf",
+        },
+    });
+
+    // Rochas Sedimentares
+    new Swiper(".SwiperSedimentares", {
+        ...baseOptions,
+        navigation: {
+            nextEl: ".swiper-next-sedim",
+            prevEl: ".swiper-prev-sedim",
+        },
+    });
 });
