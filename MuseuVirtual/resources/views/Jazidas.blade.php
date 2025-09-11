@@ -20,7 +20,8 @@
 
         <div class="grid grid-cols-2 gap-8 ">
             @foreach ($jazidas as $item)
-                <figure class="pl-80 w-full">
+                <a href="{{ route('jazida_específica', $item->id) }}">
+                    <figure class="pl-80 w-full hover:w-">
                     @php
                         $fotoExibir = null; // Inicializa como nulo
                         // Tenta encontrar uma foto com capa
@@ -43,53 +44,10 @@
                         <h3 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Localização:
                                 {{ $item->localizacao }}</strong></h3>
                     </figcaption>
-                </figure>
+                    </figure>
+            </a>
             @endforeach
         </div>
-
-        {{-- <div class="grid grid-cols-2 gap-8 ">
-        <figure class="pl-80 w-full">
-            <img class="object-cover" src="/assets/img/image.png" alt="Imagem da jazida tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD]"><strong>Jazida tal</h2>
-                <h3 class="font-[Arial] text-[20px] text-[#F1EEDD]">Fica em tal lugar</strong></h3>
-            </figcaption>
-        </figure>
-        <figure class= "pb-20 w-full ">
-            <img class="object-cover" src="/assets/img/image.png" alt="Imagem da jazida tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD]"><strong>Jazida tal</h2>
-                <h3 class="font-[Arial] text-[20px] text-[#F1EEDD]">Fica em tal lugar</strong></h3>
-            </figcaption>
-        </figure>
-    </div>
-
-    <figure class="pl-80 pb-20 w-[82%]">
-        <img src="/assets/img/image (1).png" alt="Imagem da jazida tal">
-        <figcaption>
-            <h2 class="font-[Arial] text-[30px] text-[#F1EEDD]"><strong>Jazida tal</h2>
-            <h3 class="font-[Arial] text-[20px] text-[#F1EEDD]">Fica em tal lugar</strong></h3>
-        </figcaption>
-    </figure>
-
-
-
-    <div class="grid grid-cols-2 gap-8">
-        <figure class="pl-80 ">
-            <img src="/assets/img/image.png" alt="Imagem da jazida tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD]"><strong>Jazida tal</h2>
-                <h3 class="font-[Arial] text-[20px] text-[#F1EEDD]">Fica em tal lugar</strong></h3>
-            </figcaption>
-        </figure>
-        <figure class="pl-2 pb-40">
-            <img src="/assets/img/image.png" alt="Imagem da jazida tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD]"><strong>Jazida tal</h2>
-                <h3 class="font-[Arial] text-[20px] text-[#F1EEDD]">Fica em tal lugar</strong></h3>
-            </figcaption>
-        </figure>
-    </div> --}}
 
         <x-rodape_site></x-rodape_site>
 </body>
