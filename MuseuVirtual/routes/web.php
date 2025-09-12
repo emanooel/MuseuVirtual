@@ -48,7 +48,7 @@ Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.
 Route::resource('rocha', RochaController::class)->names('Rocha');
 
 Route::get('/site/rochas/{tipo}/{rocha}', [RochaController::class, 'show'])
-     ->name('rochas.show');
+     ->name('site.rochas.show');
 
 Route::resource('timeline', RochaController::class)->names('Timeline');
 
