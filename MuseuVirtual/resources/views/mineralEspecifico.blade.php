@@ -29,22 +29,24 @@
             @endphp
             @if ($fotoCapa)
                 <div class="image-gallery-container">
+
                     <div class="main-image-wrapper">
-                        <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" alt="Foto principal do mineral {{ $mineral->nome }}">
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
+                            data-caption="{{ $mineral->nome }}">
+                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}"
+                                alt="Foto principal da mineral {{ $mineral->nome }}">
+                        </a>
                         <div class="action-buttons">
+
                             <div class="action-button" onclick="downloadImage()" title="Baixar imagem">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 16l-4-4h3V4h2v8h3l-4 4zM6 20v-2h12v2H6z"/>
+                                    <path d="M12 16l-4-4h3V4h2v8h3l-4 4zM6 20v-2h12v2H6z" />
                                 </svg>
                             </div>
                             <div class="action-button" onclick="showQRCode()" title="Gerar QR Code">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-6-6h2v2h-2v-2zm2 2h2v2h-2v-2zm0 2h2v2h-2v-2z"/>
-                                </svg>
-                            </div>
-                            <div class="action-button" onclick="openFullscreen()" title="Tela cheia">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M5 5h5V3H3v7h2V5zm9-2v2h5v5h2V3h-7zM3 14v7h7v-2H5v-5H3zm16 0v5h-5v2h7v-7h-2z"/>
+                                    <path
+                                        d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-6-6h2v2h-2v-2zm2 2h2v2h-2v-2zm0 2h2v2h-2v-2z" />
                                 </svg>
                             </div>
                         </div>
