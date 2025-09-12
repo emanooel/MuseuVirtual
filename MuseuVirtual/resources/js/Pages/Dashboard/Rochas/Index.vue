@@ -29,6 +29,24 @@ function deleteRocha(id) {
         router.delete(route('rochas.destroy', id));
     }
 }
+
+/*
+function deleteRocha(id) {
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir esta rocha?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('rochas.destroy', id));
+    }
+  });
+}
+*/
+
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 <script setup>
+import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
 import ImageAnnotationViewer from '@/Components/ImageAnnotationViewer.vue';
@@ -28,12 +29,20 @@ const fecharModalVisualizacao = () => {
 };
 
 function deletar(id) {
-  if (confirm('Tem certeza que deseja deletar?')) {
-    router.delete(route('fotos-destroy', id), {
-      preserveState: true,
-      // onSuccess: () => alert('Foto excluída com sucesso!'),
-    });
-  }
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir esta foto?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('fotos-destroy', id), {
+      preserveState: true});
+      location.reload();
+    }
+  });
 }
 
 const filters = ref({
