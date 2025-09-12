@@ -6,8 +6,8 @@ import { aparelhoUso } from '@/Composables/aparelhoUso.js';
 
 const props = defineProps({
   minerais: {
-    type: Array,
-    default: () => [],
+    type: Object,
+    default: () => ({ data: []}),
   },
 });
 
@@ -82,6 +82,22 @@ function submitDelete(id) {
                     </tr>
                   </tbody>
                 </table>
+                <!-- Paginação Desktop -->
+                <div v-if="Desktop && props.minerais.links.length > 0" class="mt-6 flex justify-center gap-2">
+                  <button
+                    v-for="link in props.minerais.links"
+                    :key="link.label"
+                    :disabled="!link.url"
+                    @click="router.get(link.url)"
+                    v-html="link.label"
+                    class="mx-1 px-3 py-1 rounded text-sm"
+                    :class="{
+                      'bg-blue-600 text-white': link.active,
+                  'text-gray-500 dark:text-gray-30': !link.active,
+                  'text-gray-400': !link.url
+                    }"
+                  />
+                </div>
               </div>
               <p v-else class="text-center text-gray-600 dark:text-gray-300">Nenhum mineral cadastrado.</p>
             </div>
@@ -113,6 +129,22 @@ function submitDelete(id) {
               </div>
 
               <p v-else class="text-center text-gray-600 dark:text-gray-300">Nenhum mineral cadastrado.</p>
+            </div>
+            <!-- Paginação Mobile -->
+            <div v-if="!Desktop && props.minerais.links.length > 0" class="mt-6 flex flex-wrap justify-center gap-2">
+              <button
+                v-for="link in props.minerais.links"
+                :key="link.label"
+                :disabled="!link.url"
+                @click="router.get(link.url)"
+                v-html="link.label"
+                class="mx-1 px-3 py-1 rounded text-sm"
+                :class="{
+                  'bg-blue-600 text-white': link.active,
+                  'text-gray-500 dark:text-gray-30': !link.active,
+                  'text-gray-400': !link.url
+                }"
+              />
             </div>
 
           </div>

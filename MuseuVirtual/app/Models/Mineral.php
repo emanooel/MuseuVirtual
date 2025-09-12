@@ -14,6 +14,8 @@ class Mineral extends Model
         'descricao',
         'propriedades',
         'idJazida',
+        'era_id',
+        'periodo_id',
     ];
     public function fotos()
     {

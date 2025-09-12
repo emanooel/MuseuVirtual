@@ -4,7 +4,7 @@
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
         <div class="hero-section">
-            <h1><strong>Museu Mineral - Jazidas</strong></h1>
+            <h1 ><strong>Museu Mineral - Jazidas</strong></h1>
             <p>
                 Conheça as principais jazidas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>

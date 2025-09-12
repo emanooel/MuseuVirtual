@@ -5,8 +5,7 @@
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
         <div class="hero-section">
-            <h1><strong>Museu Mineral - Rochas</strong></h1>
-            <p>
+            <h1 style="font-family: 'Segoe UI', sans-serif"><strong>Museu Mineral - Rochas</strong></h1><p>
                 Conheça os três principais tipos de rochas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
         </div>
@@ -166,7 +165,4 @@
             <img src="{{ asset('assets/img/ciclo-das-rochas.png') }}" alt="Diagrama do ciclo das rochas" class="rock-cycle-image">
         </div>
     </div>
-
-    <script>
-
 </x-layouts.BaseLayout>

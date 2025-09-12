@@ -26,7 +26,7 @@ onMounted(() => {
 
 function deleteRocha(id) {
     if (confirm('Tem certeza que deseja excluir esta rocha?')) {
-        router.delete(route('Rocha.destroy', id));
+        router.delete(route('rochas.destroy', id));
     }
 }
 </script>
@@ -40,7 +40,7 @@ function deleteRocha(id) {
                 <h2 class="font-semibold text-xl text-gray-900 leading-tight">
                     Lista de Rochas
                 </h2>
-                <a :href="route('Rocha.create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <a :href="route('rochas.create')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Cadastrar Rocha
                 </a>
             </div>
@@ -86,7 +86,7 @@ function deleteRocha(id) {
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <div class="flex items-center justify-center gap-2">
-                                            <a :href="route('Rocha.edit', rocha.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                            <a :href="route('rochas.edit', rocha.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">
                                                 Editar
                                             </a>
                                             <button @click="deleteRocha(rocha.id)"
@@ -139,7 +139,7 @@ function deleteRocha(id) {
 
                             <!-- Ações -->
                             <div class="flex justify-center gap-2 mt-2">
-                            <a :href="route('Rocha.edit', rocha.id)" class="text-sm bg-[#9B9FB5] text-black dark:text-white px-3 py-1 rounded hover:underline">Editar</a>
+                            <a :href="route('rochas.edit', rocha.id)" class="text-sm bg-[#9B9FB5] text-black dark:text-white px-3 py-1 rounded hover:underline">Editar</a>
                             <button @click="deleteRocha(rocha.id)" class="text-sm bg-[#9B9FB5] text-red-600 dark:text-red-400 px-3 py-1 rounded hover:underline">Excluir</button>
                             </div>
                         </div>
