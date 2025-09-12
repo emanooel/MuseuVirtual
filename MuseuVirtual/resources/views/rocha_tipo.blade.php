@@ -109,7 +109,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             @foreach ($rochastipo as $item)
-                <a href="{{ route('site.rochas.show', $item->id) }}">
+                <a href="{{ route('rochas.show', [$item->tipo_nome, $item->slug]) }}">
                     <div class="rock-card">
                         @php
                             $fotoExibir = null;

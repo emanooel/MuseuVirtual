@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `eons`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eons` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -50,16 +50,16 @@ DROP TABLE IF EXISTS `eras`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eras` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descricao` text COLLATE utf8mb4_unicode_ci,
-  `imagem` text COLLATE utf8mb4_unicode_ci,
+  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `imagem` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `eon_id` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `eras_eon_id_foreign` (`eon_id`),
   CONSTRAINT `eras_eon_id_foreign` FOREIGN KEY (`eon_id`) REFERENCES `eons` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `eras` (
 
 LOCK TABLES `eras` WRITE;
 /*!40000 ALTER TABLE `eras` DISABLE KEYS */;
-INSERT INTO `eras` VALUES (1,'Eoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(2,'Paleoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(3,'Mesoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(4,'Neoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(5,'Paleoproterozoico',NULL,NULL,3,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(6,'Mesoproterozoico',NULL,NULL,3,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(7,'Neoproterozoico',NULL,NULL,3,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(8,'Paleozoico',NULL,NULL,4,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(9,'Mesozoico',NULL,NULL,4,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(10,'Cenozoico',NULL,NULL,4,'2025-08-18 17:34:30','2025-08-18 17:34:30');
+INSERT INTO `eras` VALUES (1,'Eoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(2,'Paleoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(3,'Mesoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(4,'Neoarqueano',NULL,NULL,2,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(5,'Paleoproterozoico',NULL,NULL,3,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(6,'Mesoproterozoico',NULL,NULL,3,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(7,'Neoproterozoico',NULL,NULL,3,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(8,'Paleozoico',NULL,NULL,4,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(9,'Mesozoico',NULL,NULL,4,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(10,'Cenozoico',NULL,NULL,4,'2025-08-18 17:34:30','2025-08-18 17:34:30'),(11,'Pre-Arquenano',NULL,NULL,1,NULL,NULL);
 /*!40000 ALTER TABLE `eras` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,8 +81,8 @@ DROP TABLE IF EXISTS `periodos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `periodos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descricao` text COLLATE utf8mb4_unicode_ci,
+  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `era_id` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -111,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-18 17:40:13
+-- Dump completed on 2025-08-29 20:04:43

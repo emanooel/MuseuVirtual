@@ -20,6 +20,35 @@ class SiteController extends Controller
             ->take(6) // Exemplo: Pega as 6 fotos mais recentes
             ->get();
 
+
+
         return view("home", compact('fotosRecentes'));
+    }
+    public function busca(Request $request)
+    {
+        $termo = trim($request->query('q')); 
+        $porPagina = 10;
+
+        // Evita consultas desnecessárias se o termo estiver vazio
+        if (empty($termo)) {
+            return view('home', [
+                'minerais' => collect(),
+                'rochas' => collect(),
+                'jazidas' => collect(),
+                'termo' => $termo,
+            ]);
+        }
+
+        // Busca com paginação nomeada para evitar conflitos
+        $minerais = Mineral::where('nome', 'LIKE', "%{$termo}%")
+            ->paginate($porPagina, ['*'], 'minerais');
+
+        $rochas = Rocha::where('nome', 'LIKE', "%{$termo}%")
+            ->paginate($porPagina, ['*'], 'rochas');
+
+        $jazidas = Jazida::where('localizacao', 'LIKE', "%{$termo}%")
+            ->paginate($porPagina, ['*'], 'jazidas');
+
+        return view('home', compact('minerais', 'rochas', 'jazidas', 'termo'));
     }
 }

@@ -17,7 +17,7 @@ class JazidaController extends Controller
     {
         $jazidas = Jazida::with('fotos')->get();
         # return view('dashboard.jazidas.index', compact('jazidas'));
-        return Inertia::render('Dashboard/Jazidas/Index',['jazidas'=>$jazidas]);
+        return Inertia::render('Dashboard/Jazidas/Index', ['jazidas' => $jazidas]);
     }
 
     /**
@@ -57,13 +57,12 @@ class JazidaController extends Controller
         return redirect()->route('jazidas.index')->with('success', 'Jazida cadastrada com sucesso!');
     }
 
-
     /**
      * Display the specified resource.
      */
     public function show($jazida)
     {
-        $jazida = Jazida::with('fotos')->findOrFail($jazida);
+        $jazida = Jazida::with('fotos')->where('slug', $jazida)->firstOrFail();;
         return view('jazidaEspecifica',compact('jazida'));
     }
 
@@ -73,8 +72,8 @@ class JazidaController extends Controller
     public function edit(Jazida $jazida)
     {
         $jazida->load('fotos');
-       # return view('dashboard.jazidas.edit', compact('jazida'));
-       return Inertia::render('Dashboard/Jazidas/Edit',['jazida'=>$jazida]);
+        # return view('dashboard.jazidas.edit', compact('jazida'));
+        return Inertia::render('Dashboard/Jazidas/Edit', ['jazida' => $jazida]);
     }
 
     /**
@@ -113,9 +112,8 @@ class JazidaController extends Controller
     {
         foreach ($jazida->fotos as $foto) {
             app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
-
         }
-        
+
         $jazida->delete();
         $jazidas = Jazida::with('fotos')->paginate(10);  // 10 jazidas por página
 
