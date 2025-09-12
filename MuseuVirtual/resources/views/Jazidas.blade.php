@@ -20,7 +20,7 @@
 
         <div class="grid grid-cols-2 gap-8 ">
             @foreach ($jazidas as $item)
-                <a href="{{ route('jazida_específica', $item->id) }}">
+                <a href="{{ route('jazida_específica', $item->slug) }}">
                     <figure class="pl-80 w-full hover:w-">
                     @php
                         $fotoExibir = null; // Inicializa como nulo

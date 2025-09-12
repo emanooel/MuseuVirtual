@@ -20,6 +20,8 @@ class SiteController extends Controller
             ->take(6) // Exemplo: Pega as 6 fotos mais recentes
             ->get();
 
+
+
         return view("home", compact('fotosRecentes'));
     }
 }

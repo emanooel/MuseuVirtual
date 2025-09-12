@@ -32,7 +32,8 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo1 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('Rocha.show', $item->id) }}">
+                                {{-- @dd($item) --}}
+                                <a href="{{ route('rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();

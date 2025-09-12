@@ -47,6 +47,9 @@ Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.
 
 Route::resource('rocha', RochaController::class)->names('Rocha');
 
+Route::get('/site/rochas/{tipo}/{rocha}', [RochaController::class, 'show'])
+     ->name('rochas.show');
+
 Route::resource('timeline', RochaController::class)->names('Timeline');
 
 
@@ -86,5 +89,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
     Route::resource('/timeline', TimelineController::class);
 });
+
+
 
 require __DIR__.'/auth.php';

@@ -1,5 +1,11 @@
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap');
 
+        body {
+            font-family: 'Lato', sans-serif;
+            background: rgb(0, 0, 0);
+            color: #F1EEDD;
+        }
+
         :root {
             --primary-dark: #1c1f1a;
             --primary-light: #F1EEDD;
@@ -28,7 +34,9 @@
             min-height: 100vh;
         }
 
-        h1, h2, .section-title {
+        h1,
+        h2,
+        .section-title {
             font-family: 'Cinzel', serif;
         }
 
@@ -57,17 +65,21 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, 
-                rgba(172, 177, 142, 0.15) 0%, 
-                rgba(115, 120, 92, 0.25) 50%,
-                rgba(54, 60, 39, 0.2) 100%
-            );
+            background: linear-gradient(135deg,
+                    rgba(172, 177, 142, 0.15) 0%,
+                    rgba(115, 120, 92, 0.25) 50%,
+                    rgba(54, 60, 39, 0.2) 100%);
             border-radius: 30px;
             padding: 60px 40px;
             margin: 40px 0 60px 0;
@@ -91,8 +103,15 @@
         }
 
         @keyframes shimmer {
-            0%, 100% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
+
+            0%,
+            100% {
+                transform: translateX(-100%);
+            }
+
+            50% {
+                transform: translateX(100%);
+            }
         }
 
         .hero-section h1 {
@@ -191,7 +210,6 @@
             background: linear-gradient(45deg, var(--accent-green), var(--accent-dark-green));
             padding: 3px;
         }
-        
         .main-image-wrapper:hover {
             transform: scale(1.02) translateY(-5px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -315,8 +333,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .modal-content {
@@ -342,7 +365,6 @@
             color: var(--accent-green);
             font-size: 1.5rem;
         }
-        
         .modal-content #qrcode {
             padding: 15px;
             background: var(--primary-light);
@@ -355,7 +377,7 @@
         .modal-actions {
             display: flex;
             justify-content: center;
-            gap: 15px; 
+            gap: 15px;
             margin-top: 20px;
         }
 
@@ -370,7 +392,6 @@
             transition: var(--transition);
             font-size: 1rem;
         }
-        
         .modal-close-button.close-only {
             background: transparent;
             border: 2px solid var(--accent-dark-green);
@@ -381,10 +402,10 @@
             transform: translateY(-2px);
             box-shadow: var(--shadow-light);
         }
-        
+
         .modal-close-button.close-only:hover {
-             background: var(--accent-dark-green);
-             color: var(--primary-light);
+            background: var(--accent-dark-green);
+            color: var(--primary-light);
         }
 
 
@@ -441,12 +462,10 @@
             .swiper-container {
                 padding: 0 25px;
             }
-            
             .modal-content {
                 padding: 25px;
                 margin: 20px;
             }
-            
             .modal-actions {
                 flex-direction: column;
                 gap: 10px;
@@ -467,16 +486,39 @@
             }
         }
 
-        .animate-delay-1 { animation-delay: 0.1s; }
-        .animate-delay-2 { animation-delay: 0.2s; }
-        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .animate-delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .animate-delay-3 {
+            animation-delay: 0.3s;
+        }
 
         /* Notification animations */
         @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
+
         @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
