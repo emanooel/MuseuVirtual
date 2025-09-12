@@ -1,5 +1,5 @@
 <x-layouts.BaseLayout>
-    @vite(['resources/css/homeBlade.css', 'resources/js/app.js'])
+    @vite(['resources/css/homeBlade.css', 'resources/js/app.js', 'resources/js/home.js'])
     <x-slot name="title">Home</x-slot>
 
     <!-- Loading Screen -->
