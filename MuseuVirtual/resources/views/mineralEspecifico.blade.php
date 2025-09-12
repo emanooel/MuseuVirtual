@@ -11,7 +11,6 @@
     <script>
         Fancybox.bind("[data-fancybox]", {
             hideScrollbar: false,
-            clickOutside: "close",
             Toolbar: {
                 display: {
                     left: ["infobar"],
@@ -46,11 +45,12 @@
             @endphp
             @if ($fotoCapa)
                 <div class="image-gallery-container">
+
                     <div class="main-image-wrapper">
                         <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
                             data-caption="{{ $mineral->nome }}">
-                            <img id="main-rocha-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}"
-                                alt="Foto principal da rocha {{ $mineral->nome }}">
+                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}"
+                                alt="Foto principal da mineral {{ $mineral->nome }}">
                         </a>
                         <div class="action-buttons">
 
