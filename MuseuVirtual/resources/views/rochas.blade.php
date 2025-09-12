@@ -1,7 +1,7 @@
 <x-layouts.BaseLayout>
-    @vite(['resources/css/rochasBlade.css', 'resources/js/app.js', 'resources/js/rochas.js'])
+    @vite(['resources/css/rochasBlade.css', 'resources/js/rochas.js'])
     <x-slot name="title">Rochas</x-slot>
-
+    
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
         <div class="hero-section">
@@ -165,5 +165,7 @@
             <img src="{{ asset('assets/img/ciclo-das-rochas.png') }}" alt="Diagrama do ciclo das rochas" class="rock-cycle-image">
         </div>
     </div>
+
+    <script>
 
 </x-layouts.BaseLayout>
