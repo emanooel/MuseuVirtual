@@ -24,7 +24,6 @@
 </head>
 
 <body>
-    <div class="2xl:px-80">
         <x-menu_site />
     </div>
     {{ $slot }}

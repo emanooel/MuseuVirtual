@@ -5,7 +5,8 @@
     }
 
     h1,
-    h2 {
+    h2,
+    .section-title {
         font-family: 'Cinzel', serif;
     }
 
