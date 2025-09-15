@@ -48,12 +48,10 @@
             @if ($fotoCapa)
                 <div class="image-gallery-container">
                     <div class="main-image-wrapper">
-                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" 
                             data-caption="{{ $rocha->nome }}">
-                            <img id="main-rocha-image" 
-                                 src="{{ asset('storage/' . $fotoCapa->caminho) }}"
-                                 data-current-path="{{ $fotoCapa->caminho }}"
-                                 alt="Foto principal da rocha {{ $rocha->nome }}">
+                            <img id="main-rocha-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
+                                alt="Foto principal da rocha {{ $rocha->nome }}">
                         </a>
                         <div class="action-buttons">
                             <div class="action-button" onclick="downloadImage()" title="Baixar imagem">
@@ -83,7 +81,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rocha->fotos as $foto)
                             <div class="swiper-slide">
-                                <img src="{{ asset('storage/' . $foto->caminho) }}"
+                                <img src="{{ asset('storage/' . $foto->caminho) }}" 
                                     alt="Miniatura da rocha {{ $rocha->nome }}"
                                     data-src="{{ asset('storage/' . $foto->caminho) }}"
                                     data-path="{{ $foto->caminho }}">

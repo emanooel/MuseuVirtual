@@ -48,12 +48,10 @@
             @if ($fotoCapa)
                 <div class="image-gallery-container">
                     <div class="main-image-wrapper">
-                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
-                            data-caption="{{ $mineral->nome }}">
-                            <img id="main-rocha-image" 
-                                 src="{{ asset('storage/' . $fotoCapa->caminho) }}"
-                                 data-current-path="{{ $fotoCapa->caminho }}"
-                                 alt="Foto principal da rocha {{ $mineral->nome }}">
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" 
+                            data-caption="{{ $mineral->nome }}" id="main-image-link">
+                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
+                                alt="Foto principal da mineral {{ $mineral->nome }}">
                         </a>
                         <div class="action-buttons">
                             <div class="action-button" onclick="downloadImage()" title="Baixar imagem">
@@ -83,10 +81,16 @@
                     <div class="swiper-wrapper">
                         @foreach ($mineral->fotos as $foto)
                             <div class="swiper-slide">
+<<<<<<< HEAD
                                 <img src="{{ asset('storage/' . $foto->caminho) }}"
                                     alt="Miniatura da rocha {{ $mineral->nome }}"
                                     data-src="{{ asset('storage/' . $foto->caminho) }}"
                                     data-path="{{ $foto->caminho }}">
+=======
+                                <img src="{{ asset('storage/' . $foto->caminho) }}" 
+                                     alt="Miniatura do mineral {{ $mineral->nome }}" 
+                                     data-src="{{ asset('storage/' . $foto->caminho) }}">
+>>>>>>> 451966577cc4816e893f8b73538c124189b39162
                             </div>
                         @endforeach
                     </div>
@@ -142,5 +146,9 @@
             </div>
         @endif
     </div>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 451966577cc4816e893f8b73538c124189b39162
 </x-layouts.BaseLayout>

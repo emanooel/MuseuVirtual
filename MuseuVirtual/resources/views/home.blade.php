@@ -44,7 +44,7 @@
                         <ul class="list-disc list-inside">
                             @foreach ($rochas as $rocha)
                                 <li>
-                                    <a href="{{ route('site.rochas.show', $rocha->id) }}"
+                                    <a href="{{ route('site.rochas.show', [$rocha->tipo,$rocha->slug]) }}"
                                         class="text-blue-600 hover:underline">
                                         {{ $rocha->nome }}
                                     </a>
