@@ -76,7 +76,7 @@
                     </div>
                 @endif
             @else
-                <p class="text-gray-600">Nenhum resultado encontrado para "{{ $termo }}".</p>
+                <p class="text-gray-600 font-cinzel">Nenhum resultado encontrado para "{{ $termo }}".</p>
             @endif
         </main>
     @endif
