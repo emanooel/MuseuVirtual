@@ -21,10 +21,10 @@
             <!-- Formulário de Busca -->
             <form action="{{ route('busca') }}" method="GET" class="flex items-center space-x-2 w-full lg:w-auto">
                 <input type="text" name="q" placeholder="Buscar..." value="{{ $termo ?? '' }}"
-                    class="opacity-70 w-full lg:w-64 px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-white"
+                    class="opacity-80 w-full lg:w-64 px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-white"
                 >
                 <button type="submit"
-                    class="bg-white text-black font-semibold px-4 py-2 rounded-full hover:bg-gray-200 transition opacity-80">
+                    class="bg-white text-black font-semibold px-4 py-2 rounded-full hover:bg-gray-200 transition opacity-90">
                     Buscar
                 </button>
             </form>
