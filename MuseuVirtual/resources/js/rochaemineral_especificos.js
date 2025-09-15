@@ -1,6 +1,7 @@
 console.log("ola")
+
 // Fullscreen function
-window.openFullscreen= function () {
+window.openFullscreen = function () {
     const img = document.getElementById('main-rocha-image') || document.getElementById('main-mineral-image');
     if (img.requestFullscreen) {
         img.requestFullscreen();
@@ -10,6 +11,7 @@ window.openFullscreen= function () {
         img.msRequestFullscreen();
     }
 }
+
 Fancybox.bind("[data-fancybox]", {
     hideScrollbar: false,
     Toolbar: {
@@ -20,6 +22,7 @@ Fancybox.bind("[data-fancybox]", {
         },
     },
 });
+
 // Loading screen
 window.addEventListener('load', function () {
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -33,47 +36,61 @@ window.addEventListener('load', function () {
 
 // Swiper and main functionality
 document.addEventListener('DOMContentLoaded', function () {
-    const mainImage = document.getElementById('main-rocha-image');
+    // Detecta se é rocha ou mineral
+    const mainImage = document.getElementById('main-rocha-image') || document.getElementById('main-mineral-image');
+    const isMineral = document.getElementById('main-mineral-image') !== null;
+    
+    // Define o seletor do swiper baseado no tipo
+    const swiperSelector = isMineral ? ".swiper-mineral-thumbs" : ".swiper-rocha-thumbs";
+    
+    if (document.querySelector(swiperSelector)) {
+        const thumbsSwiper = new Swiper(swiperSelector, {
+            spaceBetween: 15,
+            slidesPerView: 5,
+            freeMode: true,
+            watchSlidesProgress: true,
+            loop: false, // Mudei para false para evitar problemas
+            centeredSlides: false,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                320: { slidesPerView: 2.5, spaceBetween: 10 },
+                480: { slidesPerView: 3, spaceBetween: 12 },
+                768: { slidesPerView: 4, spaceBetween: 15 },
+                1024: { slidesPerView: 5, spaceBetween: 15 },
+            },
+        });
 
-    const thumbsSwiper = new Swiper(".swiper-rocha-thumbs", {
-        spaceBetween: 15,
-        slidesPerView: 5,
-        freeMode: true,
-        watchSlidesProgress: true,
-        loop: true,
-        centeredSlides: false,
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-            320: { slidesPerView: 2.5, spaceBetween: 10 },
-            480: { slidesPerView: 3, spaceBetween: 12 },
-            768: { slidesPerView: 4, spaceBetween: 15 },
-            1024: { slidesPerView: 5, spaceBetween: 15 },
-        },
-    });
+        // Handle thumbnail clicks
+        thumbsSwiper.on('click', function (swiper, event) {
+            const clickedSlide = event.target.closest('.swiper-slide');
+            if (clickedSlide && mainImage) {
+                const newSrc = clickedSlide.querySelector('img').getAttribute('data-src');
+                if (newSrc) {
+                    mainImage.style.opacity = '0.5';
+                    mainImage.src = newSrc;
 
-    // Handle thumbnail clicks
-    thumbsSwiper.on('click', function (swiper, event) {
-        const clickedSlide = event.target.closest('.swiper-slide');
-        if (clickedSlide) {
-            const newSrc = clickedSlide.querySelector('img').getAttribute('data-src');
-            if (newSrc) {
-                mainImage.style.opacity = '0.5';
-                mainImage.src = newSrc;
+                    // Atualiza o link do fancybox também
+                    const mainImageLink = document.getElementById('main-image-link');
+                    if (mainImageLink) {
+                        mainImageLink.href = newSrc;
+                    }
 
-                mainImage.onload = function () {
-                    mainImage.style.opacity = '1';
-                };
+                    mainImage.onload = function () {
+                        mainImage.style.opacity = '1';
+                    };
 
-                document.querySelectorAll('.swiper-slide').forEach(slide => {
-                    slide.classList.remove('swiper-slide-thumb-active');
-                });
-                clickedSlide.classList.add('swiper-slide-thumb-active');
+                    // Remove classe ativa de todos os slides
+                    document.querySelectorAll('.swiper-slide').forEach(slide => {
+                        slide.classList.remove('swiper-slide-thumb-active');
+                    });
+                    clickedSlide.classList.add('swiper-slide-thumb-active');
+                }
             }
-        }
-    });
+        });
+    }
 
     // Animate elements on scroll
     const observerOptions = {
@@ -97,10 +114,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Download image function
 window.downloadImage = function() {
-    const imageSrc = document.getElementById('main-rocha-image').src;
+    const mainImage = document.getElementById('main-rocha-image') || document.getElementById('main-mineral-image');
+    const imageSrc = mainImage.src;
     const a = document.createElement('a');
     a.href = imageSrc;
-    a.download = 'rocha-{{ Str::slug($rocha->nome) }}-' + Date.now();
+    
+    // Define o nome do arquivo baseado no tipo
+    const isMineral = document.getElementById('main-mineral-image') !== null;
+    const prefix = isMineral ? 'mineral' : 'rocha';
+    
+    a.download = `${prefix}-${Date.now()}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -116,9 +139,9 @@ window.showQRCode = function () {
 
     qrcodeContainer.innerHTML = '';
 
-    const jazidaUrl = window.location.href;
+    const currentUrl = window.location.href;
     new QRCode(qrcodeContainer, {
-        text: jazidaUrl,
+        text: currentUrl,
         width: 200,
         height: 200,
         colorDark: "#1c1f1a",
@@ -141,7 +164,12 @@ window.downloadQRCode = function () {
         const imageDataURL = canvas.toDataURL("image/png");
         const a = document.createElement('a');
         a.href = imageDataURL;
-        a.download = 'qrcode-rocha-{{ Str::slug($rocha->nome) }}';
+        
+        // Define o nome do arquivo baseado no tipo
+        const isMineral = document.getElementById('main-mineral-image') !== null;
+        const prefix = isMineral ? 'mineral' : 'rocha';
+        
+        a.download = `qrcode-${prefix}-${Date.now()}`;
 
         document.body.appendChild(a);
         a.click();
@@ -154,23 +182,22 @@ window.downloadQRCode = function () {
     }
 }
 
-
 // Notification system
 window.showNotification = function (message) {
     const notification = document.createElement('div');
     notification.textContent = message;
     notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--accent-green);
-                color: var(--primary-dark);
-                padding: 15px 25px;
-                border-radius: 10px;
-                font-weight: 600;
-                z-index: 10000;
-                animation: slideInRight 0.3s ease;
-            `;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--accent-green);
+        color: var(--primary-dark);
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+    `;
 
     document.body.appendChild(notification);
 
@@ -183,9 +210,14 @@ window.showNotification = function (message) {
 }
 
 // Close modal when clicking outside
-document.getElementById('qrcode-modal-overlay').addEventListener('click', function (e) {
-    if (e.target === this) {
-        hideQRCode();
+document.addEventListener('DOMContentLoaded', function() {
+    const qrModal = document.getElementById('qrcode-modal-overlay');
+    if (qrModal) {
+        qrModal.addEventListener('click', function (e) {
+            if (e.target === this) {
+                hideQRCode();
+            }
+        });
     }
 });
 
@@ -195,3 +227,22 @@ document.addEventListener('keydown', function (e) {
         hideQRCode();
     }
 });
+
+// Função adicional para trocar imagem (compatibilidade)
+window.changeMainImage = function(imageSrc) {
+    const mainImage = document.getElementById('main-rocha-image') || document.getElementById('main-mineral-image');
+    const mainImageLink = document.getElementById('main-image-link');
+    
+    if (mainImage) {
+        mainImage.style.opacity = '0.5';
+        mainImage.src = imageSrc;
+        
+        if (mainImageLink) {
+            mainImageLink.href = imageSrc;
+        }
+        
+        mainImage.onload = function () {
+            mainImage.style.opacity = '1';
+        };
+    }
+}

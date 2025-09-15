@@ -21,7 +21,7 @@
 
             <div class="minerals-grid">
                 @foreach ($minerais as $item)
-                    <a href="{{ route('minerais.show', $item->slug) }}">
+                    <a href="{{ route('minerais.show', $item->id) }}">
                         <figure>
                             @php
                                 $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();

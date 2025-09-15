@@ -29,15 +29,13 @@
             @endphp
             @if ($fotoCapa)
                 <div class="image-gallery-container">
-
                     <div class="main-image-wrapper">
-                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
-                            data-caption="{{ $mineral->nome }}">
-                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}"
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" 
+                            data-caption="{{ $mineral->nome }}" id="main-image-link">
+                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
                                 alt="Foto principal da mineral {{ $mineral->nome }}">
                         </a>
                         <div class="action-buttons">
-
                             <div class="action-button" onclick="downloadImage()" title="Baixar imagem">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 16l-4-4h3V4h2v8h3l-4 4zM6 20v-2h12v2H6z" />
@@ -59,7 +57,9 @@
                     <div class="swiper-wrapper">
                         @foreach ($mineral->fotos as $foto)
                             <div class="swiper-slide">
-                                <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Miniatura do mineral {{ $mineral->nome }}" data-src="{{ asset('storage/' . $foto->caminho) }}">
+                                <img src="{{ asset('storage/' . $foto->caminho) }}" 
+                                     alt="Miniatura do mineral {{ $mineral->nome }}" 
+                                     data-src="{{ asset('storage/' . $foto->caminho) }}">
                             </div>
                         @endforeach
                     </div>
@@ -98,7 +98,5 @@
             </div>
         @endif
     </div>
-
-
 
 </x-layouts.BaseLayout>

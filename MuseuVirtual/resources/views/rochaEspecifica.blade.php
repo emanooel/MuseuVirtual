@@ -42,9 +42,9 @@
             @if ($fotoCapa)
                 <div class="image-gallery-container">
                     <div class="main-image-wrapper">
-                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" 
                             data-caption="{{ $rocha->nome }}">
-                            <img id="main-rocha-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}"
+                            <img id="main-rocha-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
                                 alt="Foto principal da rocha {{ $rocha->nome }}">
                         </a>
                         <div class="action-buttons">
@@ -70,7 +70,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rocha->fotos as $foto)
                             <div class="swiper-slide">
-                                <img src="{{ asset('storage/' . $foto->caminho) }}"
+                                <img src="{{ asset('storage/' . $foto->caminho) }}" 
                                     alt="Miniatura da rocha {{ $rocha->nome }}"
                                     data-src="{{ asset('storage/' . $foto->caminho) }}">
                             </div>
@@ -314,8 +314,5 @@
             }
         });
     </script>
-<<<<<<< HEAD
->>>>>>> 49355b47bef4539eb4f8af79fa24697fb21c1b7e
-=======
->>>>>>> 4068f4236db195f9da19822f64fb4df8705bd7fd
+
 </x-layouts.BaseLayout>
