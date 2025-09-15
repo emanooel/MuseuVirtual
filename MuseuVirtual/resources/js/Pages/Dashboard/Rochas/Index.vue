@@ -25,13 +25,7 @@ onMounted(() => {
     }
 });
 
-function deleteRocha(id) {
-    if (confirm('Tem certeza que deseja excluir esta rocha?')) {
-        router.delete(route('rochas.destroy', id));
-    }
-}
 
-/*
 function deleteRocha(id) {
     swal({
     title: "Excluir?",
@@ -46,7 +40,7 @@ function deleteRocha(id) {
     }
   });
 }
-*/
+
 
 </script>
 
