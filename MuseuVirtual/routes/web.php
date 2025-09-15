@@ -61,8 +61,9 @@ Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 Route::resource('rochas', RochaController::class)->names('rochas');
 
 // Minerais:
-Route::resource('/minerais', MineralController::class)
-    ->parameters(['minerais' => 'mineral']);
+Route::resource('minerais', MineralController::class);
+
+Route::get('/site/minerais/{slug_mineral}', [MineralController::class, 'show'])->name('site.minerais.show');
 
 // Timeline:
 Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');

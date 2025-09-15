@@ -64,9 +64,9 @@ class MineralController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($mineral)
+    public function show($slug_mineral)
     {
-        $mineral = Mineral::with('fotos')->where('id', $mineral)->firstOrFail();
+        $mineral = Mineral::with('fotos')->where('slug', $slug_mineral)->firstOrFail();
         return view('mineralEspecifico', compact('mineral'));
     }
 
