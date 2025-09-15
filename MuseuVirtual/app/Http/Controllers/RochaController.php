@@ -17,8 +17,8 @@ class RochaController extends Controller
      */
     public function index()
     {
-        $rochas = Rocha::with('fotos')->paginate(10);
-
+        $rochas = Rocha::with('fotos')->paginate(10)->withPath(url()->current());  // 10 rochas por página
+        // dd($rochas);
         return Inertia::render('Dashboard/Rochas/Index', [
             'rochas' => $rochas
         ]);
@@ -77,9 +77,14 @@ class RochaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($rocha)
+    public function show(string $tipo, $rocha)
     {
-        $rocha = Rocha::with('fotos')->findOrFail($rocha);
+        // aqui você pode validar se o tipo da URL bate com o da rocha
+        // if ($tipo !== $tipo) {
+        //     abort(404);
+        // }
+
+        $rocha = Rocha::with('fotos')->where('slug', $rocha)->firstOrFail();
         return view('rochaEspecifica', compact('rocha'));
     }
 
@@ -88,8 +93,6 @@ class RochaController extends Controller
      */
     public function edit($id)
     {
-
-
 
         $rocha = Rocha::with('fotos')->findOrFail($id);
         $jazidas = Jazida::all(['id', 'descricao']);
@@ -162,14 +165,14 @@ class RochaController extends Controller
 
     public function site()
     {
-        $rochastipo1 = Rocha::where("tipo", 1)->with("fotos")->get();
-        $rochastipo2 = Rocha::where("tipo", 2)->with("fotos")->get();
-        $rochastipo3 = Rocha::where("tipo", 3)->with("fotos")->get();
+        $rochastipo1 = Rocha::where("tipo", 1)->with("fotos")->paginate(12);
+        $rochastipo2 = Rocha::where("tipo", 2)->with("fotos")->paginate(12);
+        $rochastipo3 = Rocha::where("tipo", 3)->with("fotos")->paginate(12);
         // dd($rochas);
         return view('rochas', compact("rochastipo1", "rochastipo2", "rochastipo3"));
     }
 
-     public function gerarQrCode($id)
+    public function gerarQrCode($id)
     {
         $rocha = Rocha::findOrFail($id);
         $url = route('Rocha.show', $rocha->id); // ou use slug se tiver
@@ -177,11 +180,17 @@ class RochaController extends Controller
 
         return response($qrCode)
             ->header('Content-Type', 'image/png')
-            ->header('Content-Disposition', 'attachment; filename="rocha_'.$rocha->id.'_qr.png"');
+            ->header('Content-Disposition', 'attachment; filename="rocha_' . $rocha->id . '_qr.png"');
     }
     public function site_tipo_rocha($tipo)
     {
         $rochastipo = Rocha::where('tipo', $tipo)->with('fotos')->get();
         return view('rocha_tipo', compact('rochastipo', 'tipo'));
+    }
+
+    public function site_show($id)
+    {
+        $rocha = Rocha::with('fotos')->findOrFail($id);
+        return view('rochaEspecifica', compact('rocha'));
     }
 }

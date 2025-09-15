@@ -1,135 +1,61 @@
-<style>
-    /* a:hover {
-        background: rgba(0, 0, 0, .05);
-    } */
+<header class="w-full bg-black text-white">
+  <nav class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center relative">
     
-    #nav #div {
-        background: #F1EEDD;
-    }
+    <img src="/assets/img/logo12.png" alt="Museu Virtual ES Logo" class="h-11">
 
-    @media(max-width:1600px){
-        #nav  {
-        background: #F1EEDD;
-    }
-    }
+    <ul class="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 space-x-12 font-semibold text-lg">
+      <li><a href="{{ route('home') }}" class="p-2 hover:underline {{ request()->routeIs('home')?'underline':'' }}">Home</a></li>
+      <li><a href="{{ route('site.jazidas') }}" class="p-2 hover:underline {{ request()->routeIs('site.jazidas','site.jazidas.show')?'underline':'' }}">Jazidas</a></li>
+      <li><a href="{{ route('site.rochas') }}" class="p-2 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo')?'underline':'' }}">Rochas</a></li>
+      <li><a href="{{ route('site.minerais') }}" class="p-2 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo')?'underline':'' }}">Minerais</a></li>
+    </ul>
 
-    @media (max-width: 768px) {
-        #btn-mobile {
-            display: block;
-        }
+    <form action="{{ route('busca') }}" method="GET" class="hidden lg:flex items-center ml-auto">
+      <input type="text" name="q" placeholder="Buscar..." value="{{ $termo ?? '' }}" 
+             class="w-64 px-3 py-2 rounded-l-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
+      <button type="submit" class="bg-white text-black px-4 py-2 rounded-r-md hover:bg-gray-200 transition">
+        Buscar
+      </button>
+    </form>
+    
+    <button id="btn-mobile" class="lg:hidden flex flex-col justify-center items-center gap-1 p-2 focus:outline-none focus:ring-2 focus:ring-white z-10" aria-label="Abrir menu">
+      <span class="block w-6 h-0.5 bg-white transition-transform duration-300 ease-in-out"></span>
+      <span class="block w-6 h-0.5 bg-white transition-opacity duration-300 ease-in-out"></span>
+      <span class="block w-6 h-0.5 bg-white transition-transform duration-300 ease-in-out"></span>
+    </button>
+  </nav>
 
-        #menu {
-            display: block;
-            position: absolute;
-            width: 100%;
-            background: #F1EEDD;
-            right: 0px;
-            height: 0px;
-            transition: .6s;
-            z-index: 1000;
-            visibility: hidden;
-            overflow-y: hidden;
-        }
+  <hr class="border-white">
 
-        #nav.active #menu {
-            height: 100vh;
-            visibility: visible;
-            overflow-y: auto;
-        }
+  <div id="mobile-menu" class="lg:hidden fixed top-16 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-95 rounded-lg shadow-lg px-6 py-8 space-y-4 max-w-xs w-11/12 scale-y-0 origin-top transition-transform duration-300 ease-out z-50">
+    <a href="{{ route('home') }}" class="block text-white text-center hover:underline">Home</a>
+    <a href="{{ route('site.jazidas') }}" class="block text-white text-center hover:underline">Jazidas</a>
+    <a href="{{ route('site.rochas') }}" class="block text-white text-center hover:underline">Rochas</a>
+    <a href="{{ route('site.minerais') }}" class="block text-white text-center hover:underline">Minerais</a>
 
-        #nav #div {
-            border-radius: 0;
-            margin-top: 0;
-        }
-
-        #btn-mobile {
-            display: flex;
-            padding: .5rem 1rem;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            gap: .5rem;
-        }
-
-        #hamburguer {
-            width: 20px;
-            border-top: 2px solid;
-            display: block;
-            color: #565851;
-        }
-
-        #hamburguer::after,
-        #hamburguer::before {
-            content: '';
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: currentColor;
-            margin-top: 5px;
-            transition: .3s;
-            position: relative;
-        }
-
-        #nav.active #hamburguer {
-            border-top-color: transparent;
-        }
-
-        #nav.active #hamburguer::before {
-            transform: rotate(135deg);
-        }
-
-        #nav.active #hamburguer::after {
-            transform: rotate(-135deg);
-            top: -7px;
-        }
-
-        #menu #cadastro,
-        #login {
-            background: none;
-            color: #565851;
-        }
-    }
-</style>
-<header id="header" >
-    <nav id="nav" class="block"> 
-        {{-- justify-center no nav --}}
-        <div id="div" class="rounded-full">
-            <button aria-label="Abrir menu" id="btn-mobile" aria-controls="menu" aria-haspopup="true" aria-expanded="false"
-                class="hidden text-[#565851]">Menu
-                <span id="hamburguer"></span>
-            </button>
-            <ul id="menu" role="menu" class="flex justify-center font-[arial] pt-3 pb-3 font-bold">
-                <li><a href="{{ route('home') }}" class="p-5 pr-40 text-[#565851]">Museu Virtual ES</a></li>
-                <li><a href="{{ route('site.jazidas') }}" class="p-5 text-[#565851]">Jazidas</a></li>
-                <li><a href="{{ route('site.rochas') }}" class="p-5 text-[#565851]">Rochas</a></li>
-                <li><a href="{{ route('site.minerais') }}" class="p-5 pr-40 text-[#565851] ">Minerais</a></li>
-                {{-- <li><a href="{{ route('dashboard') }}" id="cadastro"
-                        class="p-2 pl-5 pr-5 rounded-full bg-[#ACB18E] mr-5 text-[#F1EEDD] bg-[#ACB18E] hover:bg-[#A39D8C]">Cadastrar</a>
-                </li>
-                <li><a href="{{ route('dashboard') }}" id="login"
-                        class="p-2 pl-5 pr-5 rounded-full bg-[#ACB18E] text-[#F1EEDD] bg-[#ACB18E] hover:bg-[#A39D8C]">Login</a>
-                </li> --}}
-            </ul>
-        </div>
-    </nav>
+    <form action="{{ route('busca') }}" method="GET" class="flex mt-2">
+      <input type="text" name="q" placeholder="Buscar..." class="flex-grow px-3 py-2 rounded-l-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
+      <button type="submit" class="bg-white text-black px-4 py-2 rounded-r-md hover:bg-gray-200 transition">Buscar</button>
+    </form>
+  </div>
 </header>
 
 <script>
-    const btnMobile = document.getElementById('btn-mobile');
+  const btnMobile = document.getElementById('btn-mobile');
+  const mobileMenu = document.getElementById('mobile-menu');
 
-    function toggleMenu(event) {
-        if (event.type === 'touchstart') event.preventDefault();
-        const nav = document.getElementById('nav');
-        nav.classList.toggle('active');
-        const active = nav.classList.contains('active');
-        event.currentTarget.setAttribute('aria-expanded', active);
-        if (active) {
-            event.currentTarget.setAttribute('aria-label', 'Fechar menu');
-        } else {
-            event.currentTarget.setAttribute('aria-label', 'Abrir menu');
-        }
-    }
+  function toggleMenu() {
+    mobileMenu.classList.toggle('scale-y-0');
+    mobileMenu.classList.toggle('scale-y-100');
 
-    btnMobile.addEventListener('click', toggleMenu);
-    btnMobile.addEventListener('touchstart', toggleMenu);
+    // Animação do ícone do botão hambúrguer
+    const spans = btnMobile.querySelectorAll('span');
+    spans[0].classList.toggle('rotate-45');
+    spans[0].classList.toggle('translate-y-1.5');
+    spans[1].classList.toggle('opacity-0');
+    spans[2].classList.toggle('-rotate-45');
+    spans[2].classList.toggle('-translate-y-1.5');
+  }
+
+  btnMobile.addEventListener('click', toggleMenu);
 </script>

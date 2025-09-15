@@ -1,208 +1,129 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref, reactive, onMounted } from 'vue';
-import axios from 'axios';
+import { reactive, ref, computed } from 'vue';
 
-const form = reactive({
-    eon: '',
-    era: '',
-    periodo: '',
-    fotos: [],
-    capa_nome: ''
-});
 
 const props = defineProps({
-  rochas: Array,
-  minerais: Array,
+    rochas: Array,
+    minerais: Array,
+    eons: Array
 });
 
-const jazidas = ref([]);
-const jazida_id = ref(null);
+const searchRocha = ref('');
+const searchMineral = ref('');
 
-onMounted(() => {
-    axios.get('/api/jazidas').then(res => {
-        jazidas.value = res.data;
-    });
+const filteredRochas = computed(() => {
+    return props.rochas.filter(r => r.nome.toLowerCase().includes(searchRocha.value.toLowerCase()));
 });
 
-function handleFileChange(event) {
-    const files = Array.from(event.target.files);
-    form.fotos = files;
-    previewFotos.value = files.map((file, index) => ({
-        file,
-        url: URL.createObjectURL(file),
-        isCapa: false,
-        name: file.name
-    }));
-    form.capa_nome = ''; // reset
-}
+const filteredMinerais = computed(() => {
+    return props.minerais.filter(m => m.nome.toLowerCase().includes(searchMineral.value.toLowerCase()));
+});
 
+const form = reactive({
+    eon_id: '',
+    era_id: '',
+    periodo_id: null,
+    rocha_id: null,
+    mineral_id: null
+});
 
 function submitForm() {
-    const payload = new FormData();
-    payload.append('nome', form.nome);
-    payload.append('descricao', form.descricao);
-    payload.append('composicao', form.composicao);
-    payload.append('tipo', form.tipo);
-    form.fotos.forEach(f => payload.append('foto[]', f));
-    payload.append('capa_nome', form.capa_nome);
-    if (associarJazida.value && jazida_id.value) {
-        payload.append('jazida_id', jazida_id.value);
+    if (!form.era_id) {
+        alert('Selecione uma Era.');
+        return;
     }
 
-    router.post(route('Rocha.store'), payload);
+    if (!form.rocha_id && !form.mineral_id) {
+        alert('Selecione uma Rocha ou um Mineral.');
+        return;
+    }
+
+    if (form.rocha_id && form.mineral_id) {
+        alert('Selecione apenas um: Rocha OU Mineral.');
+        return;
+    }
+
+    router.post('/timeline', {
+        era_id: form.era_id,
+        periodo_id: form.periodo_id,
+        rocha_id: form.rocha_id,
+        mineral_id: form.mineral_id
+    }, { preserveScroll: true });
+    window.history.back();
 }
 </script>
 
 <template>
-    <Head title="Associar" />
+<Head title="Associar Formação Geológica" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
-                Associar Formação Geológica
-            </h2>
-        </template>
+<AuthenticatedLayout>
+    <template #header>
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
+        Associar Formação Geológica
+    </h2>
+    </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <form @submit.prevent="submitForm" enctype="multipart/form-data">
-                            <div class="mb-4">
-                                <label for="eon" class="block font-medium">Éon</label>
-                                <select id="eon" v-model="form.eon" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha um éon...</option>
-                                    <option value="1">Hadeano</option>
-                                    <option value="2">Arqueano</option>
-                                    <option value="3">Proterozoico</option>
-                                    <option value="4">Fanerozoico</option>
-                                    let
-                                </select>
-                            </div>
-
-                            <!-- Hadeano -->
-                            <div class="mb-4" v-if="form.eon == '1'">
-                                <label for="era" class="block font-medium">Era</label>
-                                <select id="era" v-model="form.era" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha uma era...</option>
-                                    <option value="1">Pré-Arqueano</option>
-                                </select>
-                            </div>
-
-                            <!-- Arqueano -->
-                            <div class="mb-4" v-if="form.eon === '2'">
-                                <label for="era" class="block font-medium">Era</label>
-                                <select id="era" v-model="form.era" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha uma era...</option>
-                                    <option value="1">Eoarqueano</option>
-                                    <option value="2">Paleoarqueano</option>
-                                    <option value="3">Mesoarqueano</option>
-                                    <option value="4">Neoarqueano</option>
-                                </select>
-                            </div>
-
-                            <!-- Proterozoico -->
-                            <div class="mb-4" v-if="form.eon === '3'">
-                                <label for="era" class="block font-medium">Era</label>
-                                <select id="era" v-model="form.era" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha uma era...</option>
-                                    <option value="1">Paleoproterozoico</option>
-                                    <option value="2">Mesoproterozoico</option>
-                                    <option value="3">Neoproterozoico</option>
-                                </select>
-                            </div>
-
-                            <!-- Fanerozoico -->
-                            <div class="mb-4" v-if="form.eon === '4'">
-                                <label for="era" class="block font-medium">Era</label>
-                                <select id="era" v-model="form.era" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha uma era...</option>
-                                    <option value="1">Paleozóico</option>
-                                    <option value="2">Mesozóico</option>
-                                    <option value="3">Cenozóico</option>
-                                </select>
-                            </div>
-
-                            <!-- Paleozóico -->
-                            <div v-if="form.eon == '4'">
-                            <div class="mb-4" v-if="form.era == '1'">
-                                <label for="periodo" class="block font-medium">Período</label>
-                                <select id="periodo" v-model="form.periodo" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha um período...</option>
-                                    <option value="1">Cambriano</option>
-                                    <option value="2">Ordoviciano</option>
-                                    <option value="3">Siluriano</option>
-                                    <option value="4">Devoniano</option>
-                                    <option value="5">Carbonífero</option>
-                                    <option value="6">Permiano</option>
-                                </select>
-                            </div>
-
-                            <!-- Mesozóico -->
-                            <div class="mb-4" v-if="form.era == '2'">
-                                <label for="periodo" class="block font-medium">Período</label>
-                                <select id="periodo" v-model="form.periodo" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha um período...</option>
-                                    <option value="1">Triássico</option>
-                                    <option value="2">Jurássico</option>
-                                    <option value="3">Cretáceo</option>
-
-                                </select>
-                            </div>
-
-                            <!-- Cenozóico -->
-                            <div class="mb-4" v-if="form.era == '3'">
-                                <label for="periodo" class="block font-medium">Período</label>
-                                <select id="periodo" v-model="form.periodo" required
-                                    class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                    <option value="" disabled>Escolha uma período...</option>
-                                    <option value="1">Paleógeno</option>
-                                    <option value="1">Neógeno</option>
-                                    <option value="1">Quaternário</option>
-                                </select>
-                            </div>
-                            </div>
-
-                            <div>
-                            <label for="idMineral" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mineral</label>
-                            <select
-                                v-model="form.idMineral"
-                                class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                <option value="">Escolha um mineral...</option>
-                                <option v-for="mineral in props.minerais" :key="mineral.id" :value="mineral.id">{{ mineral.nome }}</option>
-                            </select>
-                            </div>
-
-
-                            <div>
-                            <label for="idRocha" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Rocha</label>
-                            <select
-                                v-model="form.idRocha"
-                                class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                                <option value="">Escolha uma rocha...</option>
-                                <option v-for="rocha in props.rochas" :key="rocha.id" :value="rocha.id">{{ rocha.nome }}</option>
-                            </select>
-                            </div>
-
-                            <div class="mt-6">
-                                <button type="submit"
-                                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
-                                    Associar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="p-6 text-gray-900 dark:text-gray-100">
+            <form @submit.prevent="submitForm">
+            <!-- Éons -->
+            <div class="mb-4">
+                <label class="block font-medium">Éon</label>
+                <select v-model="form.eon_id" class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
+                <option value="" disabled>Escolha um Éon...</option>
+                <option v-for="eon in props.eons" :key="eon.id" :value="eon.id">{{ eon.nome }}</option>
+                </select>
             </div>
+
+            <!-- Eras -->
+            <div class="mb-4" v-if="form.eon_id">
+                <label class="block font-medium">Era</label>
+                <select v-model="form.era_id" class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
+                <option value="" disabled>Escolha uma Era...</option>
+                <option v-for="era in props.eons.find(e => e.id === form.eon_id).eras" :key="era.id" :value="era.id">{{ era.nome }}</option>
+                </select>
+            </div>
+
+            <!-- Períodos (nullable) -->
+            <div class="mb-4" v-if="form.era_id">
+                <label class="block font-medium">Período (opcional)</label>
+                <select v-model="form.periodo_id" class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
+                <option value="">Nenhum</option>
+                <option v-for="periodo in props.eons.find(e => e.id === form.eon_id).eras.find(er => er.id === form.era_id).periodos" :key="periodo.id" :value="periodo.id">{{ periodo.nome }}</option>
+                </select>
+            </div>
+
+            <!-- Pesquisa Rocha -->
+            <div class="mb-4">
+                <label class="block font-medium">Rocha</label>
+                <input type="text" placeholder="Pesquisar rocha..." v-model="searchRocha" class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
+                <select v-model="form.rocha_id" @change="form.mineral_id = null" class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
+                <option value="">Nenhuma</option>
+                <option v-for="rocha in filteredRochas" :key="rocha.id" :value="rocha.id">{{ rocha.nome }}</option>
+                </select>
+            </div>
+
+            <!-- Pesquisa Mineral -->
+            <div class="mb-4">
+                <label class="block font-medium">Mineral</label>
+                <input type="text" placeholder="Pesquisar mineral..." v-model="searchMineral" class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
+                <select v-model="form.mineral_id" @change="form.rocha_id = null" class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
+                <option value="">Nenhum</option>
+                <option v-for="mineral in filteredMinerais" :key="mineral.id" :value="mineral.id">{{ mineral.nome }}</option>
+                </select>
+            </div>
+
+            <div class="mt-6">
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Associar</button>
+            </div>
+            </form>
         </div>
-    </AuthenticatedLayout>
+        </div>
+    </div>
+    </div>  
+</AuthenticatedLayout>
 </template>

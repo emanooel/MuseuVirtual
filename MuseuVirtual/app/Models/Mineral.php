@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Mineral extends Model
 {
@@ -13,13 +14,25 @@ class Mineral extends Model
         'descricao',
         'propriedades',
         'idJazida',
+        'era_id',
+        'periodo_id',
     ];
-    public function fotos(){
-        return $this->hasMany(Fotos::class, 'idMineral' );
+    public function fotos()
+    {
+        return $this->hasMany(Fotos::class, 'idMineral');
     }
     public function jazida()
     {
         return $this->belongsTo(Jazida::class, 'idJazida');
     }
 
+    // Gera slug automaticamente ao criar
+    protected static function booted()
+    {
+        static::creating(function ($mineral) {
+            if (empty($mineral->slug)) {
+                $mineral->slug = Str::slug($mineral->nome);
+            }
+        });
+    }
 }

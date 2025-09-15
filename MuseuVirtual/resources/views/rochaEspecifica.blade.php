@@ -1,217 +1,144 @@
 <x-layouts.BaseLayout>
-    <x-slot name="title">RochaEspecifica</x-slot>
+    @vite(['resources/css/EspecificoBlade.css', 'resources/js/app.js','resources/js/rochaemineral_especificos.js'])
+    <x-slot name="title">Rocha - {{ $rocha->nome }}</x-slot>
 
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    {{-- Pass all photos with annotations to JavaScript --}}
     <script>
-        Fancybox.bind("[data-fancybox]", {});
+        window.fotosComAnotacoes = @json($rocha->fotos->mapWithKeys(function($foto) {
+            return [$foto->caminho => $foto->anotacoes];
+        }));
+        
+        Fancybox.bind("[data-fancybox]", {
+            width: "90%",
+            height: "90%",
+            Toolbar: {
+                display: {
+                    left: ["infobar"],
+                    middle: [],
+                    right: ["slideshow", "fullScreen", "download", "thumbs", "close"],
+                },
+            },
+        });
     </script>
+    
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
 
-    <style>
-        /* Estilos para o contêiner principal do carrossel e seus botões */
-        .swiper-container-wrapper {
-            display: flex;
-            /* Permite que os itens (botões e carrossel) fiquem lado a lado */
-            align-items: center;
-            /* Alinha os itens verticalmente ao centro */
-            justify-content: center;
-            /* Centraliza os itens horizontalmente dentro do wrapper */
-            max-width: 800px;
-            /* Largura máxima do wrapper do carrossel para desktops */
-            margin: 50px auto;
-            /* Centraliza o wrapper do carrossel na página e adiciona margem superior/inferior */
-            position: relative;
-            /* Necessário para posicionamento absoluto de outros elementos se houver */
-        }
+    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
+        <br><br>
 
-        /* Estilos para o próprio carrossel (a área visível dos slides) */
-        .mySwiper {
-            width: 100%;
-            /* Ocupa toda a largura disponível do seu contêiner (swiper-container-wrapper) */
-            height: 240px;
-            /* Altura fixa para o carrossel (baseado no tamanho das miniaturas) */
-            overflow: hidden;
-            /* Garante que os slides que excedem a área sejam cortados */
-        }
+        <div class="hero-section fade-in">
+            <h1><strong>{{ $rocha->nome }}</strong></h1>
+            <p>
+                Detalhes sobre a geologia, minerais e história desta rocha fascinante.
+            </p>
+        </div>
 
-        /* Estilos para cada slide individual do carrossel */
-        .swiper-slide {
-            width: 240px;
-            /* Largura explícita para cada slide (corresponde ao size-60 da imagem) */
-            /* O espaço entre os slides será controlado pelo 'spaceBetween' no JS do Swiper */
-        }
-
-        /* Estilos para as imagens dentro dos slides do carrossel */
-        .swiper-slide img {
-            width: 100%;
-            /* A imagem preenche 100% da largura do seu slide */
-            height: 100%;
-            /* A imagem preenche 100% da altura do seu slide */
-            object-fit: cover;
-            /* Recorta a imagem para cobrir toda a área do slide sem distorcer */
-            border-radius: 0.75rem;
-            /* Aplica bordas arredondadas (equivalente ao Tailwind rounded-xl) */
-        }
-
-        /* Estilos para os botões de navegação (setas) do carrossel */
-        .swiper-button-prev,
-        .swiper-button-next {
-            width: 40px;
-            /* Largura do botão */
-            height: 40px;
-            /* Altura do botão */
-            border-radius: 50%;
-            /* Transforma o botão em um círculo */
-            background-color: rgba(0, 0, 0, 0);
-            /* Fundo transparente por padrão */
-            display: flex;
-            align-items: center;
-            /* Centraliza a seta verticalmente */
-            justify-content: center;
-            /* Centraliza a seta horizontalmente */
-            cursor: pointer;
-            /* Muda o cursor para indicar que é clicável */
-            flex-shrink: 0;
-            /* Impede que o botão encolha em telas menores */
-            position: static;
-            /* Necessário para o flexbox do pai (swiper-container-wrapper) posicioná-los */
-            margin: 0 10px;
-            /* Adiciona espaçamento horizontal entre os botões e o carrossel */
-            transition: background-color 0.3s ease;
-            /* Transição suave para a cor de fundo no hover */
-        }
-
-        /* Efeito de HOVER para o fundo dos botões de navegação */
-        .swiper-button-prev:hover,
-        .swiper-button-next:hover {
-            background-color: rgba(0, 0, 0, 0.3);
-            /* Fundo semi-transparente quando o mouse está sobre o botão */
-        }
-
-        /* Estilos para as setas (o conteúdo gerado por ::after) dentro dos botões */
-        .swiper-button-prev::after,
-        .swiper-button-next::after {
-            font-size: 20px;
-            /* Tamanho da fonte da seta */
-            color: #F1EEDD;
-            /* Cor padrão da seta */
-            transition: color 0.3s ease;
-            /* Transição suave para a cor da seta no hover */
-        }
-
-        /* Efeito de HOVER para a cor das SETAS */
-        .swiper-button-prev:hover::after,
-        .swiper-button-next:hover::after {
-            color: #FFFFFF;
-            /* Cor da seta muda para branco no hover */
-        }
-
-        /* ----- Estilos para a IMAGEM PRINCIPAL (Da Rocha Específica) ----- */
-        .main-image-container {
-            display: flex;
-            /* Usa flexbox para centralizar a imagem */
-            justify-content: center;
-            /* Centraliza a imagem horizontalmente */
-            align-items: center;
-            /* Centraliza a imagem verticalmente (se houver altura disponível) */
-            width: 100%;
-            /* Garante que este contêiner ocupe a largura total do seu pai (o div com paddings responsivos) */
-            margin-top: 20px;
-            /* Adiciona um espaço da imagem para o título acima dela */
-        }
-
-        .main-image {
-            max-width: 100%;
-            /* A imagem nunca será maior que seu contêiner, garantindo responsividade */
-            height: auto;
-            /* Mantém a proporção da imagem ao redimensionar */
-            display: block;
-            /* Remove o espaço extra abaixo da imagem que navegadores podem adicionar */
-            object-fit: cover;
-            /* Recorta a imagem para cobrir a área sem distorcer (útil se você definir uma proporção fixa) */
-            border-radius: 0.75rem;
-            /* Aplica bordas arredondadas (equivalente ao Tailwind rounded-xl) */
-            /* Se desejar limitar a largura máxima da imagem em telas muito grandes, adicione: */
-            /* max-width: 1200px; */
-        }
-
-        /* ------------------------------------------------------------- */
-    </style>
-
-    {{-- Classe para o fundo gradiente de toda a página --}}
-
-
-
-    {{-- Contêiner principal para o conteúdo da página (com paddings responsivos) --}}
-
-    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 ">
-
-        {{-- Comentário para depuração (Laravel Blade) --}}
-        {{-- @dd($rocha) --}}
-
-        {{-- Título da página, exibindo o nome da rocha --}}
-        <h1 class="font-[Arial] text-[50px] text-[#F1EEDD] pt-16"><strong>{{ $rocha->nome }}</strong></h1>
-
-        {{-- Lógica PHP para encontrar a foto de capa (se existir) ou a primeira foto --}}
-        @php
-            $fotoExibir = null;
-            foreach ($rocha->fotos as $item) {
-                if ($item->capa) {
-                    $fotoExibir = $item;
-                    break;
-                }
-            }
-            // Se nenhuma capa foi definida, usa a primeira foto disponível
-            if (is_null($fotoExibir) && count($rocha->fotos) > 0) {
-                $fotoExibir = $rocha->fotos[0];
-            }
-        @endphp
-
-        <div class="text-white">
-            {{-- Exibe a imagem principal se houver alguma foto para exibir --}}
-            @if ($fotoExibir)
-                {{-- Contêiner para centralizar a imagem principal e aplicar estilos --}}
-                <div class="main-image-container">
-                    <img class="2xl:w-full rounded-xl main-image" {{-- Aplica bordas arredondadas e a classe CSS 'main-image' --}}
-                        src="{{ asset('storage/' . $fotoExibir->caminho) }}" {{-- Caminho para a imagem --}}
-                        alt="Imagem principal de {{ $rocha->nome }}"> {{-- Texto alternativo para acessibilidade --}}
+        <div class="section-container fade-in animate-delay-1">
+            @php
+                $fotoCapa = $rocha->fotos->firstWhere('capa', true) ?? $rocha->fotos->first();
+            @endphp
+            @if ($fotoCapa)
+                <div class="image-gallery-container">
+                    <div class="main-image-wrapper">
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" 
+                            data-caption="{{ $rocha->nome }}">
+                            <img id="main-rocha-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
+                                alt="Foto principal da rocha {{ $rocha->nome }}">
+                        </a>
+                        <div class="action-buttons">
+                            <div class="action-button" onclick="downloadImage()" title="Baixar imagem">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 16l-4-4h3V4h2v8h3l-4 4zM6 20v-2h12v2H6z" />
+                                </svg>
+                            </div>
+                            <div class="action-button" onclick="showQRCode()" title="Gerar QR Code">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-6-6h2v2h-2v-2zm2 2h2v2h-2v-2zm0 2h2v2h-2v-2z" />
+                                </svg>
+                            </div>
+                            {{-- Updated button to get annotations dynamically --}}
+                            <div class="action-button" onclick="showCurrentImageAnnotations()" title="Ver anotações">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a href="{{ route('rochas.qrcode', $rocha->id) }}"
-                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    Baixar QR Code da Rocha
-                </a>
             @endif
 
-            {{-- Wrapper para o Carrossel (Swiper) e seus botões de navegação --}}
-            <div class="swiper-container-wrapper">
-                <div class="swiper-button-prev"></div> {{-- Botão "anterior" do Swiper --}}
-                <div class="swiper mySwiper"> {{-- Contêiner do carrossel Swiper --}}
-                    <div class="swiper-wrapper"> {{-- Wrapper interno para os slides do Swiper --}}
-                        {{-- Loop pelas fotos da rocha para criar os slides do carrossel --}}
-                        @foreach ($rocha->fotos as $item)
-                            {{-- Cada slide do carrossel. pr-4 foi removido aqui pois 'spaceBetween' é configurado no JS --}}
+            @if ($rocha->fotos->count() > 1)
+                <div class="swiper-container swiper-rocha-thumbs">
+                    <div class="swiper-wrapper">
+                        @foreach ($rocha->fotos as $foto)
                             <div class="swiper-slide">
-                                <a href="{{ asset('storage/' . $item->caminho) }}" data-fancybox='Galeria'>
-                                    <img class="size-60 rounded-xl" {{-- Imagem do slide (240x240px com arredondamento) --}}
-                                        src="{{ asset('storage/' . $item->caminho) }}"
-                                        alt="Miniatura de {{ $rocha->nome }}">
-                                </a>
+                                <img src="{{ asset('storage/' . $foto->caminho) }}" 
+                                    alt="Miniatura da rocha {{ $rocha->nome }}"
+                                    data-src="{{ asset('storage/' . $foto->caminho) }}"
+                                    data-path="{{ $foto->caminho }}">
                             </div>
                         @endforeach
                     </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-next"></div> {{-- Botão "próximo" do Swiper --}}
-            </div>
+            @endif
+        </div>
 
-            {{-- Seção de descrição e composição da rocha --}}
-            <div class="pt-6">
-                <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"> <strong> Descrição:
-                    </strong>{!! $rocha->descricao !!}</h2>
-                <br>
-                <h2 class="text-[20px] font-[arial] text-[#F1EEDD]"><strong> Composição da rocha: </strong>
-                    {{ $rocha->composicao }}</h2>
+        <div id="qrcode-modal-overlay" class="modal-overlay">
+            <div class="modal-content">
+                <h2>📱 Acesse esta página</h2>
+                <div id="qrcode"></div>
+                <div class="modal-actions">
+                    <button class="modal-close-button" onclick="downloadQRCode()">Baixar QR Code</button>
+                    <button class="modal-close-button close-only" onclick="hideQRCode()">Fechar</button>
+                </div>
             </div>
         </div>
+
+        {{-- Modal de Anotações --}}
+        <div id="annotations-modal-overlay" class="modal-overlay" style="display: none;">
+            <div class="modal-content annotations-modal-content">
+                <div class="modal-header">
+                    <h2>📝 Anotações</h2>
+                    <button class="modal-close-button" onclick="hideAnnotationsModal()">&times;</button>
+                </div>
+                <div class="annotations-body">
+                    <div class="annotation-image-wrapper">
+                        <img id="modal-annotation-image" src="" alt="Imagem com anotações">
+                        <div id="annotations-container" class="annotations-container">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if ($rocha->descricao || $rocha->composicao)
+            <div class="section-container fade-in animate-delay-2">
+                <div class="content-box">
+                    @if ($rocha->descricao)
+                        <p><strong>Descrição:</strong> {!! $rocha->descricao !!}</p>
+                    @endif
+
+                    @if ($rocha->descricao && $rocha->composicao)
+                        <br>
+                    @endif
+
+                    @if ($rocha->composicao)
+                        <p><strong>Composição:</strong> {!! $rocha->composicao !!}</p>
+                    @endif
+                </div>
+            </div>
+        @endif
     </div>
+    
 </x-layouts.BaseLayout>

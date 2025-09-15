@@ -44,7 +44,7 @@ function submitForm() {
         payload.jazida_id = null;
     }
 
-    router.put(route('Rocha.update', rocha.value.id), payload);
+    router.put(route('rochas.update', rocha.value.id), payload);
 }
 
 function submitDeleteFoto(id) {
