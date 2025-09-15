@@ -1,6 +1,14 @@
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap');
 
+        body {
+            font-family: 'Lato', sans-serif;
+            background: rgb(0, 0, 0);
+            color: #F1EEDD;
+        }
+
         :root {
+
+
             --primary-dark: #1c1f1a;
             --primary-light: #F1EEDD;
             --accent-green: #ACB18E;

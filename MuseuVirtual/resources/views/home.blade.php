@@ -10,11 +10,12 @@
     <!-- Hero Section -->
     <div class="hero-container">
         <div class="hero-content">
-            <h2 class="main-title">Museu Virtual</h2>
-            <h2 class="subtitle">
+            <br>
+            <h1 class="main-title">Museu Virtual</h1>
+            <p class="subtitle">
                 Bem-vindo ao Museu Virtual das Rochas, um espaço interativo e educativo
                 dedicado à incrível diversidade geológica da nossa região.
-            </h2>
+            </p>
         </div>
             <figure class="w-full swiper mySwiper">
                 <div class="swiper-wrapper">
