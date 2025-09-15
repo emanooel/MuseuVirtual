@@ -16,10 +16,10 @@ class Rocha extends Model
         'jazida_id', // Adicionado para permitir preenchimento via create/update
     ];
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 
     public function periodo()
     {
