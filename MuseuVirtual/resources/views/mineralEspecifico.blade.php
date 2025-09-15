@@ -8,23 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     
-    <script>
-        Fancybox.bind("[data-fancybox]", {
-            hideScrollbar: false,
-            clickOutside: "close",
-            Toolbar: {
-                display: {
-                    left: ["infobar"],
-                    middle: [],
-                    right: ["slideshow", "download", "thumbs", "close"],
-                },
-            },
-        });
-    </script>
-
-    <style>
-
-    </style>
 
     <div id="loading-overlay" class="loading-overlay">
         <div class="loading-spinner"></div>
@@ -46,6 +29,7 @@
             @endphp
             @if ($fotoCapa)
                 <div class="image-gallery-container">
+
                     <div class="main-image-wrapper">
                         <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
                             data-caption="{{ $mineral->nome }}">

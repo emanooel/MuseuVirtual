@@ -1,12 +1,11 @@
 <x-layouts.BaseLayout>
     @vite(['resources/css/rochasBlade.css', 'resources/js/app.js', 'resources/js/rochas.js'])
     <x-slot name="title">Rochas</x-slot>
-
+    
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
         <div class="hero-section">
-            <h1><strong>Museu Mineral - Rochas</strong></h1>
-            <p>
+            <h1 style="font-family: 'Segoe UI', sans-serif"><strong>Museu Mineral - Rochas</strong></h1><p>
                 Conheça os três principais tipos de rochas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
         </div>
@@ -32,7 +31,8 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo1 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('Rocha.show', $item->id) }}">
+                                {{-- @dd($item) --}}
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
@@ -80,7 +80,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo2 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('Rocha.show', $item->id) }}">
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
@@ -128,7 +128,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo3 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('Rocha.show', $item->id) }}">
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();

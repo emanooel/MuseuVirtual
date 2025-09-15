@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Jazida extends Model
 {
@@ -28,5 +29,13 @@ class Jazida extends Model
     {
         return $this->hasMany(Mineral::class);
     }
-    
+     // Gera slug automaticamente ao criar
+     protected static function booted()
+     {
+         static::creating(function ($jazida) {
+             if (empty($jazida->slug)) {
+                 $jazida->slug = Str::slug($jazida->nome);
+             }
+         });
+     }
 }

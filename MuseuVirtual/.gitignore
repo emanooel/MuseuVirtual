@@ -20,4 +20,4 @@ yarn-error.log
 /.zed
 *.Identifier
 /vendor
-.env
+.env/storage/app/public

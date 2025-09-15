@@ -3,16 +3,12 @@
     <x-slot name="title">Jazidas</x-slot>
     <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
-
-        {{-- Título grande e descrição do topo --}}
         <div class="hero-section">
-            <h1><strong>Museu Mineral - Jazidas</strong></h1>
+            <h1 ><strong>Museu Mineral - Jazidas</strong></h1>
             <p>
                 Conheça as principais jazidas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
         </div>
-
-        {{-- Seção estilizada com borda verde, como em Minerais --}}
         <div class="rock-type-section">
             <div class="rock-description">
                 <h2><strong>Jazidas</strong></h2>
@@ -23,7 +19,7 @@
 
             <div class="minerals-grid">
                 @foreach ($jazidas as $item)
-                    <a href="{{ route('jazidas.show', $item->id) }}">
+                    <a href="{{ route('jazidas.show', $item->slug) }}">
                         <figure>
                             @php
                                 $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();

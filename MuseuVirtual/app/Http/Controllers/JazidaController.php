@@ -62,7 +62,7 @@ class JazidaController extends Controller
      */
     public function show($jazida)
     {
-        $jazida = Jazida::with('fotos')->findOrFail($jazida);
+        $jazida = Jazida::with('fotos')->where('slug', $jazida)->firstOrFail();;
         return view('jazidaEspecifica',compact('jazida'));
     }
 

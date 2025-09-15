@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('rochas', function (Blueprint $table) {
-            $table->foreignId('periodo_id')->nullable()->after('id')->constrained('periodos')->onDelete('set null');
+        Schema::table('minerals', function (Blueprint $table) {
+            //
+            $table->string('slug')->unique(); 
         });
     }
 
@@ -21,8 +22,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('rochas', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('periodo_id');
+        Schema::table('minerals', function (Blueprint $table) {
+            //
+            $table->dropUnique(['slug']);
+            $table->dropColumn('slug');
         });
     }
 };
