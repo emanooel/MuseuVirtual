@@ -94,8 +94,6 @@ class RochaController extends Controller
     public function edit($id)
     {
 
-
-
         $rocha = Rocha::with('fotos')->findOrFail($id);
         $jazidas = Jazida::all(['id', 'descricao']);
 
