@@ -9,7 +9,7 @@
     @if (isset($termo))
         <main id="resultados-container" class="max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-black">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">
+                <h2 class="text-2xl font-bold font-cinzel">
                     Resultados da busca por: <span class="text-white-600">"{{ $termo }}"</span>
                 </h2>
                 <button onclick="document.getElementById('resultados-container').style.display='none'"
@@ -21,7 +21,7 @@
             @if ($minerais->count() || $rochas->count() || $jazidas->count())
                 @if ($minerais->count() > 0)
                     <div class="mb-6">
-                        <h3 class="text-xl font-semibold mb-2">Minerais encontrados:</h3>
+                        <h3 class="text-xl font-semibold font-cinzel mb-2">Minerais encontrados:</h3>
                         <ul class="list-disc list-inside">
                             @foreach ($minerais as $mineral)
                                 <li>
@@ -40,7 +40,7 @@
 
                 @if ($rochas->count() > 0)
                     <div class="mb-6">
-                        <h3 class="text-xl font-semibold mb-2">Rochas encontradas:</h3>
+                        <h3 class="text-xl font-semibold font-cinzel mb-2">Rochas encontradas:</h3>
                         <ul class="list-disc list-inside">
                             @foreach ($rochas as $rocha)
                                 <li>
@@ -59,7 +59,7 @@
 
                 @if ($jazidas->count() > 0)
                     <div class="mb-6">
-                        <h3 class="text-xl font-semibold mb-2">Jazidas encontradas:</h3>
+                        <h3 class="text-xl font-semibold font-cinzel mb-2">Jazidas encontradas:</h3>
                         <ul class="list-disc list-inside">
                             @foreach ($jazidas as $jazida)
                                 <li>

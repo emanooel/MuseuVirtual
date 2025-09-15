@@ -47,7 +47,7 @@
         }
 
         .rock-card h2 {
-            font-family: 'Arial', sans-serif;
+            font-family: sans-serif;
             font-size: 28px;
             font-weight: bold;
             color: #F1EEDD;
@@ -94,7 +94,7 @@
 </head>
 
 <body>
-    <div class="2xl:px-80"><x-menu_site /></div>
+    <div class="2xl:px-100"><x-menu_site /></div>
 
     <div class="w-full mx-auto 2xl:px-80 xl:px-32 lg:px-20 md:px-10 py-16">
         <h1 class="section-title">
