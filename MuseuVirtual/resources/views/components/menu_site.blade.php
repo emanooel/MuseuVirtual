@@ -13,8 +13,8 @@
 
     <form action="{{ route('busca') }}" method="GET" class="hidden lg:flex items-center ml-auto">
       <input type="text" name="q" placeholder="Buscar..." value="{{ $termo ?? '' }}" 
-             class="w-64 px-3 py-2 rounded-l-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
-      <button type="submit" class="bg-white text-black px-4 py-2 rounded-r-md hover:bg-gray-200 transition">
+             class="opacity-80 w-64 px-3 py-2 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
+      <button type="submit" class="opacity-90 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition">
         Buscar
       </button>
     </form>
@@ -37,8 +37,8 @@
     <a href="{{ route('site.minerais') }}" class="block text-white text-center hover:underline">Minerais</a>
 
     <form action="{{ route('busca') }}" method="GET" class="flex mt-2">
-      <input type="text" name="q" placeholder="Buscar..." class="flex-grow px-3 py-2 rounded-l-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
-      <button type="submit" class="bg-white text-black px-4 py-2 rounded-r-md hover:bg-gray-200 transition">Buscar</button>
+      <input type="text" name="q" placeholder="Buscar..." class="flex-grow px-3 py-2 opacity-80 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
+      <button type="submit" class="bg-white text-black px-4 py-2 rounded-full opacity-90 hover:bg-gray-200 transition">Buscar</button>
     </form>
   </div>
 </header>
