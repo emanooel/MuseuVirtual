@@ -3,6 +3,7 @@
     
     <img src="/assets/img/logo12.png" alt="Museu Virtual ES Logo" class="h-11">
 
+    <!-- Menu desktop -->
     <ul class="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 space-x-12 font-semibold text-lg">
       <li><a href="{{ route('home') }}" class="p-2 hover:underline {{ request()->routeIs('home')?'underline':'' }}">Home</a></li>
       <li><a href="{{ route('site.jazidas') }}" class="p-2 hover:underline {{ request()->routeIs('site.jazidas','site.jazidas.show')?'underline':'' }}">Jazidas</a></li>
@@ -18,6 +19,7 @@
       </button>
     </form>
     
+    <!-- Botão mobile -->
     <button id="btn-mobile" class="lg:hidden flex flex-col justify-center items-center gap-1 p-2 focus:outline-none focus:ring-2 focus:ring-white z-10" aria-label="Abrir menu">
       <span class="block w-6 h-0.5 bg-white transition-transform duration-300 ease-in-out"></span>
       <span class="block w-6 h-0.5 bg-white transition-opacity duration-300 ease-in-out"></span>
@@ -27,7 +29,8 @@
 
   <hr class="border-white">
 
-  <div id="mobile-menu" class="lg:hidden fixed top-16 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-95 rounded-lg shadow-lg px-6 py-8 space-y-4 max-w-xs w-11/12 scale-y-0 origin-top transition-transform duration-300 ease-out z-50">
+  <!-- Menu mobile moderno (deslizando do topo) -->
+  <div id="mobile-menu" class="lg:hidden fixed top-0 left-0 w-full bg-black bg-opacity-95 transform -translate-y-full transition-transform duration-300 ease-out z-50 p-6 space-y-4">
     <a href="{{ route('home') }}" class="block text-white text-center hover:underline">Home</a>
     <a href="{{ route('site.jazidas') }}" class="block text-white text-center hover:underline">Jazidas</a>
     <a href="{{ route('site.rochas') }}" class="block text-white text-center hover:underline">Rochas</a>
@@ -41,21 +44,29 @@
 </header>
 
 <script>
+document.addEventListener('DOMContentLoaded', () => {
   const btnMobile = document.getElementById('btn-mobile');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  function toggleMenu() {
-    mobileMenu.classList.toggle('scale-y-0');
-    mobileMenu.classList.toggle('scale-y-100');
+  if (!btnMobile || !mobileMenu) return;
 
-    // Animação do ícone do botão hambúrguer
+  btnMobile.addEventListener('click', () => {
+    // Alterna entre o menu oculto e visível deslizando do topo
+    if (mobileMenu.classList.contains('-translate-y-full')) {
+      mobileMenu.classList.remove('-translate-y-full');
+      mobileMenu.classList.add('translate-y-0');
+    } else {
+      mobileMenu.classList.remove('translate-y-0');
+      mobileMenu.classList.add('-translate-y-full');
+    }
+
+    // Animação do botão hambúrguer
     const spans = btnMobile.querySelectorAll('span');
     spans[0].classList.toggle('rotate-45');
     spans[0].classList.toggle('translate-y-1.5');
     spans[1].classList.toggle('opacity-0');
     spans[2].classList.toggle('-rotate-45');
     spans[2].classList.toggle('-translate-y-1.5');
-  }
-
-  btnMobile.addEventListener('click', toggleMenu);
+  });
+});
 </script>
