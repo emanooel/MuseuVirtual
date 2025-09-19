@@ -254,11 +254,12 @@ let imageNaturalHeight = 0;
 
 // New function to get current image annotations
 window.showCurrentImageAnnotations = function () {
+    console.log(window.fotosComAnotacoes.fotos);
     const mainImage = document.getElementById('main-rocha-image');
-    const currentPath = mainImage.getAttribute('data-current-path');
+    // const currentPath = mainImage.getAttribute('data-current-path');
     
     // Get annotations for the current image path
-    const currentImageAnnotations = window.fotosComAnotacoes[currentPath] || [];
+    const currentImageAnnotations = window.fotosComAnotacoes;
     
     if (currentImageAnnotations.length === 0) {
         showNotification('Esta imagem não possui anotações.');
@@ -304,7 +305,7 @@ function renderAnnotations() {
     const scaleY = displayedHeight / imageNaturalHeight;
 
     annotationsContainer.innerHTML = '';
-
+    console.log(currentAnnotations);
     currentAnnotations.forEach(anotacao => {
         const x = anotacao.x * scaleX;
         const y = anotacao.y * scaleY;
