@@ -46,11 +46,13 @@
         <li><a href="{{ route('site.rochas') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo') ? 'underline decoration-white' : '' }}">Rochas</a></li>
         <li><a href="{{ route('site.minerais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white' : '' }}">Minerais</a></li>
       </ul>
-
       <!-- Busca desktop -->
-      <form class="hidden lg:flex items-center">
-        <input type="text" name="q" placeholder="Buscar..." class="w-64 px-3 py-2 rounded-l-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        <button type="submit" class="bg-white text-black text-xl rounded-r-md hover:bg-gray-200 transition">Buscar</button>
+      <form action="{{ route('busca') }}" method="GET" class="hidden lg:flex items-center">
+          <input type="text" name="q" placeholder="Buscar..."  value="{{ $termo ?? '' }}" 
+                  class="w-64 px-3 py-2 rounded-l-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          <button type="submit" class="bg-white text-black px-6 py-2 rounded-r-md hover:bg-gray-200 transition font-medium">
+              Buscar
+          </button>
       </form>
 
       <!-- Botão mobile -->
@@ -84,7 +86,7 @@
     <div class="p-6 border-t border-gray-700 mt-8">
       <form class="flex">
         <input type="text" name="q" placeholder="Buscar..." class="flex-grow px-4 py-3 rounded-l-md text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        <button type="submit" class="bg-white text-black text-lg rounded-r-md hover:bg-gray-200 transition font-semibold">🔍</button>
+        <button type="submit" class="bg-white text-black px-4 py-3 rounded-r-md hover:bg-gray-200 transition font-semibold">🔍</button>
       </form>
     </div>
   </div>
