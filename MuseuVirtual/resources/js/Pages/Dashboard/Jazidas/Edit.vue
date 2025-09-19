@@ -75,7 +75,15 @@ onMounted(()=>{
 
                         <!-- Fotos da Jazida -->
                         <div class="mt-6">
-                            <h2 class="text-xl font-semibold">Fotos da Jazida</h2>
+                            <div class="mt-8 flex flex-wrap justify-center">
+                                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mr-4">
+                                    Fotos da Jazida:
+                                </h2>
+                                <a :href="route('fotos-create', { idJazida: jazida.id })"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-4">
+                                    Adicionar fotos
+                                </a>
+                            </div>  
                             <div class="flex flex-wrap">
                                 <p v-if="props.jazida.fotos.length === 0">Não há fotos cadastradas para esta jazida.</p>
                                 <div v-else v-for="foto in props.jazida.fotos" :key="foto.id"
