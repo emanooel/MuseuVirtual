@@ -19,7 +19,7 @@
 
             <div class="minerals-grid">
                 @foreach ($jazidas as $item)
-                    <a href="{{ route('jazidas.show', $item->slug) }}">
+                    <a href="{{ route('site.jazidas.show', $item->id) }}">
                         <figure>
                             @php
                                 $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();

@@ -84,7 +84,7 @@ class RochaController extends Controller
         //     abort(404);
         // }
 
-        $rocha = Rocha::with('fotos')->where('slug', $rocha)->firstOrFail();
+        $rocha = Rocha::with('fotos')->where('id', $rocha)->firstOrFail();
         return view('rochaEspecifica', compact('rocha'));
     }
 
