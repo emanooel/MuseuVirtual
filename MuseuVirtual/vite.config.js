@@ -16,7 +16,8 @@ export default defineConfig({
       'resources/js/home.js',
       'resources/js/baselayout.js',
 		    'resources/js/rochas.js',
-		    'resources/js/rochaemineral_especificos.js'
+		    'resources/js/rochaemineral_especificos.js',
+		    'resources/js/mineralespecifico.js'
 	    ],
             refresh: true,
         }),
