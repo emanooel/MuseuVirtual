@@ -25,7 +25,8 @@
                         <ul class="list-disc list-inside">
                             @foreach ($minerais as $mineral)
                                 <li>
-                                    <a href="{{ route('minerais.show', $mineral->id) }}"
+                                    {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
+                                    <a href="{{ route('site.minerais.show', $mineral->slug) }}"
                                         class="text-blue-600 hover:underline">
                                         {{ $mineral->nome }}
                                     </a>
