@@ -18,6 +18,10 @@ body {
     --shadow-heavy: 0 10px 30px rgba(0, 0, 0, 0.3);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --border-radius: 20px;
+    /* Complementares */
+    --accent-contrast: #6E72AC;   /* lilás acinzentado, complementar */
+    --accent-warm: #D9822B;       /* laranja queimado, contraste quente */
+    --accent-bright: #7A5CFF; 
 }
 
 * {
@@ -609,17 +613,50 @@ h2,
 
 /* Estilo do pino de anotação */
 .annotation-pin {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: var(--accent-green);
-    border-radius: 50%;
-    border: 2px solid var(--primary-light);
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    pointer-events: all;
-    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent-bright);
+  border-radius: 50%;
+  border: 2px solid var(--primary-light);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  pointer-events: all;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  z-index: 1;
 }
+
+/* Criando ondas que saem do centro */
+.annotation-pin::before,
+.annotation-pin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--accent-bright);
+  opacity: 0.6;
+  animation: pulse-wave 2s infinite;
+  z-index: -1; /* Fica atrás do pin */
+}
+
+/* Atraso para criar efeito de ondas sucessivas */
+.annotation-pin::after {
+  animation-delay: 1s;
+}
+
+@keyframes pulse-wave {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3); /* tamanho da onda */
+    opacity: 0; /* some suavemente */
+  }
+}
+
+
+
 
 .annotation-pin:hover {
     transform: translate(-50%, -50%) scale(1.2);
