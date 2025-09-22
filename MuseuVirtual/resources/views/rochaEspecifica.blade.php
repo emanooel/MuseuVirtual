@@ -10,9 +10,7 @@
 
     {{-- Pass all photos with annotations to JavaScript --}}
     <script>
-        window.fotosComAnotacoes = @json($rocha->fotos->mapWithKeys(function($foto) {
-            return [$foto->caminho => $foto->anotacoes];
-        }));
+        window.fotosComAnotacoes = @json($rocha);
         
         Fancybox.bind("[data-fancybox]", {
             width: "90%",
