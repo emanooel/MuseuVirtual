@@ -101,7 +101,7 @@
         /* Explore Section */
         .explore-section {
             padding: 40px 0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(20, 20, 20, 0.8) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
         }
 
         .explore-title {

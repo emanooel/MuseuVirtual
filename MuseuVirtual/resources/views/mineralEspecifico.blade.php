@@ -1,5 +1,5 @@
 <x-layouts.BaseLayout>
-    @vite(['resources/css/EspecificoBlade.css', 'resources/js/app.js', 'resources/js/rochaemineral_especificos.js'])
+    @vite(['resources/css/EspecificoBlade.css', 'resources/js/app.js','resources/js/rochaemineral_especificos.js'])
     <x-slot name="title">Mineral - {{ $mineral->nome }}</x-slot>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -7,8 +7,26 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    
 
+    {{-- Pass all photos with annotations to JavaScript --}}
+    <script>
+        window.fotosComAnotacoes = @json($mineral->fotos->mapWithKeys(function($foto) {
+            return [$foto->caminho => $foto->anotacoes];
+        }));
+        
+        Fancybox.bind("[data-fancybox]", {
+            width: "90%",
+            height: "90%",
+            Toolbar: {
+                display: {
+                    left: ["infobar"],
+                    middle: [],
+                    right: ["slideshow", "fullScreen", "download", "thumbs", "close"],
+                },
+            },
+        });
+    </script>
+    
     <div id="loading-overlay" class="loading-overlay">
         <div class="loading-spinner"></div>
     </div>
@@ -19,7 +37,7 @@
         <div class="hero-section fade-in">
             <h1><strong>{{ $mineral->nome }}</strong></h1>
             <p>
-                Detalhes sobre a geologia, minerais e história deste mineral fascinante.
+                Detalhes sobre a geologia, minerais e história desta rocha fascinante.
             </p>
         </div>
 
@@ -29,15 +47,13 @@
             @endphp
             @if ($fotoCapa)
                 <div class="image-gallery-container">
-
                     <div class="main-image-wrapper">
-                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
-                            data-caption="{{ $mineral->nome }}">
-                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}"
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" 
+                            data-caption="{{ $mineral->nome }}" id="main-image-link">
+                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
                                 alt="Foto principal da mineral {{ $mineral->nome }}">
                         </a>
                         <div class="action-buttons">
-
                             <div class="action-button" onclick="downloadImage()" title="Baixar imagem">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 16l-4-4h3V4h2v8h3l-4 4zM6 20v-2h12v2H6z" />
@@ -49,17 +65,32 @@
                                         d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-6-6h2v2h-2v-2zm2 2h2v2h-2v-2zm0 2h2v2h-2v-2z" />
                                 </svg>
                             </div>
+                            {{-- Updated button to get annotations dynamically --}}
+                            <div class="action-button" onclick="showCurrentImageAnnotations()" title="Ver anotações">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endif
 
-            @if($mineral->fotos->count() > 1)
-                <div class="swiper-container swiper-mineral-thumbs">
+            @if ($mineral->fotos->count() > 1)
+                <div class="swiper-container swiper-rocha-thumbs">
                     <div class="swiper-wrapper">
                         @foreach ($mineral->fotos as $foto)
                             <div class="swiper-slide">
-                                <img src="{{ asset('storage/' . $foto->caminho) }}" alt="Miniatura do mineral {{ $mineral->nome }}" data-src="{{ asset('storage/' . $foto->caminho) }}">
+<<<<<<< HEAD
+                                <img src="{{ asset('storage/' . $foto->caminho) }}"
+                                    alt="Miniatura da rocha {{ $mineral->nome }}"
+                                    data-src="{{ asset('storage/' . $foto->caminho) }}"
+                                    data-path="{{ $foto->caminho }}">
+=======
+                                <img src="{{ asset('storage/' . $foto->caminho) }}" 
+                                     alt="Miniatura do mineral {{ $mineral->nome }}" 
+                                     data-src="{{ asset('storage/' . $foto->caminho) }}">
+>>>>>>> 451966577cc4816e893f8b73538c124189b39162
                             </div>
                         @endforeach
                     </div>
@@ -80,25 +111,44 @@
             </div>
         </div>
 
-        @if($mineral->descricao || $mineral->propriedades)
+        {{-- Modal de Anotações --}}
+        <div id="annotations-modal-overlay" class="modal-overlay" style="display: none;">
+            <div class="modal-content annotations-modal-content">
+                <div class="modal-header">
+                    <h2>📝 Anotações</h2>
+                    <button class="modal-close-button" onclick="hideAnnotationsModal()">&times;</button>
+                </div>
+                <div class="annotations-body">
+                    <div class="annotation-image-wrapper">
+                        <img id="modal-annotation-image" src="" alt="Imagem com anotações">
+                        <div id="annotations-container" class="annotations-container">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if ($mineral->descricao || $mineral->propriedades)
             <div class="section-container fade-in animate-delay-2">
                 <div class="content-box">
-                    @if($mineral->descricao)
+                    @if ($mineral->descricao)
                         <p><strong>Descrição:</strong> {!! $mineral->descricao !!}</p>
                     @endif
 
-                    @if($mineral->descricao && $mineral->propriedades)
-                        <br> {{-- Adiciona uma quebra de linha se ambas existirem --}}
+                    @if ($mineral->descricao && $mineral->propriedades)
+                        <br>
                     @endif
 
-                    @if($mineral->propriedades)
-                        <p><strong>Propriedades:</strong> {!! $mineral->propriedades !!}</p>
+                    @if ($mineral->propriedades)
+                        <p><strong>Composição:</strong> {!! $mineral->propriedades !!}</p>
                     @endif
                 </div>
             </div>
         @endif
     </div>
+<<<<<<< HEAD
+    
+=======
 
-
-
+>>>>>>> 451966577cc4816e893f8b73538c124189b39162
 </x-layouts.BaseLayout>
