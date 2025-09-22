@@ -1,7 +1,7 @@
 <header class="w-full bg-black text-white">
   <nav class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center relative">
     
-    <img src="/assets/img/logo12.png" alt="Museu Virtual ES Logo" class="h-11">
+    <img src="/assets/img/logo_sem_estado.png" alt="Museu Virtual ES Logo" class="h-11 pl-16 opacity-65">
 
     <!-- Menu desktop -->
     <ul class="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 space-x-12 font-semibold text-lg">
