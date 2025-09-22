@@ -60,11 +60,12 @@ class JazidaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($jazida)
+    public function show($id)
     {
-        $jazida = Jazida::with('fotos')->where('slug', $jazida)->firstOrFail();;
-        return view('jazidaEspecifica',compact('jazida'));
+        $jazida = Jazida::with('fotos')->findOrFail($id);
+        return view('jazidaEspecifica', compact('jazida'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

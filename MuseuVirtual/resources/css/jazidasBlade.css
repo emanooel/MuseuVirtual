@@ -37,7 +37,7 @@
         .rock-type-section {
             background: rgba(54, 60, 39, 0.3);
             border-radius: 20px;
-            padding: 40px;
+            padding: 10px;
             margin-bottom: 60px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(241, 238, 221, 0.1);
