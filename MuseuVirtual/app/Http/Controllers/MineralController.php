@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mineral;
 use App\Models\Jazida;
+use App\Models\Rocha;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
@@ -29,7 +30,8 @@ class MineralController extends Controller
     {
         $jazidas = Jazida::all();
         return Inertia::render('Dashboard/Minerais/Create', [
-            'jazidas' => $jazidas
+            'jazidas' => $jazidas,
+            'rochas' => Rocha::all(),
         ]);
     }
 
@@ -45,6 +47,11 @@ class MineralController extends Controller
         $mineral->propriedades = $request->propriedades;
         $mineral->jazida_id = $request->idJazida;
         $mineral->save();
+
+        if ($request->filled('rocha_id')) {
+        $mineral->rochas()->attach($request->rocha_id);
+        }
+
 
         if ($request->hasFile('foto')) {
             $fotosRequest = new Request([
