@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Rocha extends Model
 {
@@ -14,6 +15,11 @@ class Rocha extends Model
         'tipo',
         'jazida_id', // Adicionado para permitir preenchimento via create/update
     ];
+
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 
     public function periodo()
     {
@@ -28,5 +34,26 @@ class Rocha extends Model
     public function jazida()
     {
         return $this->belongsTo(Jazida::class);
+    }
+
+    // Gera slug automaticamente ao criar
+    protected static function booted()
+    {
+        static::creating(function ($rocha) {
+            if (empty($rocha->slug)) {
+                $rocha->slug = Str::slug($rocha->nome);
+            }
+        });
+    }
+
+
+    // Traduz os tipos para nomes amigáveis
+    public function getTipoNomeAttribute()
+    {
+        return match($this->tipo) {
+            '1' => 'igneas',
+            '2' => 'sedimentares',
+            '3' => 'metamorficas',
+        };
     }
 }

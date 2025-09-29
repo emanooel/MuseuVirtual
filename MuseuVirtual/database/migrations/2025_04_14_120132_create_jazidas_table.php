@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('localizacao'); 
             $table->text('descricao')->nullable(); 
+            $table->string("slug")->unique();
             $table->timestamps(); 
         });
     }

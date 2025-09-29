@@ -18,13 +18,13 @@ use App\Http\Controllers\TimelineController;
 // Público:
 Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
-Route::get("/site/jazidas/{id}", [JazidaController::class, 'site'])->name("site.jazidas.show");
+Route::get("/site/jazidas/{id}", [JazidaController::class, 'show'])->name("site.jazidas.show");
 Route::get("/site/rochas/{id}", [RochaController::class, 'site'])->name("rochas.show");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");
 Route::get('/rochas/{id}/qrcode', [RochaController::class, 'gerarQrCode'])->name('rochas.qrcode');
 Route::get("/site/rochas/{id}", [RochaController::class, 'site_show'])->name("site.rochas.show");
-
+Route::get("/busca", [SiteController::class, 'busca'])->name("busca");
 Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/api/rochas", [RochaController::class, 'apiListRocha']);
 
@@ -43,6 +43,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
+
+Route::resource('rocha', RochaController::class)->names('Rocha');
+
+Route::get('/site/rochas/{tipo}/{rocha}', [RochaController::class, 'show'])
+     ->name('site.rochas.show');
+
+Route::resource('timeline', RochaController::class)->names('Timeline');
+
+
 // Jazidas:
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
 Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
@@ -51,8 +61,9 @@ Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 Route::resource('rochas', RochaController::class)->names('rochas');
 
 // Minerais:
-Route::resource('/minerais', MineralController::class)
-    ->parameters(['minerais' => 'mineral']);
+Route::resource('minerais', MineralController::class);
+
+Route::get('/site/minerais/{slug_mineral}', [MineralController::class, 'show'])->name('site.minerais.show');
 
 // Timeline:
 Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
@@ -91,5 +102,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
     Route::resource('/timeline', TimelineController::class);
 });
+
+
 
 require __DIR__.'/auth.php';

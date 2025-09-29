@@ -21,3 +21,4 @@ yarn-error.log
 *.Identifier
 /vendor
 .env
+/storage/app/public
