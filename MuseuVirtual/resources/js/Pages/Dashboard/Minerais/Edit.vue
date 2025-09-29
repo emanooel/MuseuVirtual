@@ -3,24 +3,34 @@ import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const props = defineProps({
     mineral: Object,
-    jazidas : Array
+    jazidas : Array,
+    rochas : Array,
 });
 
-const mineral = ref({ ...props.mineral });
+const mineral = ref({ 
+    ...props.mineral,
+    rochas_ids: props.mineral.rochas_ids ?? []
+});
+
 const page = usePage();
 const successMessage = computed(() => page.props?.flash?.success ?? null);
 
-onMounted(() => {
-    console.log('Mineral:', mineral.value);
-    console.log('Mineral', mineral.value.jazida_id);
+const searchRocha = ref('');
+
+const filteredRochas = computed(() => {
+    return props.rochas.filter(r =>
+        r.nome.toLowerCase().includes(searchRocha.value.toLowerCase())
+    );
 });
 
 function submitForm() {
+    mineral.value.rochas_ids = mineral.value.rochas_ids.map(Number);
+
     if (mineral.value.jazida_id === '89656') {
         mineral.value.jazida_id = null;
     }
@@ -94,6 +104,22 @@ function submitDeleteFoto(id) {
                                 </select>
                             </div>
 
+                            <!-- Associar Rocha -->
+                            <div class="mb-4">
+                                <label class="block font-medium">Associar mineral a rochas</label>
+                                <input type="text" placeholder="Pesquisar rocha..." v-model="searchRocha"
+                                    class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
+
+                                <div class="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
+                                    <div v-for="rocha in filteredRochas" :key="rocha.id" class="flex items-center">
+                                        <input type="checkbox" 
+                                            :value="rocha.id" 
+                                            v-model="mineral.rochas_ids" 
+                                            class="mr-2" />
+                                        <span>{{ rocha.nome }}</span>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                                 Salvar

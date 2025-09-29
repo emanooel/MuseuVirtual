@@ -1,9 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
-import axios from 'axios';
 
 const form = reactive({
     nome: '',
@@ -11,20 +10,23 @@ const form = reactive({
     composicao: '',
     tipo: '',
     fotos: [],
-    capa_nome: ''
+    capa_nome: '',
+    jazida_id: '',
+    minerais_ids: [],
+});
+
+const props = defineProps({
+  jazidas: Array,
+  minerais: Array, // recebendo minerais do backend
 });
 
 const associarJazida = ref(false);
-const jazidas = ref([]);
-const jazida_id = ref(null);
-
 const fotoInput = ref(null);
 const previewFotos = ref([]);
+const searchMineral = ref('');
 
-onMounted(() => {
-    axios.get('/api/jazidas').then(res => {
-        jazidas.value = res.data;
-    });
+const filteredMinerais = computed(() => {
+    return props.minerais.filter(m => m.nome.toLowerCase().includes(searchMineral.value.toLowerCase()));
 });
 
 function handleFileChange(event) {
@@ -52,11 +54,16 @@ function submitForm() {
     payload.append('descricao', form.descricao);
     payload.append('composicao', form.composicao);
     payload.append('tipo', form.tipo);
+
+    if (associarJazida.value && form.jazida_id) {
+        payload.append('jazida_id', form.jazida_id);
+    }
+
+    form.minerais_ids = form.minerais_ids.map(Number);
+    form.minerais_ids.forEach(id => payload.append('minerais_ids[]', id));
+
     form.fotos.forEach(f => payload.append('foto[]', f));
     payload.append('capa_nome', form.capa_nome);
-    if (associarJazida.value && jazida_id.value) {
-        payload.append('jazida_id', jazida_id.value);
-    }
 
     router.post(route('rochas.store'), payload);
 }
@@ -77,23 +84,27 @@ function submitForm() {
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                            <!-- Nome -->
                             <div class="mb-4">
                                 <label for="nome" class="block font-medium">Nome</label>
                                 <input id="nome" v-model="form.nome" type="text" required
                                     class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
                             </div>
 
+                            <!-- Descrição -->
                             <div class="mb-4">
                                 <label for="descricao" class="block font-medium">Descrição</label>
                                 <TinyMCEEditor v-model="form.descricao" />
                             </div>
 
+                            <!-- Composição -->
                             <div class="mb-4">
                                 <label for="composicao" class="block font-medium">Composição</label>
                                 <input id="composicao" v-model="form.composicao" type="text" required
                                     class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
                             </div>
 
+                            <!-- Tipo -->
                             <div class="mb-4">
                                 <label for="tipo" class="block font-medium">Tipo de Rocha</label>
                                 <select id="tipo" v-model="form.tipo" required
@@ -105,29 +116,48 @@ function submitForm() {
                                 </select>
                             </div>
 
+                            <!-- Associar Jazida -->
                             <div class="mb-4">
-                                    <label for="jazida" class="block font-medium">Associar esta rocha á alguma jazida?</label>
-                                    <div id="switch">
+                                <label class="block font-medium">Associar esta rocha à alguma jazida?</label>
+                                <div id="switch">
                                     <p>Não</p>
                                     <label class="switch">
                                         <input type="checkbox" v-model="associarJazida">
                                         <span class="slider round"></span>
                                     </label>
                                     <p>Sim</p>
-                                    </div>
+                                </div>
                             </div>
 
                             <div class="mb-4" v-if="associarJazida">
                                 <label for="jazida_id" class="block font-medium">Selecionar Jazida</label>
-                                <select id="jazida_id" v-model="jazida_id"
+                                <select id="jazida_id" v-model="form.jazida_id"
                                     class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
                                     <option disabled value="">Escolha uma jazida...</option>
-                                    <option v-for="jazida in jazidas" :key="jazida.id" :value="jazida.id">
+                                    <option v-for="jazida in props.jazidas" :key="jazida.id" :value="jazida.id">
                                         {{ jazida.localizacao }}
                                     </option>
                                 </select>
                             </div>
 
+                            <!-- Associar Minerais -->
+                            <div class="mb-4">
+                                <label class="block font-medium">Associar rocha a minerais</label>
+                                <input type="text" placeholder="Pesquisar mineral..." v-model="searchMineral"
+                                    class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
+
+                                <div class="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
+                                    <div v-for="mineral in filteredMinerais" :key="mineral.id" class="flex items-center">
+                                        <input type="checkbox"
+                                            :value="mineral.id"
+                                            v-model="form.minerais_ids"
+                                            class="mr-2" />
+                                        <span>{{ mineral.nome }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fotos -->
                             <div class="mb-4">
                                 <label for="foto" class="block font-medium">Fotos da Rocha</label>
                                 <input ref="fotoInput" @change="handleFileChange" type="file" id="foto" multiple
@@ -146,6 +176,7 @@ function submitForm() {
                                 </div>
                             </div>
 
+                            <!-- Botão -->
                             <div class="mt-6">
                                 <button type="submit"
                                     class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
@@ -193,7 +224,7 @@ function submitForm() {
   height: 30px;
 }
 
-#switch {
+#switch { 
   display: flex;
   align-items: center;
   column-gap: 5px;
@@ -237,7 +268,8 @@ input:checked + .slider {
 
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
-}
+} 
+  
 
 input:checked + .slider:before {
   -webkit-transform: translateX(40px);

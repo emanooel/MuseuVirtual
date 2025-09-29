@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rocha;
 use App\Models\Jazida;
+use App\Models\Mineral;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
@@ -28,15 +29,16 @@ class RochaController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return Inertia::render('Dashboard/Rochas/Create');
+{
+    $jazidas = Jazida::all(['id', 'descricao']);
+    $minerais = Mineral::all(['id', 'nome']);
 
-        $jazidas = Jazida::all(['id', 'descricao']); // ou 'localizacao', se preferir
+    return Inertia::render('Dashboard/Rochas/Create', [
+        'jazidas' => $jazidas,
+        'minerais' => $minerais,
+    ]);
+}
 
-        return Inertia::render('Dashboard/Rochas/Create', [
-            'jazidas' => $jazidas
-        ]);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,8 +58,14 @@ class RochaController extends Controller
         $rocha = Rocha::create($validated);
 
         // Sincroniza minerais (muitos-para-muitos)
-        if ($request->filled('minerais')) {
-            $rocha->minerais()->sync($request->minerais);
+        //if ($request->filled('minerais')) {
+        //    $rocha->minerais()->attach($request->minerais);
+        //}
+
+        if ($request->filled('minerais_ids')) {
+            foreach ($request->minerais_ids as $mineralId) {
+                $rocha->minerais()->attach($mineralId);
+            }
         }
 
         // Fotos (mantido igual)

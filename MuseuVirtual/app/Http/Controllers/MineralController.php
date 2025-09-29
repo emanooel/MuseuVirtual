@@ -41,18 +41,18 @@ class MineralController extends Controller
     public function store(Request $request)
     {
         $mineral = new Mineral;
-
         $mineral->nome = $request->nome;
         $mineral->descricao = $request->descricao;
         $mineral->propriedades = $request->propriedades;
         $mineral->jazida_id = $request->idJazida;
         $mineral->save();
 
-        if ($request->filled('rocha_id')) {
-        $mineral->rochas()->attach($request->rocha_id);
+        if ($request->filled('rochas_ids')) {
+            foreach ($request->rochas_ids as $rochaId) {
+                $mineral->rochas()->attach($rochaId);
+            }
         }
-
-
+    
         if ($request->hasFile('foto')) {
             $fotosRequest = new Request([
                 "idMineral" => $mineral->id,
@@ -88,9 +88,11 @@ class MineralController extends Controller
         $mineral = Mineral::with('fotos')->findOrFail($id);
         $jazidas = Jazida::all();
 
+
         return Inertia::render('Dashboard/Minerais/Edit', [
             'mineral' => $mineral,
             'jazidas' => $jazidas,
+            'rochas' => Rocha::all(),
         ]);
     }
 
