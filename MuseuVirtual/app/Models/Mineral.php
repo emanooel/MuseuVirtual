@@ -26,6 +26,11 @@ class Mineral extends Model
         return $this->belongsTo(Jazida::class, 'idJazida');
     }
 
+    public function rochas()
+    {
+        return $this->belongsToMany(Rocha::class, 'rocha_minerals');
+    }
+
     // Gera slug automaticamente ao criar
     protected static function booted()
     {

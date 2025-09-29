@@ -26,6 +26,11 @@ class Rocha extends Model
         return $this->belongsTo(Periodo::class);
     }
 
+    public function minerais()
+    {
+        return $this->belongsToMany(Mineral::class, 'rocha_minerals');
+    }
+
     public function fotos()
     {
         return $this->hasMany(Fotos::class, 'idRocha');

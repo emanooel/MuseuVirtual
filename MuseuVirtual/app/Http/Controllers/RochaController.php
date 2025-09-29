@@ -43,32 +43,32 @@ class RochaController extends Controller
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'descricao' => 'required|string',
             'composicao' => 'required|string',
             'tipo' => 'required|integer',
             'jazida_id' => 'nullable|exists:jazidas,id',
+            'minerais' => 'nullable|array',            // <-- array de IDs de minerais
+            'minerais.*' => 'exists:minerals,id',     // <-- validação de cada ID
         ]);
 
-
-        // Começa aqui a parte de encaminhar para o fotos controller ----------------------------
         $rocha = Rocha::create($validated);
 
+        // Sincroniza minerais (muitos-para-muitos)
+        if ($request->filled('minerais')) {
+            $rocha->minerais()->sync($request->minerais);
+        }
+
+        // Fotos (mantido igual)
         if ($request->hasFile('foto')) {
             $fotosRequest = new Request([
                 "idRocha" => $rocha->id,
                 "capa_nome" => $request->input('capa_nome'),
             ]);
-
-            // Encaminha os arquivos
             $fotosRequest->files->set('foto', $request->file('foto'));
-
-            // Chama o controller de fotos
             app(\App\Http\Controllers\FotosController::class)->store($fotosRequest);
         }
-        // termina aqui ---------------------------------------------------------------------
 
         return redirect()->route('rochas.index')->with('success', 'Rocha criada com sucesso!');
     }
@@ -113,30 +113,19 @@ class RochaController extends Controller
             'descricao' => 'nullable|string',
             'composicao' => 'nullable|string',
             'tipo' => 'required|integer',
+            'jazida_id' => 'nullable|exists:jazidas,id',
+            'minerais' => 'nullable|array',
+            'minerais.*' => 'exists:minerals,id',
         ]);
 
-        // Atualizando apenas os campos que foram enviados
-        if ($request->filled('nome')) {
-            $rocha->nome = $request->nome;
-        }
+        $rocha->update($request->only(['nome','descricao','composicao','tipo','jazida_id']));
 
-        if ($request->filled('descricao')) {
-            $rocha->descricao = $request->descricao;
+        // Sincroniza minerais (atualiza a relação)
+        if ($request->has('minerais')) {
+            $rocha->minerais()->sync($request->minerais);
+        } else {
+            $rocha->minerais()->sync([]); // remove todos se não enviar
         }
-
-        if ($request->filled('composicao')) {
-            $rocha->composicao = $request->composicao;
-        }
-
-        if ($request->filled('tipo')) {
-            $rocha->tipo = $request->tipo;
-        }
-
-        if ($request->filled('jazida_id')) {
-            $rocha->jazida_id = $request->jazida_id;
-        }
-
-        $rocha->save();
 
         return redirect()->route('rochas.index')->with('success', 'Rocha atualizada com sucesso!');
     }
