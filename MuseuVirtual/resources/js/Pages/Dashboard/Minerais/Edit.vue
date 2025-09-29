@@ -14,7 +14,7 @@ const props = defineProps({
 
 const mineral = ref({ 
     ...props.mineral,
-    rochas_ids: props.mineral.rochas_ids ?? []
+    rochas_ids: (props.mineral.rochas_ids ?? []).map(Number)
 });
 
 const page = usePage();
@@ -34,6 +34,7 @@ function submitForm() {
     if (mineral.value.jazida_id === '89656') {
         mineral.value.jazida_id = null;
     }
+
     router.put(route('minerais.update', mineral.value.id), mineral.value);
 }
 
@@ -113,7 +114,7 @@ function submitDeleteFoto(id) {
                                 <div class="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
                                     <div v-for="rocha in filteredRochas" :key="rocha.id" class="flex items-center">
                                         <input type="checkbox" 
-                                            :value="rocha.id" 
+                                            :value="Number(rocha.id)" 
                                             v-model="mineral.rochas_ids" 
                                             class="mr-2" />
                                         <span>{{ rocha.nome }}</span>

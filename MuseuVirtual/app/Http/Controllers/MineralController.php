@@ -85,12 +85,13 @@ class MineralController extends Controller
      */
     public function edit($id)
     {
-        $mineral = Mineral::with('fotos')->findOrFail($id);
+        $mineral = Mineral::with('fotos', 'rochas')->findOrFail($id);
         $jazidas = Jazida::all();
 
-
         return Inertia::render('Dashboard/Minerais/Edit', [
-            'mineral' => $mineral,
+            'mineral' => array_merge($mineral->toArray(), [
+                'rochas_ids' => $mineral->rochas->pluck('id')->toArray(),
+            ]),
             'jazidas' => $jazidas,
             'rochas' => Rocha::all(),
         ]);
@@ -108,6 +109,14 @@ class MineralController extends Controller
             'descricao' => 'nullable|string',
             'propriedades' => 'nullable|string',
         ]);
+
+        $mineral->rochas()->sync($request->input('rochas_ids', []));
+
+        if ($request->filled('rochas_ids')) {
+            foreach ($request->rochas_ids as $rochaId) {
+                $mineral->rochas()->syncWithoutDetaching($rochaId);
+            }
+        }
 
         // Atualizando apenas os campos que foram enviados
         if ($request->filled('nome')) {
