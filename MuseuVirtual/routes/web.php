@@ -65,6 +65,8 @@ Route::resource('minerais', MineralController::class);
 // Timeline:
 Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
 Route::post('/timeline', [TimelineController::class, 'store'])->name('timeline.store');
+Route::delete('/timeline/associacoes/{id}', [TimelineController::class, 'destroyAssociacao'])->name('timeline.associacoes.destroy');
+
 
 // QRcode:
 Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');

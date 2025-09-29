@@ -123,4 +123,14 @@ class TimelineController extends Controller
     {
         //
     }
+
+    public function destroyAssociacao($id)
+    {
+        // supondo que o modelo seja Associacao ou Aquisicao
+        $Aquisicoes = Aquisicoes::findOrFail($id);
+        $Aquisicoes->delete();
+
+        return redirect()->back()->with('success', 'Associação removida com sucesso!');
+    }
+
 }
