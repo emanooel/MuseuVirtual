@@ -1,4 +1,5 @@
 <script setup>
+import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { computed, onMounted, ref } from 'vue';
@@ -24,11 +25,23 @@ onMounted(() => {
     }
 });
 
+
 function deleteRocha(id) {
-    if (confirm('Tem certeza que deseja excluir esta rocha?')) {
-        router.delete(route('rochas.destroy', id));
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir esta rocha?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('rochas.destroy', id));
     }
+  });
 }
+
+
 </script>
 
 <template>

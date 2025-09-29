@@ -1,12 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
-import { ref, computed } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 
 const props = defineProps({
   rochas: Array,
   minerais: Array,
-  jazidas: Array
+  jazidas: Array,
+  idMineral: Number,
+  idRocha: Number,
+  idJazida: Number,
 })
 
 const previewCards = ref([])
@@ -16,10 +19,24 @@ const form = useForm({
   capa_nome: '',
   idRocha: '',
   idMineral: '',
-  idJazida: ''
+  idJazida: '',
 })
 
-const errors = computed(() => usePage().props.errors || {})
+const errors = computed(() => usePage().props.errors || {});
+
+onMounted(() => {
+
+  const parametros = new URLSearchParams(window.location.search);
+
+  const idMineral = parametros.get("idMineral");
+  const idRocha = parametros.get("idRocha");
+  const idJazida = parametros.get("idJazida");
+
+  if (idRocha) form.idRocha = parseInt(idRocha)
+  if (idMineral) form.idMineral = parseInt(idMineral)
+  if (idJazida) form.idJazida = parseInt(idJazida)
+})
+
 
 function handleFileChange(e) {
   const files = Array.from(e.target.files)
@@ -115,40 +132,31 @@ function submit() {
             </div>
 
             <input type="hidden" name="capa_nome" :value="form.capa_nome" />
+              <div>
+                <!-- Rocha -->
+                <label for="idRocha" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Rocha</label>
+                <select v-model="form.idRocha"
+                  class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-3">
+                  <option value="">Escolha uma rocha...</option>
+                  <option v-for="rocha in props.rochas" :key="rocha.id" :value="rocha.id">{{ rocha.nome }}</option>
+                </select>
 
-            <div>
-              <label for="idRocha" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Rocha</label>
-              <select
-                v-model="form.idRocha"
-                class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-3"
-              >
-                <option value="">Escolha uma rocha...</option>
-                <option v-for="rocha in props.rochas" :key="rocha.id" :value="rocha.id">{{ rocha.nome }}</option>
-              </select>
-            </div>
+                <!-- Mineral -->
+                <label for="idMineral" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-4">Mineral</label>
+                <select v-model="form.idMineral"
+                  class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-3">
+                  <option value="">Escolha um mineral...</option>
+                  <option v-for="mineral in props.minerais" :key="mineral.id" :value="mineral.id">{{ mineral.nome }}</option>
+                </select>
 
-            <div>
-              <label for="idMineral" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mineral</label>
-              <select
-                v-model="form.idMineral"
-                class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-3"
-              >
-                <option value="">Escolha um mineral...</option>
-                <option v-for="mineral in props.minerais" :key="mineral.id" :value="mineral.id">{{ mineral.nome }}</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="idJazida" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jazida</label>
-              <select
-                v-model="form.idJazida"
-                class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-3"
-              >
-                <option value="">Escolha uma jazida...</option>
-                <option v-for="jazida in props.jazidas" :key="jazida.id" :value="jazida.id">{{ jazida.localizacao }}</option>
-              </select>
-            </div>
-
+                <!-- Jazida -->
+                <label for="idJazida" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-4">Jazida</label>
+                <select v-model="form.idJazida"
+                  class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-3">
+                  <option value="">Escolha uma jazida...</option>
+                  <option v-for="jazida in props.jazidas" :key="jazida.id" :value="jazida.id">{{ jazida.localizacao }}</option>
+                </select>
+              </div>
             <div>
               <button
                 type="submit"

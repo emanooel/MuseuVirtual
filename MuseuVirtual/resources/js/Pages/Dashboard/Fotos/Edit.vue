@@ -1,4 +1,5 @@
 <script setup>
+import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ref, watch, nextTick } from 'vue';
@@ -111,8 +112,11 @@ const adicionarAnotacao = (e) => {
   const xNatural = xExibido * scaleX;
   const yNatural = yExibido * scaleY;
 
-  const texto = prompt("Digite o texto da anotação:");
-  if (texto && texto.trim() !== '') {
+  swal("Digite o texto da anotação:", {
+    content: "input",
+  })
+  .then((texto) => {
+    if (texto && texto.trim() !== '') {
     anotacoes.value.push({
       id: null,
       xOriginal: xNatural,
@@ -123,6 +127,8 @@ const adicionarAnotacao = (e) => {
       mostrarTexto: true,
     });
   }
+  });
+  
 };
 
 const toggleAnotacao = (index) => {
@@ -139,12 +145,21 @@ const editarAnotacao = (index) => {
 
 const removerAnotacao = (index) => {
   const anotacao = anotacoes.value[index];
-  if (confirm("Deseja remover esta anotação?")) {
-    if (anotacao.id) {
-      anotacoesParaExcluir.value.push(anotacao.id);
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja remover esta anotação?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      if (anotacao.id) {
+        anotacoesParaExcluir.value.push(anotacao.id);
+      }
+      anotacoes.value.splice(index, 1);
     }
-    anotacoes.value.splice(index, 1);
-  }
+  });
 };
 
 const salvarAnotacoes = () => {
