@@ -31,7 +31,6 @@
   </style>
 </head>
 <body class="bg-black text-white">
-
   <!-- HEADER -->
   <header class="w-full bg-black text-white relative z-50">
     <nav class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -48,8 +47,8 @@
       </ul>
 
       <!-- Busca desktop -->
-      <form class="hidden lg:flex items-center">
-        <input type="text" name="q" placeholder="Buscar..." class="w-64 px-4 py-2 text-sm text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-300 ease-in-out">
+      <form action="{{ route('busca') }}" method="GET" class="hidden lg:flex items-center">
+        <input type="text" name="q" placeholder="Buscar..." class="w-64 px-4 py-2 text-sm text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-300 ease-in-out value="{{ $termo ?? '' }}">
         <button type="submit" class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-gray-200 transition">Buscar</button>
       </form>
 
@@ -82,8 +81,8 @@
 
     <!-- Busca mobile -->
     <div class="p-6 border-t border-gray-700 mt-8">
-      <form class="flex">
-        <input type="text" name="q" placeholder="Buscar..." class="flex-grow px-4 py-3 rounded-l-md text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+      <form action="{{ route('busca') }}" method="GET" class="flex">
+        <input type="text" name="q" placeholder="Buscar..." class="flex-grow px-4 py-3 rounded-l-md text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 value="{{ $termo ?? '' }}">
         <button type="submit" class="bg-white text-black text-lg rounded-r-md hover:bg-gray-200 transition font-semibold">🔍</button>
       </form>
     </div>
