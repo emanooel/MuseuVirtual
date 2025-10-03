@@ -1,4 +1,5 @@
 <script setup>
+import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
@@ -24,15 +25,21 @@ const page = usePage();
 const successMessage = computed(() => page.props?.flash?.success ?? null);
 
 function submitDelete(id) {
-    if (confirm('Tem certeza que deseja excluir esta jazida?')) {
-        router.delete(route('jazidas.destroy', id), {
-            preserveScroll: true,
-            onSuccess: () => {
-                router.reload({ only: ['jazidas'] });
-            },
-        });
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir esta jazida?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('jazidas.destroy', id));
+      location.reload();
     }
+  });
 }
+
 </script>
 
 <template>

@@ -18,7 +18,7 @@
             </li>
         </ul>
 
-        {{-- Arruamamos o botão BUSCAR --}}
+{{-- Arruamamos o botão BUSCAR --}}
         <form action="{{ route('busca') }}" method="GET" class="hidden lg:flex items-center ml-auto space-x-2">
             <input type="text" name="q" placeholder="Buscar..." value="{{ $termo ?? '' }}"
                 class="w-64 px-4 py-2 text-sm text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-300 ease-in-out">
@@ -53,7 +53,7 @@
             <input type="text" name="q" placeholder="Buscar..."
                 class="flex-grow px-3 py-2 opacity-80 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
             <button type="submit"
-                class="bg-white text-black px-4 py-2 rounded-full opacity-90 hover:bg-gray-200 transition">Buscar</button>
+                class="text-black px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-gray-200 transition">Buscar</button>
         </form>
     </div>
 </header>

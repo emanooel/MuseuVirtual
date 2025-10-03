@@ -1,4 +1,5 @@
 <script setup>
+import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { computed, onMounted } from 'vue';
@@ -18,9 +19,19 @@ const page = usePage();
 const successMessage = computed(() => page.props?.flash?.success ?? null);
 
 function submitDelete(id) {
-  if (confirm('Tem certeza que deseja excluir este mineral?')) {
-    router.delete(route('minerais.destroy', id));
-  }
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir este mineral?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('minerais.destroy', id));
+      location.reload();
+    }
+  });
 }
 </script>
 

@@ -32,7 +32,7 @@
                         @foreach ($rochastipo1 as $item)
                             <div class="swiper-slide">
                                 {{-- @dd($item) --}}
-                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->id]) }}">
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
@@ -80,7 +80,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo2 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->id]) }}">
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
@@ -128,7 +128,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo3 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->id]) }}">
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();

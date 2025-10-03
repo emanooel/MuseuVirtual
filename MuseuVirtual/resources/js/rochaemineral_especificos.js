@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Detecta se é rocha ou mineral
     const mainImage = document.getElementById('main-rocha-image') || document.getElementById('main-mineral-image');
     const isMineral = document.getElementById('main-mineral-image') !== null;
-    
+
     // Define o seletor do swiper baseado no tipo
     const swiperSelector = isMineral ? ".swiper-mineral-thumbs" : ".swiper-rocha-thumbs";
-    
+
     if (document.querySelector(swiperSelector)) {
         const thumbsSwiper = new Swiper(swiperSelector, {
             spaceBetween: 15,
@@ -73,20 +73,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     mainImage.src = newSrc;
                 }
             }
-    });
-    // Handle thumbnail clicks with path tracking
-    thumbsSwiper.on('click', function (swiper, event) {
-        const clickedSlide = event.target.closest('.swiper-slide');
-        if (clickedSlide) {
-            const newSrc = clickedSlide.querySelector('img').getAttribute('data-src');
-            const newPath = clickedSlide.querySelector('img').getAttribute('data-path');
-            
-            if (newSrc && newPath) {
-                mainImage.style.opacity = '0.5';
-                mainImage.src = newSrc;
-                
-                // Update the data-current-path attribute for the main image
-                mainImage.setAttribute('data-current-path', newPath);
+        });
+        // Handle thumbnail clicks with path tracking
+        thumbsSwiper.on('click', function (swiper, event) {
+            const clickedSlide = event.target.closest('.swiper-slide');
+            if (clickedSlide) {
+                const newSrc = clickedSlide.querySelector('img').getAttribute('data-src');
+                const newPath = clickedSlide.querySelector('img').getAttribute('data-path');
+
+                if (newSrc && newPath) {
+                    mainImage.style.opacity = '0.5';
+                    mainImage.src = newSrc;
+
+                    // Update the data-current-path attribute for the main image
+                    mainImage.setAttribute('data-current-path', newPath);
                     // Atualiza o link do fancybox também
                     const mainImageLink = document.getElementById('main-image-link');
                     if (mainImageLink) {
@@ -128,16 +128,16 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Download image function
-window.downloadImage = function() {
+window.downloadImage = function () {
     const mainImage = document.getElementById('main-rocha-image') || document.getElementById('main-mineral-image');
     const imageSrc = mainImage.src;
     const a = document.createElement('a');
     a.href = imageSrc;
-    
+
     // Define o nome do arquivo baseado no tipo
     const isMineral = document.getElementById('main-mineral-image') !== null;
     const prefix = isMineral ? 'mineral' : 'rocha';
-    
+
     a.download = `${prefix}-${Date.now()}`;
     document.body.appendChild(a);
     a.click();
@@ -179,11 +179,11 @@ window.downloadQRCode = function () {
         const imageDataURL = canvas.toDataURL("image/png");
         const a = document.createElement('a');
         a.href = imageDataURL;
-        
+
         // Define o nome do arquivo baseado no tipo
         const isMineral = document.getElementById('main-mineral-image') !== null;
         const prefix = isMineral ? 'mineral' : 'rocha';
-        
+
         a.download = `qrcode-${prefix}-${Date.now()}`;
 
         document.body.appendChild(a);
@@ -225,7 +225,7 @@ window.showNotification = function (message) {
 }
 
 // Close modal when clicking outside
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const qrModal = document.getElementById('qrcode-modal-overlay');
     if (qrModal) {
         qrModal.addEventListener('click', function (e) {
@@ -254,18 +254,32 @@ let imageNaturalHeight = 0;
 
 // New function to get current image annotations
 window.showCurrentImageAnnotations = function () {
-    const mainImage = document.getElementById('main-rocha-image');
-    const currentPath = mainImage.getAttribute('data-current-path');
-    
-    // Get annotations for the current image path
-    const currentImageAnnotations = window.fotosComAnotacoes[currentPath] || [];
-    
-    if (currentImageAnnotations.length === 0) {
-        showNotification('Esta imagem não possui anotações.');
-        return;
-    }
-    
-    showAnnotationsModal(currentImageAnnotations);
+    console.log(window.fotosComAnotacoes.fotos);
+
+    // Verifica as anotações que estão no main container que é onde aparece a foto 
+    const mainContainer = document.getElementById("main-rocha-image")
+
+    window.fotosComAnotacoes.fotos.forEach((item) => {
+        console.log(item.caminho)
+        const caminho = item.caminho
+        const src = mainContainer.getAttribute("src")
+        // Verifica se no src possui o caminho
+        const matchImage = src.includes(caminho)
+
+        if (matchImage) {
+            if (!item.anotacoes.length) {
+                showNotification('Esta imagem não possui anotações.');
+                return;
+            }
+            const currentImageAnnotations = item.anotacoes
+            showAnnotationsModal(currentImageAnnotations);
+        }
+
+        // .includes(caminho)
+        // console.log("ooooooooo" + matchImage)
+
+    })
+
 }
 
 // Updated showAnnotationsModal function
@@ -280,7 +294,7 @@ window.showAnnotationsModal = function (anotacoesData) {
 
     annotationsModal.style.display = 'flex';
 
-    modalImage.onload = function() {
+    modalImage.onload = function () {
         imageNaturalWidth = modalImage.naturalWidth;
         imageNaturalHeight = modalImage.naturalHeight;
         renderAnnotations();
@@ -304,7 +318,7 @@ function renderAnnotations() {
     const scaleY = displayedHeight / imageNaturalHeight;
 
     annotationsContainer.innerHTML = '';
-
+    // console.log(currentAnnotations);
     currentAnnotations.forEach(anotacao => {
         const x = anotacao.x * scaleX;
         const y = anotacao.y * scaleY;
@@ -317,7 +331,7 @@ function renderAnnotations() {
         const tooltip = document.createElement('div');
         tooltip.className = 'annotation-tooltip';
         tooltip.innerHTML = `<p>${anotacao.texto}</p>`;
-        
+
         const containerBounds = annotationsContainer.getBoundingClientRect();
         if (x + 8 + 200 > containerBounds.width) {
             tooltip.style.right = '8px';
@@ -330,25 +344,25 @@ function renderAnnotations() {
     });
 }
 
-annotationsModal.addEventListener('click', function(e) {
+annotationsModal.addEventListener('click', function (e) {
     if (e.target === this) {
         hideAnnotationsModal();
     }
 });
 
 // Função adicional para trocar imagem (compatibilidade)
-window.changeMainImage = function(imageSrc) {
+window.changeMainImage = function (imageSrc) {
     const mainImage = document.getElementById('main-rocha-image') || document.getElementById('main-mineral-image');
     const mainImageLink = document.getElementById('main-image-link');
-    
+
     if (mainImage) {
         mainImage.style.opacity = '0.5';
         mainImage.src = imageSrc;
-        
+
         if (mainImageLink) {
             mainImageLink.href = imageSrc;
         }
-        
+
         mainImage.onload = function () {
             mainImage.style.opacity = '1';
         };

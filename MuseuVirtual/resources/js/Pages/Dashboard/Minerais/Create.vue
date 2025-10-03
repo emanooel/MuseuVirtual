@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const form = reactive({
@@ -11,6 +11,17 @@ const form = reactive({
     idJazida: '',
     fotos: [],
     capa_nome: ''
+});
+
+const props = defineProps({
+  jazidas: Array,
+  rochas: Array,
+});
+
+const searchRocha = ref('');
+
+const filteredRochas = computed(() => {
+    return props.rochas.filter(r => r.nome.toLowerCase().includes(searchRocha.value.toLowerCase()));
 });
 
 const fotoInput = ref(null);
@@ -42,15 +53,12 @@ function submitForm() {
     payload.append('descricao', form.descricao);
     payload.append('propriedades', form.propriedades);
     payload.append('idJazida', form.idJazida);
+    payload.append('rocha_id', form.rocha_id);
     form.fotos.forEach(f => payload.append('foto[]', f));
     payload.append('capa_nome', form.capa_nome);
 
     router.post(route('minerais.store'), payload);
 }
-
-const props = defineProps({
-  jazidas: Array
-});
 
 </script>
 
@@ -104,7 +112,15 @@ const props = defineProps({
                 </select>
               </div>
 
-           
+              <!-- Associar Rocha -->
+              <div class="mb-4">
+                <label class="block font-medium">Associar mineral á alguma rocha?</label>
+                <input type="text" placeholder="Pesquisar rocha..." v-model="searchRocha" class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
+                <select v-model="form.rocha_id" @change="form.mineral_id = null" class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
+                <option value="">Nenhuma</option>
+                <option v-for="rocha in filteredRochas" :key="rocha.id" :value="rocha.id">{{ rocha.nome }}</option>
+                </select>
+              </div>
 
               <!-- Fotos -->
               <div class="mb-4">

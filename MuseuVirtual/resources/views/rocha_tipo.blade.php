@@ -95,8 +95,8 @@
 
 <body>
     <div class="2xl:px-100"><x-menu_site /></div>
-
-    <div class="w-full mx-auto 2xl:px-80 xl:px-32 lg:px-20 md:px-10 py-16">
+    {{-- coloquei padding no menor tamanho --}}
+    <div class="w-full mx-auto p-5 2xl:px-80 xl:px-32 lg:px-20 md:px-10 py-16">
         <h1 class="section-title">
             @if ($tipo == '1')
                 Ígneas

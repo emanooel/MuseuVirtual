@@ -1,4 +1,5 @@
 <script setup>
+import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
@@ -27,14 +28,24 @@ function submitForm() {
 }
 
 function submitDeleteFoto(id) {
-    if (confirm('Tem certeza que deseja excluir esta foto?')) {
-        router.delete(route('fotos-destroy', id), {
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir esta foto?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('fotos-destroy', id), {
             onSuccess: () => {
                 mineral.value.fotos = mineral.value.fotos.filter(foto => foto.id !== id);
             }
         });
     }
+  });
 }
+
 </script>
 
 <template>
