@@ -7,13 +7,13 @@
         <div class="spinner"></div>
     </div>
     @if (isset($termo))
-        <main id="resultados-container" class="max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-black">
+        <main id="resultados-container" class="results-section mt-4 max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-white">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold font-cinzel">
+                <h2 class="text-2xl font-black lato">
                     Resultados da busca por: <span class="text-white-600">"{{ $termo }}"</span>
                 </h2>
                 <button onclick="document.getElementById('resultados-container').style.display='none'"
-                    class="text-sm text-red-600 hover:underline">
+                    class="text-sm text-red-600 bg-[#524c4c] px-3 py-1 rounded-full transition hover:bg-red-400 hover:text-white">
                     Fechar tudo
                 </button>
             </div>
@@ -22,12 +22,12 @@
                 @if ($minerais->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Minerais encontrados:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="list-inside">
                             @foreach ($minerais as $mineral)
                                 <li>
                                     {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
                                     <a href="{{ route('site.minerais.show', $mineral->slug) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $mineral->nome }}
                                     </a>
                                 </li>
