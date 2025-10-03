@@ -37,6 +37,7 @@ function deleteRocha(id) {
   .then((apagar) => {
     if (apagar) {
       router.delete(route('rochas.destroy', id));
+      location.reload();
     }
   });
 }

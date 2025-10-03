@@ -51,7 +51,7 @@ function submitForm() {
         rocha_id: form.rocha_id,
         mineral_id: form.mineral_id
     }, { preserveScroll: true });
-    window.history.back();
+    router.visit(route('timeline.index'));
 }
 </script>
 
