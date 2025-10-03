@@ -48,7 +48,7 @@
       </ul>
 
       <!-- Busca desktop -->
-      <form class="hidden lg:flex items-center">
+      <form action="{{ route('busca') }}" method="GET" class="hidden lg:flex items-center">
         <input type="text" name="q" placeholder="Buscar..." class="w-64 px-4 py-2 text-sm text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-300 ease-in-out">
         <button type="submit" class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-gray-200 transition">Buscar</button>
       </form>
