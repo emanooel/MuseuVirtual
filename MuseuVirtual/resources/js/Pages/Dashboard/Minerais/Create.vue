@@ -10,7 +10,8 @@ const form = reactive({
     propriedades: '',
     idJazida: '',
     fotos: [],
-    capa_nome: ''
+    capa_nome: '',
+    rochas_ids: [],
 });
 
 const props = defineProps({
@@ -53,10 +54,13 @@ function submitForm() {
     payload.append('descricao', form.descricao);
     payload.append('propriedades', form.propriedades);
     payload.append('idJazida', form.idJazida);
-    payload.append('rocha_id', form.rocha_id);
+
+    form.rochas_ids = form.rochas_ids.map(Number);
+    form.rochas_ids.forEach(id => payload.append('rochas_ids[]', id));
+
     form.fotos.forEach(f => payload.append('foto[]', f));
     payload.append('capa_nome', form.capa_nome);
-
+    
     router.post(route('minerais.store'), payload);
 }
 
@@ -114,12 +118,19 @@ function submitForm() {
 
               <!-- Associar Rocha -->
               <div class="mb-4">
-                <label class="block font-medium">Associar mineral á alguma rocha?</label>
-                <input type="text" placeholder="Pesquisar rocha..." v-model="searchRocha" class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
-                <select v-model="form.rocha_id" @change="form.mineral_id = null" class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
-                <option value="">Nenhuma</option>
-                <option v-for="rocha in filteredRochas" :key="rocha.id" :value="rocha.id">{{ rocha.nome }}</option>
-                </select>
+                <label class="block font-medium">Associar mineral a rochas</label>
+                <input type="text" placeholder="Pesquisar rocha..." v-model="searchRocha"
+                  class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
+
+                <div class="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
+                  <div v-for="rocha in filteredRochas" :key="rocha.id" class="flex items-center">
+                    <input type="checkbox" 
+                          :value="rocha.id" 
+                          v-model="form.rochas_ids" 
+                          class="mr-2" />
+                    <span>{{ rocha.nome }}</span>
+                  </div>
+                </div>
               </div>
 
               <!-- Fotos -->
@@ -224,7 +235,8 @@ input:checked + .slider {
 
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
-}
+} 
+  
 
 input:checked + .slider:before {
   -webkit-transform: translateX(40px);
