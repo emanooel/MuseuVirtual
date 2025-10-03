@@ -1,15 +1,3 @@
-    body {
-        font-family: 'Lato', sans-serif;
-        background: rgb(0, 0, 0);
-        color: #F1EEDD;
-    }
-
-    h1,
-    h2,
-    .section-title {
-        font-family: 'Cinzel', serif;
-    }
-
     .hero-section {
         background: linear-gradient(135deg, rgba(172, 177, 142, 0.2), rgba(115, 120, 92, 0.2));
         border-radius: 25px;

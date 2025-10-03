@@ -49,8 +49,8 @@
 
       <!-- Busca desktop -->
       <form class="hidden lg:flex items-center">
-        <input type="text" name="q" placeholder="Buscar..." class="w-64 px-3 py-2 rounded-l-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        <button type="submit" class="bg-white text-black text-xl rounded-r-md hover:bg-gray-200 transition">Buscar</button>
+        <input type="text" name="q" placeholder="Buscar..." class="w-64 px-4 py-2 text-sm text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-300 ease-in-out">
+        <button type="submit" class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-gray-200 transition">Buscar</button>
       </form>
 
       <!-- Botão mobile -->
