@@ -14,9 +14,11 @@
     @endif
 
     <style>
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #000; /* Fundo preto liso */
+            font-weight: bold;
+            font-family: 'Cinzel', serif;
+            background: rgb(0, 0, 0);
             color: #F1EEDD;
         }
 
@@ -47,7 +49,6 @@
         }
 
         .rock-card h2 {
-            font-family: sans-serif;
             font-size: 28px;
             font-weight: bold;
             color: #F1EEDD;
@@ -57,7 +58,6 @@
         }
 
         .section-title {
-            font-family: 'Arial Black', sans-serif;
             font-size: 50px;
             color: #F1EEDD;
             margin-bottom: 50px;
@@ -98,11 +98,11 @@
 
     <div class="w-full mx-auto 2xl:px-80 xl:px-32 lg:px-20 md:px-10 py-16">
         <h1 class="section-title">
-            @if ($tipo=='1') 
+            @if ($tipo == '1')
                 Ígneas
-            @elseif ($tipo=="2")
+            @elseif ($tipo == '2')
                 Metamórficas
-            @else 
+            @else
                 Sedimentares
             @endif
         </h1>
@@ -125,7 +125,8 @@
                         @endphp
 
                         @if ($fotoExibir)
-                            <img src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha {{ $item->nome }}">
+                            <img src="{{ asset('storage/' . $fotoExibir->caminho) }}"
+                                alt="Imagem da rocha {{ $item->nome }}">
                         @else
                             <img src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
                         @endif
@@ -142,5 +143,5 @@
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     @endpush
 </body>
-</html>
 
+</html>

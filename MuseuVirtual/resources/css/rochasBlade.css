@@ -6,6 +6,8 @@
 
     h1,
     h2,
+    /* alteração foi o h4 */
+    h4, 
     .section-title {
         font-family: 'Cinzel', serif;
     }
