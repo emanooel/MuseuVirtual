@@ -160,6 +160,12 @@ class RochaController extends Controller
         return view('rochas', compact("rochastipo1", "rochastipo2", "rochastipo3"));
     }
 
+    public function siteOrnamentais()
+    {
+        $rochas = Rocha::where('ornamental', true)->with('fotos')->paginate(12);
+        return view('rochasOrnamentais', compact('rochas'));
+    }
+
     public function gerarQrCode($id)
     {
         $rocha = Rocha::findOrFail($id);
