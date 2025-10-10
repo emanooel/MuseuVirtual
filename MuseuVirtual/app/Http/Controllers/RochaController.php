@@ -53,6 +53,8 @@ class RochaController extends Controller
         'jazida_id' => 'nullable|exists:jazidas,id',
         'minerais_ids' => 'nullable|array',
         'minerais_ids.*' => 'exists:minerals,id',
+        'ornamental' => 'required|boolean',
+
     ]);
 
     $rocha = Rocha::create($validated);
@@ -60,7 +62,6 @@ class RochaController extends Controller
     // Sincroniza minerais
     $rocha->minerais()->sync($request->input('minerais_ids', []));
 
-    // Fotos (mantido igual)
     if ($request->hasFile('foto')) {
         $fotosRequest = new Request([
             "idRocha" => $rocha->id,
@@ -116,9 +117,10 @@ class RochaController extends Controller
         'jazida_id' => 'nullable|exists:jazidas,id',
         'minerais_ids' => 'nullable|array',
         'minerais_ids.*' => 'exists:minerals,id',
+        'ornamental' => 'required|boolean',
     ]);
 
-    $rocha->update($request->only(['nome','descricao','composicao','tipo','jazida_id']));
+    $rocha->update($request->only(['nome','descricao','composicao','tipo','jazida_id', 'ornamental']));
 
     // Sincroniza minerais (remove os desmarcados e adiciona os novos)
     $rocha->minerais()->sync($request->input('minerais_ids', []));

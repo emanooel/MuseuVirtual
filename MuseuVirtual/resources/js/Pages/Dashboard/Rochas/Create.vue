@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const form = reactive({
@@ -13,17 +13,19 @@ const form = reactive({
     capa_nome: '',
     jazida_id: '',
     minerais_ids: [],
+    ornamental: '',
 });
 
 const props = defineProps({
   jazidas: Array,
-  minerais: Array, // recebendo minerais do backend
+  minerais: Array,
 });
 
 const associarJazida = ref(false);
 const fotoInput = ref(null);
 const previewFotos = ref([]);
 const searchMineral = ref('');
+const rochaOrnamental = ref(false);
 
 const filteredMinerais = computed(() => {
     return props.minerais.filter(m => m.nome.toLowerCase().includes(searchMineral.value.toLowerCase()));
@@ -58,6 +60,8 @@ function submitForm() {
     if (associarJazida.value && form.jazida_id) {
         payload.append('jazida_id', form.jazida_id);
     }
+
+    payload.append('ornamental', rochaOrnamental.value ? '1' : '0');
 
     form.minerais_ids = form.minerais_ids.map(Number);
     form.minerais_ids.forEach(id => payload.append('minerais_ids[]', id));
@@ -114,6 +118,19 @@ function submitForm() {
                                     <option value="2">Metamórficas</option>
                                     <option value="3">Sedimentares</option>
                                 </select>
+                            </div>
+
+                            <!-- Ornamental? -->
+                            <div class="mb-4">
+                                <label class="block font-medium">É uma rocha ornamental?</label>
+                                <div id="switch">
+                                    <p>Não</p>
+                                    <label class="switch">
+                                        <input type="checkbox" v-model="rochaOrnamental">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <p>Sim</p>
+                                </div>
                             </div>
 
                             <!-- Associar Jazida -->
