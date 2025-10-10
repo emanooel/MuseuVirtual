@@ -92,7 +92,7 @@
             <h1 class="main-title">Museu Virtual</h1>
             <p class="subtitle">
                 Bem-vindo ao Museu Virtual das Rochas, um espaço interativo e educativo
-                dedicado à incrível diversidade geológica da nossa região.
+                dedicado à incrível diversidade geológica da nossa região capixaba.
             </p>
         </div>
 
@@ -100,7 +100,7 @@
         <figure class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="https://th.bing.com/th/id/R.ad6cba861c6885f765c806b5b7863352?rik=6CY9S7bE5j3spA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f5%2f9%2fd%2f1281292-geology-wallpaper-1920x1080-for-lockscreen.jpg&ehk=19Sopya1egoOmeuV1vNCvXYLXkFfrxtBXMqB1Z9hwvc%3d&risl=&pid=ImgRaw&r=0"
+                    <img src="/assets/img/domingos-martins-pedra-azul23.JPG"
                         alt="Rochas Geologia">
                 </div>
             </div>
