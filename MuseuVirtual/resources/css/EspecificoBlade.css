@@ -172,7 +172,7 @@ h2,
     background: var(--glass-bg);
     border-left: 6px solid var(--accent-green);
     border-radius: 15px;
-    padding: 35px;
+    padding: 15px;
     margin-top: 30px;
     box-shadow: var(--shadow-light);
     transition: var(--transition);
