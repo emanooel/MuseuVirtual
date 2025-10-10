@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
         breakpoints: {
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-            1280: { slidesPerView: 4 },
+            1200: { slidesPerView: 3 },
+            1800: { slidesPerView: 4 },
         },
         navigation: {
             nextEl: ".swiper-next-ignea",
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
         breakpoints: {
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-            1280: { slidesPerView: 4 },
+            1200: { slidesPerView: 3 },
+            1800: { slidesPerView: 4 },
         },
         navigation: {
             nextEl: ".swiper-next-metamorf",
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
         breakpoints: {
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-            1280: { slidesPerView: 4 },
+            1200: { slidesPerView: 3 },
+            1800: { slidesPerView: 4 },
         },
         navigation: {
             nextEl: ".swiper-next-sedim",
