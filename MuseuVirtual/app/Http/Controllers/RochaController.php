@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rocha;
 use App\Models\Jazida;
+use App\Models\Mineral;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
@@ -29,49 +30,50 @@ class RochaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Dashboard/Rochas/Create');
+    $jazidas = Jazida::all(['id', 'descricao']);
+    $minerais = Mineral::all(['id', 'nome']);
 
-        $jazidas = Jazida::all(['id', 'descricao']); // ou 'localizacao', se preferir
-
-        return Inertia::render('Dashboard/Rochas/Create', [
-            'jazidas' => $jazidas
-        ]);
+    return Inertia::render('Dashboard/Rochas/Create', [
+        'jazidas' => $jazidas,
+        'minerais' => $minerais,
+    ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+    $validated = $request->validate([
+        'nome' => 'required|string|max:255',
+        'descricao' => 'required|string',
+        'composicao' => 'required|string',
+        'tipo' => 'required|integer',
+        'jazida_id' => 'nullable|exists:jazidas,id',
+        'minerais_ids' => 'nullable|array',
+        'minerais_ids.*' => 'exists:minerals,id',
+        'ornamental' => 'required|boolean',
 
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'required|string',
-            'composicao' => 'required|string',
-            'tipo' => 'required|integer',
-            'jazida_id' => 'nullable|exists:jazidas,id',
+    ]);
+
+    $rocha = Rocha::create($validated);
+
+    // Sincroniza minerais
+    $rocha->minerais()->sync($request->input('minerais_ids', []));
+
+    if ($request->hasFile('foto')) {
+        $fotosRequest = new Request([
+            "idRocha" => $rocha->id,
+            "capa_nome" => $request->input('capa_nome'),
         ]);
-
-
-        // Começa aqui a parte de encaminhar para o fotos controller ----------------------------
-        $rocha = Rocha::create($validated);
-
-        if ($request->hasFile('foto')) {
-            $fotosRequest = new Request([
-                "idRocha" => $rocha->id,
-                "capa_nome" => $request->input('capa_nome'),
-            ]);
-
-            // Encaminha os arquivos
-            $fotosRequest->files->set('foto', $request->file('foto'));
-
-            // Chama o controller de fotos
-            app(\App\Http\Controllers\FotosController::class)->store($fotosRequest);
-        }
-        // termina aqui ---------------------------------------------------------------------
-
-        return redirect()->route('rochas.index')->with('success', 'Rocha criada com sucesso!');
+        $fotosRequest->files->set('foto', $request->file('foto'));
+        app(\App\Http\Controllers\FotosController::class)->store($fotosRequest);
     }
+
+    return redirect()->route('rochas.index')->with('success', 'Rocha criada com sucesso!');
+    }
+
 
 
     /**
@@ -79,11 +81,6 @@ class RochaController extends Controller
      */
     public function show(string $tipo, $rocha)
     {
-        // aqui você pode validar se o tipo da URL bate com o da rocha
-        // if ($tipo !== $tipo) {
-        //     abort(404);
-        // }
-
         $rocha = Rocha::with('fotos.anotacoes')->where('slug', $rocha)->firstOrFail();
         return view('rochaEspecifica', compact('rocha'));
     }
@@ -93,53 +90,44 @@ class RochaController extends Controller
      */
     public function edit($id)
     {
+    $rocha = Rocha::with(['fotos','minerais'])->findOrFail($id);
+    $jazidas = Jazida::all(['id', 'descricao']);
+    $minerais = Mineral::all(['id', 'nome']);
 
-        $rocha = Rocha::with('fotos')->findOrFail($id);
-        $jazidas = Jazida::all(['id', 'descricao']);
-
-        return Inertia::render('Dashboard/Rochas/Edit', [
-            'rocha' => $rocha,
-            'jazidas' => $jazidas
-        ]);
+    return Inertia::render('Dashboard/Rochas/Edit', [
+        'rocha' => array_merge($rocha->toArray(), [
+            'minerais_ids' => $rocha->minerais->pluck('id')->toArray(),
+        ]),
+        'jazidas' => $jazidas,
+        'minerais' => $minerais,
+    ]);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Rocha $rocha)
     {
-        $request->validate([
-            'nome' => 'sometimes|required|string|max:255',
-            'descricao' => 'nullable|string',
-            'composicao' => 'nullable|string',
-            'tipo' => 'required|integer',
-        ]);
+    $request->validate([
+        'nome' => 'sometimes|required|string|max:255',
+        'descricao' => 'nullable|string',
+        'composicao' => 'nullable|string',
+        'tipo' => 'required|integer',
+        'jazida_id' => 'nullable|exists:jazidas,id',
+        'minerais_ids' => 'nullable|array',
+        'minerais_ids.*' => 'exists:minerals,id',
+        'ornamental' => 'required|boolean',
+    ]);
 
-        // Atualizando apenas os campos que foram enviados
-        if ($request->filled('nome')) {
-            $rocha->nome = $request->nome;
-        }
+    $rocha->update($request->only(['nome','descricao','composicao','tipo','jazida_id', 'ornamental']));
 
-        if ($request->filled('descricao')) {
-            $rocha->descricao = $request->descricao;
-        }
+    // Sincroniza minerais (remove os desmarcados e adiciona os novos)
+    $rocha->minerais()->sync($request->input('minerais_ids', []));
 
-        if ($request->filled('composicao')) {
-            $rocha->composicao = $request->composicao;
-        }
-
-        if ($request->filled('tipo')) {
-            $rocha->tipo = $request->tipo;
-        }
-
-        if ($request->filled('jazida_id')) {
-            $rocha->jazida_id = $request->jazida_id;
-        }
-
-        $rocha->save();
-
-        return redirect()->route('rochas.index')->with('success', 'Rocha atualizada com sucesso!');
+    return redirect()->route('rochas.index')->with('success', 'Rocha atualizada com sucesso!');
     }
+
 
 
     /**

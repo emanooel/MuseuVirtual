@@ -1,6 +1,7 @@
 <script setup>
+import swal from 'sweetalert'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { reactive, ref } from 'vue';
 
 const props = defineProps({
@@ -31,6 +32,23 @@ function selectPeriodo(periodo) {
   selected.periodo = periodo;
   showAquisi.value = periodo.aquisicoes || [];
 }
+
+function excluirAssociacao(id) {
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir esta rocha?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('timeline.associacoes.destroy', id));
+      location.reload();
+    }
+  });
+}
+
 </script>
 
 <template>
@@ -68,7 +86,7 @@ function selectPeriodo(periodo) {
             </button>
           </div>
 
-          <!-- Periodos -->
+          <!-- Períodos -->
           <div v-if="selected.era && selected.era.periodos?.length" class="flex gap-2 mb-4">
             <button v-for="periodo in selected.era.periodos" :key="periodo.id" @click="selectPeriodo(periodo)"
                     class="px-3 py-1 border rounded" :class="{'bg-blue-600 text-white': selected.periodo === periodo}">
@@ -80,13 +98,20 @@ function selectPeriodo(periodo) {
           <div v-if="showAquisi.length" class="grid grid-cols-3 gap-4">
             <div v-for="item in showAquisi" :key="item.id" class="border rounded overflow-hidden relative" style="width:250px; height:100px;">
 
+              <!-- Botão Excluir Associação -->
+              <button @click="excluirAssociacao(item.id)"
+                      class="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-1 rounded">
+                X
+              </button>
+
               <!-- Imagem da Rocha -->
               <template v-if="item.rocha">
                 <template v-if="!item.rocha.fotos || item.rocha.fotos.length === 0">
-                    <p>Não existe fotos cadastradas</p>
+                  <p>Não existe fotos cadastradas</p>
                 </template>
                 <template v-else>
-                    <img :src="`/storage/${(item.rocha.fotos.find(f => f.capa) || item.rocha.fotos[0]).caminho}`">
+                  <img :src="`/storage/${(item.rocha.fotos.find(f => f.capa) || item.rocha.fotos[0]).caminho}`"
+                       class="w-full h-full object-cover">
                 </template>
                 <div class="absolute bottom-0 w-full bg-black bg-opacity-50 text-white text-xs text-center">
                   {{ item.rocha.nome }}
@@ -96,15 +121,17 @@ function selectPeriodo(periodo) {
               <!-- Imagem do Mineral -->
               <template v-else-if="item.mineral">
                 <template v-if="!item.mineral.fotos || item.mineral.fotos.length === 0">
-                    <p>Não existe fotos cadastradas</p>
+                  <p>Não existe fotos cadastradas</p>
                 </template>
                 <template v-else>
-                    <img :src="`/storage/${(item.mineral.fotos.find(f => f.capa) || item.mineral.fotos[0]).caminho}`">
+                  <img :src="`/storage/${(item.mineral.fotos.find(f => f.capa) || item.mineral.fotos[0]).caminho}`"
+                       class="w-full h-full object-cover">
                 </template>
                 <div class="absolute bottom-0 w-full bg-black bg-opacity-50 text-white text-xs text-center">
                   {{ item.mineral.nome }}
                 </div>
               </template>
+
             </div>
           </div>
 
@@ -115,5 +142,5 @@ function selectPeriodo(periodo) {
 </template>
 
 <style scoped>
-button:focus { outline:none; }
+button:focus { outline: none; }
 </style>

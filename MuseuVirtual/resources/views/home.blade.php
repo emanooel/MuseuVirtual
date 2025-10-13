@@ -1,5 +1,5 @@
 <x-layouts.BaseLayout>
-    @vite(['resources/css/homeBlade.css', 'resources/js/app.js', 'resources/js/home.js'])
+    @vite(['resources/css/homeBlade.css', 'resources/js/app.js'])
     <x-slot name="title">Home</x-slot>
 
     <!-- Loading Screen -->
@@ -7,13 +7,13 @@
         <div class="spinner"></div>
     </div>
     @if (isset($termo))
-        <main id="resultados-container" class="max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-black">
+        <main id="resultados-container" class="results-section mt-4 max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-white">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold font-cinzel">
+                <h2 class="text-2xl font-black lato">
                     Resultados da busca por: <span class="text-white-600">"{{ $termo }}"</span>
                 </h2>
                 <button onclick="document.getElementById('resultados-container').style.display='none'"
-                    class="text-sm text-red-600 hover:underline">
+                    class="text-sm text-red-600 bg-[#524c4c] px-3 py-1 rounded-full transition hover:bg-red-400 hover:text-white">
                     Fechar tudo
                 </button>
             </div>
@@ -22,11 +22,12 @@
                 @if ($minerais->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Minerais encontrados:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="list-inside">
                             @foreach ($minerais as $mineral)
                                 <li>
-                                    <a href="{{ route('minerais.show', $mineral->id) }}"
-                                        class="text-blue-600 hover:underline">
+                                    {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
+                                    <a href="{{ route('site.minerais.show', $mineral->slug) }}"
+                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $mineral->nome }}
                                     </a>
                                 </li>
@@ -44,7 +45,7 @@
                         <ul class="list-disc list-inside">
                             @foreach ($rochas as $rocha)
                                 <li>
-                                    <a href="{{ route('site.rochas.show', [$rocha->tipo,$rocha->id]) }}"
+                                    <a href="{{ route('site.rochas.show', [$rocha->tipo,$rocha->slug]) }}"
                                         class="text-blue-600 hover:underline">
                                         {{ $rocha->nome }}
                                     </a>
@@ -88,10 +89,10 @@
     <div class="hero-container">
         <div class="hero-content">
             <br>
-            <h1 class="main-title">Museu Virtual</h1>
+            <h1 class="main-title">Museu Virtual ES</h1>
             <p class="subtitle">
                 Bem-vindo ao Museu Virtual das Rochas, um espaço interativo e educativo
-                dedicado à incrível diversidade geológica da nossa região.
+                dedicado à incrível diversidade geológica da nossa região capixaba.
             </p>
         </div>
 
@@ -99,18 +100,11 @@
         <figure class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="/assets/img/rochaentrada3.jpg"
+                    <img src="/assets/img/domingos-martins-pedra-azul23.JPG"
                         alt="Rochas Geologia">
-                </div>
-                <div class="swiper-slide">
-                    <img src= '/assets/img/rochaentrada.jpg' alt="rocha capa">
-                </div>
-                <div class="swiper-slide">
-                    <img src= '/assets/img/rochaentrada2.jpg' alt="rocha capa">
                 </div>
             </div>
         </figure>
-
     </div>
 
     <!-- Explore Section -->

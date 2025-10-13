@@ -2,7 +2,7 @@
     @vite(['resources/css/rochasBlade.css', 'resources/js/app.js', 'resources/js/rochas.js'])
     <x-slot name="title">Rochas</x-slot>
     
-    <div class="2xl:px-80 xl:px-32 lg:px-20 md:px-10 px-4">
+    <div class="xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
         <div class="hero-section">
             <h1><strong>Museu Mineral - Rochas</strong></h1><p>
@@ -80,7 +80,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo2 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->id]) }}">
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();
@@ -128,7 +128,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($rochastipo3 as $item)
                             <div class="swiper-slide">
-                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->id]) }}">
+                                <a href="{{ route('site.rochas.show', [$item->tipo_nome, $item->slug]) }}">
                                     <figure>
                                         @php
                                             $fotoExibir = $item->fotos->firstWhere('capa', true) ?? $item->fotos->first();

@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'Caio Motta Barcelos',
                 'email' => 'caiomottabarcelos13@gmail.com',
-                'password' => bcrypt('caio@pass2025'), // ou gere aleatório
+                'password' => bcrypt('MuseuCaio@2025'), // ou gere aleatório
             ],
             [
                 'name' => 'Emanoel Martins Vieira',
@@ -28,9 +28,14 @@ class AdminSeeder extends Seeder
                 'password' => bcrypt('emanoel@pass2025'),
             ],
             [
+                'name' => 'Rodrigo',
+                'email' => 'rodrigo@gmail.com',
+                'password' => bcrypt('mvrodrigu@pass2025'),
+            ],
+            [
                 'name' => 'Lívia Pezzin Scaramussa',
                 'email' => 'pezzinscaramussalivia@gmail.com',
-                'password' => bcrypt('livia@pass2025'),
+                'password' => bcrypt('pezzin@liviaMuseu'),
             ],
             [
                 'name' => 'Rafael',
@@ -45,22 +50,22 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'Gabriel Melo',
                 'email' => 'gabrag0987a@gmail.com',
-                'password' => bcrypt('gabriel@pass2025'),
+                'password' => bcrypt('2025Gabra@Museu'),
             ],
             [
                 'name' => 'Livia Vieira',
-                'email' => 'liviav@gmail.com',
-                'password' => bcrypt('livia@pass2025'),
+                'email' => 'liviavieira@gmail.com',
+                'password' => bcrypt('2025Museu@Cachos'),
             ],
             [
                 'name' => 'Wallace',
                 'email' => 'wallace@gmail.com',
-                'password' => bcrypt('wallace@pass2025'),
+                'password' => bcrypt('Wallace2025@Museu'),
             ],
             [
                 'name' => 'Marlon',
                 'email' => 'marlon@gmail.com',
-                'password' => bcrypt('marlon@pass2025'),
+                'password' => bcrypt('VirtualMarlon@2025'),
             ]
         ];
     

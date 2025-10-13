@@ -4,6 +4,23 @@
             box-sizing: border-box;
         }
 
+        .results-section {
+            background: linear-gradient(135deg, rgba(172, 177, 142, 0.2), rgba(115, 120, 92, 0.2));
+            border-radius: 25px;
+            padding: 50px 30px;
+            margin-bottom: 50px;
+            border: 2px solid rgba(241, 238, 221, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .results-section h2.lato{
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: #F1EEDD;
+            margin-bottom: 20px;
+        }
+
         body {
             font-family: 'Lato', sans-serif;
             background: rgb(0, 0, 0);

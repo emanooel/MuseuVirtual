@@ -14,16 +14,21 @@ class Rocha extends Model
         'composicao',
         'tipo',
         'jazida_id', // Adicionado para permitir preenchimento via create/update
+        'ornamental',
     ];
 
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
+    protected $casts = [
+        'ornamental' => 'boolean',
+    ];
 
     public function periodo()
     {
         return $this->belongsTo(Periodo::class);
+    }
+
+    public function minerais()
+    {
+        return $this->belongsToMany(Mineral::class, 'rocha_minerals');
     }
 
     public function fotos()

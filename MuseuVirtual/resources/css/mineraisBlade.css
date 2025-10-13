@@ -1,4 +1,4 @@
-        body {
+body {
             font-family: 'Lato', sans-serif;
             background: rgb(0, 0, 0);
             color: #F1EEDD;
@@ -145,10 +145,20 @@
         }
 
         /* Paginação */
+        .pagination-links {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 20px 0;
+        }
+
         .pagination-links nav {
             display: flex;
             justify-content: center;
+            align-items: center;
             margin-top: 40px;
+            min-width: max-content;
+            padding: 0 10px;
         }
 
         .pagination-links nav a,
@@ -160,6 +170,10 @@
             font-family: Arial, sans-serif;
             color: #F1EEDD;
             background-color: rgba(241, 238, 221, 0.1);
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
         }
 
         .pagination-links nav a:hover {
@@ -182,4 +196,49 @@
         .pagination-links nav .disabled span:hover {
             background-color: rgba(241, 238, 221, 0.1);
             color: #F1EEDD;
+        }
+
+        /* Ajustes específicos para mobile */
+        @media (max-width: 768px) {
+            .pagination-links nav a,
+            .pagination-links nav span {
+                padding: 8px 12px;
+                margin: 0 3px;
+                font-size: 14px;
+                min-width: 40px;
+                text-align: center;
+            }
+
+            .pagination-links nav {
+                margin-top: 20px;
+                gap: 5px;
+            }
+
+            /* Estilo para a scrollbar no mobile */
+            .pagination-links::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            .pagination-links::-webkit-scrollbar-track {
+                background: rgba(241, 238, 221, 0.1);
+                border-radius: 10px;
+            }
+
+            .pagination-links::-webkit-scrollbar-thumb {
+                background: #73785C;
+                border-radius: 10px;
+            }
+
+            .pagination-links::-webkit-scrollbar-thumb:hover {
+                background: #ACB18E;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pagination-links nav a,
+            .pagination-links nav span {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 35px;
+            }
         }

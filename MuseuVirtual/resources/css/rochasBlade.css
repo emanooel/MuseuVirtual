@@ -1,16 +1,16 @@
-    body {
-        font-family: 'Lato', sans-serif;
-        background: rgb(0, 0, 0);
-        color: #F1EEDD;
-    }
 
-    h1,
-    h2,
-    .section-title {
-        font-family: 'Cinzel', serif;
-    }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: rgb(0, 0, 0);
+            color: #F1EEDD;
+        }
 
-    .hero-section {
+        h1,
+        h2,
+        .section-title {
+            font-family: 'Cinzel', serif;
+        }
+ .hero-section {
         background: linear-gradient(135deg, rgba(172, 177, 142, 0.2), rgba(115, 120, 92, 0.2));
         border-radius: 25px;
         padding: 50px 30px;
@@ -126,9 +126,10 @@
 
     .swiper-slide img {
         width: 100%;
-        height: 500px;
+        height: 450px;
         object-fit: cover;
         border-radius: 0.75rem 0.75rem 0 0;
+        font-size: 24px;
     }
 
     figcaption {
@@ -242,6 +243,10 @@
             width: 90%;
             height: auto;
             margin-bottom: 15px;
+        }
+
+        .swiper-slide figcaption strong{
+            font-size: 24px !important;
         }
 
         .swiper-slide img {
