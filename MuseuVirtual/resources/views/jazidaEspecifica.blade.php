@@ -34,8 +34,14 @@
 
         <div class="hero-section fade-in">
             <h1><strong>Jazida de {{ $jazida->localizacao }}</strong></h1>
-            <p>
-                Detalhes sobre a geologia, minerais e história desta jazida fascinante.
+                @if($jazida->descricao)
+                    @php
+                        $descricaoLimpa = strip_tags($jazida->descricao);
+                        $descricaoDecodificada = html_entity_decode($descricaoLimpa, ENT_QUOTES, 'UTF-8');
+                        $descricaoLimitada = mb_strlen($descricaoDecodificada, 'UTF-8') > 200 ? mb_substr($descricaoDecodificada, 0, 200, 'UTF-8') . '...' : $descricaoDecodificada;
+                    @endphp
+                    <p>{{ $descricaoLimitada }}</p>
+                @endif
             </p>
         </div>
 
