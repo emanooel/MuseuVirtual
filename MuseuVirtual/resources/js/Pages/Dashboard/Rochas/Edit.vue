@@ -106,7 +106,7 @@ function submitDeleteFoto(id) {
 
                             <!-- Ornamental -->
                             <div class="mb-4">
-                                <label class="block font-medium">É uma rocha ornamental?</label>
+                                <span class="block font-medium">É uma rocha ornamental?</span>
                                 <div id="switch">
                                     <p>Não</p>
                                     <label class="switch" for="checkOrnamental">
