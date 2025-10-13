@@ -110,7 +110,7 @@ function submitDeleteFoto(id) {
                                 <div id="switch">
                                     <p>Não</p>
                                     <label class="switch">
-                                        <input type="checkbox" v-model="rocha.ornamental">
+                                        <input id="checkOrnamental" type="checkbox" v-model="rocha.ornamental">
                                         <span class="slider round"></span>
                                     </label>
                                     <p>Sim</p>

@@ -126,7 +126,7 @@ function submitForm() {
                                 <div id="switch">
                                     <p>Não</p>
                                     <label class="switch">
-                                        <input type="checkbox" v-model="rochaOrnamental">
+                                        <input id="checkOrnamental" type="checkbox" v-model="rochaOrnamental">
                                         <span class="slider round"></span>
                                     </label>
                                     <p>Sim</p>
