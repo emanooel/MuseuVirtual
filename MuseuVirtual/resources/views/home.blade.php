@@ -22,7 +22,7 @@
                 @if ($minerais->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Minerais encontrados:</h3>
-                        <ul class="list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($minerais as $mineral)
                                 <li>
                                     {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
@@ -42,11 +42,11 @@
                 @if ($rochas->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Rochas encontradas:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($rochas as $rocha)
                                 <li>
                                     <a href="{{ route('site.rochas.show', [$rocha->tipo,$rocha->slug]) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $rocha->nome }}
                                     </a>
                                 </li>
@@ -61,11 +61,11 @@
                 @if ($jazidas->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Jazidas encontradas:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($jazidas as $jazida)
                                 <li>
                                     <a href="{{ route('jazidas.show', $jazida->id) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $jazida->localizacao }}
                                     </a>
                                 </li>
