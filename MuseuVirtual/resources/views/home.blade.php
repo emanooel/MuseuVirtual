@@ -7,7 +7,7 @@
         <div class="spinner"></div>
     </div>
     @if (isset($termo))
-        <main id="resultados-container" class="results-section mt-4 max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-white">
+        <main id="resultados-container" class="results-section mt-4 max-w-7xl mx-auto px-4 py-6 rounded shadow text-white">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-black lato">
                     Resultados da busca por: <span class="text-white-600">"{{ $termo }}"</span>
