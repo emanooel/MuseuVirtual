@@ -27,7 +27,7 @@
                                 <li>
                                     {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
                                     <a href="{{ route('site.minerais.show', $mineral->slug) }}"
-                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $mineral->nome }}
                                     </a>
                                 </li>
@@ -46,7 +46,7 @@
                             @foreach ($rochas as $rocha)
                                 <li>
                                     <a href="{{ route('site.rochas.show', [$rocha->tipo,$rocha->slug]) }}"
-                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $rocha->nome }}
                                     </a>
                                 </li>
@@ -65,7 +65,7 @@
                             @foreach ($jazidas as $jazida)
                                 <li>
                                     <a href="{{ route('jazidas.show', $jazida->id) }}"
-                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $jazida->localizacao }}
                                     </a>
                                 </li>
