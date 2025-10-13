@@ -31,6 +31,8 @@ Route::get("/busca", [SiteController::class, 'busca'])->name("busca");
 Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
+Route::get("/site/rochasOrnamentais", [RochaController::class, 'siteOrnamentais'])->name("site.rochasOrnamentais");
+
 
 Route::get("/api/rochas", [RochaController::class, 'apiListRocha']);
 
