@@ -32,12 +32,6 @@
             /* opcional: destaca ainda mais */
         }
 
-        @media(max-width:1600px) {
-            #nav {
-                background: #F1EEDD;
-            }
-        }
-
         @media (max-width: 768px) {
             #btn-mobile {
                 display: block;
