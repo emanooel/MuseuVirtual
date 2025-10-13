@@ -125,7 +125,7 @@ function submitForm() {
                                 <label class="block font-medium">É uma rocha ornamental?</label>
                                 <div id="switch">
                                     <p>Não</p>
-                                    <label class="switch">
+                                    <label class="switch" for="checkOrnamental">
                                         <input id="checkOrnamental" type="checkbox" v-model="rochaOrnamental">
                                         <span class="slider round"></span>
                                     </label>
