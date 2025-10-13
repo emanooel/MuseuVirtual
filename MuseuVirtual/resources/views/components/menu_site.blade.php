@@ -85,7 +85,7 @@
         <li><a href="{{ route('site.jazidas') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.jazidas','site.jazidas.show') ? 'underline decoration-white' : '' }}">Jazidas</a></li>
         <li><a href="{{ route('site.rochas') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo') ? 'underline decoration-white' : '' }}">Rochas</a></li>
         <li><a href="{{ route('site.minerais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white' : '' }}">Minerais</a></li>
-        <li><a href="{{ route('site.rochasOrnamentais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white' : '' }}">Rochas Ornamentais</a></li>
+        <li><a href="{{ route('site.rochasOrnamentais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochasOrnamentais','site.rochasOrnamentais.show') ? 'underline decoration-white' : '' }}">Rochas Ornamentais</a></li>
       </ul>
 
       <!-- Busca desktop -->
