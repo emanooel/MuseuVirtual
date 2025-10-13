@@ -81,7 +81,7 @@ function submitDeleteFoto(id) {
 
                             <!-- Descrição -->
                             <div class="mb-4">
-                                <label for="descricao" class="block font-medium">Descrição</label>
+                                <span for="descricao" class="block font-medium">Descrição</span>
                                 <TinyMCEEditor v-model="rocha.descricao" />
                             </div>
 
