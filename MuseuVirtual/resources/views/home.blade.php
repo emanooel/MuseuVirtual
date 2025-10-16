@@ -25,7 +25,6 @@
                         <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($minerais as $mineral)
                                 <li>
-                                    {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
                                     <a href="{{ route('site.minerais.show', $mineral->slug) }}"
                                         class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $mineral->nome }}
@@ -82,9 +81,6 @@
         </main>
     @endif
 
-
-
-
     <!-- Hero Section -->
     <div class="hero-container">
         <div class="hero-content">
@@ -96,14 +92,11 @@
             </p>
         </div>
 
-        <!-- Swiper -->
-        <figure class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="/assets/img/domingos-martins-pedra-azul23.JPG"
-                        alt="Rochas Geologia">
-                </div>
-            </div>
+        <!-- Imagem Hero -->
+        <figure class="hero-image-container">
+            <img src="/assets/img/domingos-martins-pedra-azul23.JPG"
+                alt="Rochas Geologia"
+                class="hero-image">
         </figure>
     </div>
 
@@ -159,8 +152,57 @@
         </div>
     </div>
 
+    <!-- CSS para a imagem hero -->
+    <style>
+        .hero-image-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 720px;
+            margin: 2rem auto;
+            padding: 0;
+            display: block;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .hero-image-container {
+                width: 85%;
+                height: 400px;
+                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-image-container {
+                width: 90%;
+                height: 320px;
+                border-radius: 16px;
+                margin: 1.5rem auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image-container {
+                width: 95%;
+                height: 250px;
+                border-radius: 12px;
+                margin: 1rem auto;
+            }
+        }
+    </style>
+
     <!-- Scripts -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         window.addEventListener('load', function() {
@@ -176,20 +218,6 @@
                 offset: 100
             });
         }
-
-        const swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1,
-            loop: true,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false
-            },
-            effect: "fade",
-            fadeEffect: {
-                crossFade: true
-            },
-            speed: 1000,
-        });
 
         let ticking = false;
         window.addEventListener('scroll', () => {

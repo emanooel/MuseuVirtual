@@ -5,7 +5,7 @@
     <div class="xl:px-32 lg:px-20 md:px-10 px-4">
         <br><br>
         <div class="hero-section">
-            <h1><strong>Museu Mineral - Rochas</strong></h1><p>
+            <h1><strong>Catálogo de Rochas</strong></h1><p>
                 Conheça os três principais tipos de rochas em nossa coleção. Descubra como cada uma se forma e suas características únicas.
             </p>
         </div>
@@ -15,7 +15,7 @@
             <div class="rock-description">
                 <h2><strong>Rochas Ígneas</strong></h2>
                 <p>
-                    <strong>Formadas pelo fogo.</strong> As rochas ígneas se formam quando o magma ou lava esfria e endurece. 
+                    <strong>Formadas pelo fogo.</strong> As rochas ígneas ou magmáticas  se formam quando o magma ou lava esfria e endurece. 
                     Podem ser formadas no interior da Terra (como o granito) ou na superfície (como o basalto).
                 </p>
             </div>
