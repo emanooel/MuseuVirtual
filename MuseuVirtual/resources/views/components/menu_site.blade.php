@@ -118,6 +118,7 @@
         <li><a href="{{ route('site.jazidas') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.jazidas','site.jazidas.show') ? 'underline decoration-white font-bold' : '' }}">Jazidas</a></li>
         <li><a href="{{ route('site.rochas') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo') ? 'underline decoration-white font-bold' : '' }}">Rochas</a></li>
         <li><a href="{{ route('site.minerais') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white font-bold' : '' }}">Minerais</a></li>
+        <li><a href="{{ route('site.rochasOrnamentais') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochasOrnamentais','site.rochasOrnamentais.show') ? 'underline decoration-white font-bold' : '' }}">Rochas Ornamentais</a></li>
       </ul>
     </nav>
 
