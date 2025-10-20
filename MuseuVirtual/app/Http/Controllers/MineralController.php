@@ -157,7 +157,7 @@ class MineralController extends Controller
     }
     public function site()
     {
-        $minerais = Mineral::with("fotos")->paginate(12);
+        $minerais = Mineral::with("fotos")->paginate(12)->withPath(url()->current());
         return view('Minerais', compact("minerais"));
     }
 
