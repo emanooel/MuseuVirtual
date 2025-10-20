@@ -7,7 +7,7 @@
         <div class="spinner"></div>
     </div>
     @if (isset($termo))
-        <main id="resultados-container" class="results-section mt-4 max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-white">
+        <main id="resultados-container" class="results-section mt-4 max-w-7xl mx-auto px-4 py-6 rounded shadow text-white">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-black lato">
                     Resultados da busca por: <span class="text-white-600">"{{ $termo }}"</span>
@@ -22,12 +22,12 @@
                 @if ($minerais->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Minerais encontrados:</h3>
-                        <ul class="list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($minerais as $mineral)
                                 <li>
                                     {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
                                     <a href="{{ route('site.minerais.show', $mineral->slug) }}"
-                                        class="text-white px-4 py-2 rounded-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $mineral->nome }}
                                     </a>
                                 </li>
@@ -42,11 +42,11 @@
                 @if ($rochas->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Rochas encontradas:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($rochas as $rocha)
                                 <li>
                                     <a href="{{ route('site.rochas.show', [$rocha->tipo,$rocha->slug]) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $rocha->nome }}
                                     </a>
                                 </li>
@@ -61,11 +61,11 @@
                 @if ($jazidas->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Jazidas encontradas:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($jazidas as $jazida)
                                 <li>
                                     <a href="{{ route('jazidas.show', $jazida->id) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $jazida->localizacao }}
                                     </a>
                                 </li>

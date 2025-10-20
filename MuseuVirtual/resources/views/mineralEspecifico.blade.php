@@ -22,7 +22,21 @@
         <br><br>
         <div class="hero-section fade-in">
             <h1><strong>{{ $mineral->nome }}</strong></h1>
-            <p>Detalhes sobre a geologia, minerais e história desta rocha fascinante.</p>
+            @if($mineral->descricao)
+                @if($mineral->descricao)
+                        @php
+                            // Remove tags HTML:
+                            $descricaoLimpa = strip_tags($mineral->descricao);
+                            // Decodifica entidades HTML (acentos, aspas):
+                            $descricaoDecodificada = html_entity_decode($descricaoLimpa, ENT_QUOTES, 'UTF-8');
+                            // Limita a 200 caracteres:
+                            $descricaoLimitada = mb_strlen($descricaoDecodificada, 'UTF-8') > 200 ? mb_substr($descricaoDecodificada, 0, 200, 'UTF-8') . '...' : $descricaoDecodificada;
+                            # mb_substr = corta o texto e mantêm acentuação
+                        @endphp
+                    <p>{{ $descricaoLimitada }}</p>
+                @endif
+
+            @endif
         </div>
 
         <div class="section-container fade-in animate-delay-1">
