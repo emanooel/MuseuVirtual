@@ -81,7 +81,7 @@ class RochaController extends Controller
      */
     public function show(string $tipo, $rocha)
     {
-        $rocha = Rocha::with('fotos.anotacoes')->where('slug', $rocha)->firstOrFail();
+        $rocha = Rocha::with('fotos.anotacoes', 'minerais')->where('slug', $rocha)->firstOrFail();
         return view('rochaEspecifica', compact('rocha'));
     }
 
@@ -122,7 +122,6 @@ class RochaController extends Controller
 
     $rocha->update($request->only(['nome','descricao','composicao','tipo','jazida_id', 'ornamental']));
 
-    // Sincroniza minerais (remove os desmarcados e adiciona os novos)
     $rocha->minerais()->sync($request->input('minerais_ids', []));
 
     return redirect()->route('rochas.index')->with('success', 'Rocha atualizada com sucesso!');
@@ -162,6 +161,7 @@ class RochaController extends Controller
 
     public function siteOrnamentais()
     {
+        $mineral = Mineral::with('fotos')->where('slug', $mineral)->firstOrFail();
         $rochas = Rocha::where('ornamental', true)->with('fotos')->paginate(12);
         return view('rochasOrnamentais', compact('rochas'));
     }

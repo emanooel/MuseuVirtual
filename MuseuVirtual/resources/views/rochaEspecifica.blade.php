@@ -127,6 +127,8 @@
             </div>
         </div>
 
+        
+
         @if ($rocha->descricao || $rocha->composicao)
             <div class="section-container fade-in animate-delay-2">
                 <div class="content-box">
@@ -140,6 +142,19 @@
 
                     @if ($rocha->composicao)
                         <p><strong>Composição:</strong> {!! $rocha->composicao !!}</p>
+                    @endif
+
+                    @if ($rocha->composicao && $rocha->minerais)
+                        <br>
+                    @endif
+
+                    @if ($rocha->minerais)
+                        <p><strong>Minerais associados:</strong>
+                        <ul>
+                            @foreach($rocha->minerais as $mineral)
+                                <li>• {{ $mineral->nome }}</li>
+                            @endforeach
+                        </ul>
                     @endif
                 </div>
             </div>
