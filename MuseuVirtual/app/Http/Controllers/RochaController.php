@@ -16,10 +16,20 @@ class RochaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rochas = Rocha::with('fotos')->paginate(10)->withPath(url()->current());  // 10 rochas por página
-        // dd($rochas);
+        // Monta query base
+        $query = Rocha::with('fotos');
+
+        // Filtra por nome se fornecido via query string `nome`
+        if ($request->filled('nome')) {
+            $nome = $request->input('nome');
+            $query->where('nome', 'like', "%{$nome}%");
+        }
+
+        // Paginação mantendo query string para links
+        $rochas = $query->paginate(10)->withQueryString();  // 10 rochas por página
+
         return Inertia::render('Dashboard/Rochas/Index', [
             'rochas' => $rochas
         ]);
