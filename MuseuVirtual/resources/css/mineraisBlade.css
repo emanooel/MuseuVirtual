@@ -172,7 +172,6 @@ body {
             background-color: rgba(241, 238, 221, 0.1);
             white-space: nowrap;
             text-decoration: none;
-            display: inline-block;
             cursor: pointer;
         }
 
