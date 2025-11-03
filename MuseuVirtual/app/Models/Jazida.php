@@ -13,6 +13,7 @@ class Jazida extends Model
     protected $fillable = [
         'localizacao', 
         'descricao', 
+        'slug',
     ];
 
     public function fotos()

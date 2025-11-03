@@ -17,8 +17,8 @@ const form = reactive({
 });
 
 const props = defineProps({
-  jazidas: Array,
-  minerais: Array,
+    jazidas: Array,
+    minerais: Array,
 });
 
 const associarJazida = ref(false);
@@ -74,6 +74,7 @@ function submitForm() {
 </script>
 
 <template>
+
     <Head title="Criar Rocha" />
 
     <AuthenticatedLayout>
@@ -122,27 +123,30 @@ function submitForm() {
 
                             <!-- Ornamental? -->
                             <div class="mb-4">
-                                <span class="block font-medium">É uma rocha ornamental?</span>
-                                <div id="switch">
-                                    <p>Não</p>
-                                    <label class="switch" for="checkOrnamental">
-                                        <input id="checkOrnamental" type="checkbox" v-model="rochaOrnamental">
-                                        <span class="slider round"></span>
+                                <label for="checkOrnamental" class="block font-medium">É uma rocha ornamental?</label>
+                                <div class="mv-switch-wrap">
+                                    <span>Não</span>
+                                    <label class="mv-switch" for="checkOrnamental">
+                                        <input id="checkOrnamental" type="checkbox" v-model="rochaOrnamental"
+                                            aria-label="É uma rocha ornamental?">
+                                        <span class="mv-switch__track mv-switch--round"></span>
                                     </label>
-                                    <p>Sim</p>
+                                    <span>Sim</span>
                                 </div>
                             </div>
 
                             <!-- Associar Jazida -->
                             <div class="mb-4">
-                                <label class="block font-medium">Associar esta rocha à alguma jazida?</label>
-                                <div id="switch">
-                                    <p>Não</p>
-                                    <label class="switch">
-                                        <input type="checkbox" v-model="associarJazida">
-                                        <span class="slider round"></span>
+                                <label class="block font-medium" for="checkJazida">Associar esta rocha à alguma
+                                    jazida?</label>
+                                <div class="mv-switch-wrap">
+                                    <span>Não</span>
+                                    <label class="mv-switch" for="checkJazida">
+                                        <input id="checkJazida" type="checkbox" v-model="associarJazida"
+                                            aria-label="Associar a uma jazida">
+                                        <span class="mv-switch__track mv-switch--round"></span>
                                     </label>
-                                    <p>Sim</p>
+                                    <span>Sim</span>
                                 </div>
                             </div>
 
@@ -164,10 +168,9 @@ function submitForm() {
                                     class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
 
                                 <div class="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
-                                    <div v-for="mineral in filteredMinerais" :key="mineral.id" class="flex items-center">
-                                        <input type="checkbox"
-                                            :value="mineral.id"
-                                            v-model="form.minerais_ids"
+                                    <div v-for="mineral in filteredMinerais" :key="mineral.id"
+                                        class="flex items-center">
+                                        <input type="checkbox" :value="mineral.id" v-model="form.minerais_ids"
                                             class="mr-2" />
                                         <span>{{ mineral.nome }}</span>
                                     </div>
@@ -233,73 +236,56 @@ function submitForm() {
     }
 }
 
-/* O switch */
-.switch {
+/* layout dos rótulos do switch */
+.mv-switch-wrap { 
+  display: flex; 
+  align-items: center; 
+  column-gap: 6px; 
+}
+
+/* container do switch */
+.mv-switch {
   position: relative;
   display: inline-block;
   width: 70px;
   height: 30px;
 }
 
-#switch { 
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-}
-
-/* Esconder checkbox padrão*/
-.switch input {
+/* esconder checkbox nativo (acessível) */
+.mv-switch input {
+  position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* Slider */
-.slider {
+/* trilho do switch */
+.mv-switch__track {
   position: absolute;
+  inset: 0;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  transition: .25s;
 }
 
-.slider:before {
-  position: absolute;
+/* “bolinha” */
+.mv-switch__track::before {
   content: "";
+  position: absolute;
   height: 22px;
   width: 22px;
   left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  top: 4px;
+  background-color: #fff;
+  transition: .25s;
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
+/* estados */
+.mv-switch input:checked + .mv-switch__track { background-color: #2196F3; }
+.mv-switch input:focus + .mv-switch__track { box-shadow: 0 0 0 2px rgba(33,150,243,.35); }
+.mv-switch input:checked + .mv-switch__track::before { transform: translateX(40px); }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-} 
-  
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(40px);
-  -ms-transform: translateX(40px);
-  transform: translateX(40px);
-}
-
-.slider.round {
-  border-radius: 15px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
+/* cantos arredondados */
+.mv-switch--round { border-radius: 15px; }
+.mv-switch--round::before { border-radius: 50%; }
 </style>
