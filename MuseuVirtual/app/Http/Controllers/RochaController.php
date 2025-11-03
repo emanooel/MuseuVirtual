@@ -28,7 +28,7 @@ class RochaController extends Controller
         }
 
         // Paginação mantendo query string para links
-        $rochas = $query->paginate(10)->withQueryString();  // 10 rochas por página
+        $rochas = $query->paginate(10)->withPath(url()->current());;  // 10 rochas por página
 
         return Inertia::render('Dashboard/Rochas/Index', [
             'rochas' => $rochas
