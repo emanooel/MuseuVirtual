@@ -40,7 +40,7 @@ class JazidaController extends Controller
             'foto.*' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $jazida = Jazida::create($request->only(['localizacao', 'descricao']));
+        $jazida = Jazida::create($request->only(['localizacao', 'descricao','slug']));
 
         // Processar upload de fotos
         if ($request->hasFile('foto')) {
