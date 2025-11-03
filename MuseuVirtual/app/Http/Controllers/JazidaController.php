@@ -17,7 +17,7 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::with('fotos')->get();
+        $jazidas = Jazida::with('fotos')->paginate(10)->withPath(url()->current());
         # return view('dashboard.jazidas.index', compact('jazidas'));
         return Inertia::render('Dashboard/Jazidas/Index', ['jazidas' => $jazidas]);
     }
