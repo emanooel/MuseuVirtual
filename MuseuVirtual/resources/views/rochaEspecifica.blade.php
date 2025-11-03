@@ -148,12 +148,12 @@
                         <br>
                     @endif
 
-                    @if ($rocha->minerais)
+                    @if (count($rocha->minerais) != 0)
                         <p><strong>Minerais associados:</strong>
                         <ul>
                             @foreach($rocha->minerais as $mineral)
-                                <li>• {{ $mineral->nome }}</li>
-                            @endforeach
+                                <li><a href="{{ route('site.minerais.show', ['slug_mineral' => $mineral->slug]) }}">• <u>{{ $mineral->nome }}</u></a></li>
+                                @endforeach
                         </ul>
                     @endif
                 </div>
