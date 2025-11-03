@@ -144,7 +144,7 @@
                         <p><strong>Composição:</strong> {!! $rocha->composicao !!}</p>
                     @endif
 
-                    @if ($rocha->composicao && $rocha->minerais)
+                    @if ($rocha->composicao && count($rocha->minerais) != 0)
                         <br>
                     @endif
 
