@@ -48,6 +48,8 @@ class JazidaController extends Controller
             'descricao' => $request->descricao,
             'slug' => $slug
         ]);
+
+        $jazida->save();
         
         // Jazida::create($request->only(['localizacao', 'descricao']));
 
