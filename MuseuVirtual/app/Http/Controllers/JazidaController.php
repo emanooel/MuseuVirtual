@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use SimpleSoftwareIO\QrCode\Facades\QrCode; // Certifique-se de ter o pacote instalado
 
+use Illuminate\Support\Str;
+
 class JazidaController extends Controller
 {
     /**
@@ -39,8 +41,15 @@ class JazidaController extends Controller
             'descricao' => 'nullable|string',
             'foto.*' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
+        $slug = Str::slug($request->localizacao);
 
-        $jazida = Jazida::create($request->only(['localizacao', 'descricao','slug']));
+        $jazida = new Jazida([
+            'localizacao' => $request->localizacao,
+            'descricao' => $request->descricao,
+            'slug' => $slug
+        ]);
+        
+        // Jazida::create($request->only(['localizacao', 'descricao']));
 
         // Processar upload de fotos
         if ($request->hasFile('foto')) {
