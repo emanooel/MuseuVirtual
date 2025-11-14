@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Http\Controllers\FotosController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\JazidaController;
@@ -66,7 +67,7 @@ Route::post('/timeline', [TimelineController::class, 'store'])->name('timeline.s
 Route::delete('/timeline/associacoes/{id}', [TimelineController::class, 'destroyAssociacao'])->name('timeline.associacoes.destroy');
 
 // Gerência Usuários na dashboard
-Route::resource("/usuarios", UsuarioController::class);
+Route::resource('/usuarios', UsuarioController::class);
 
 // QRcode:
 Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');

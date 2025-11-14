@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -19,6 +20,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
+        return Inertia::render('Dashboard/Usuarios/Index', [
+        'usuarios' => User::with('roles:id,name')->select('id', 'name', 'email')->get()]);
         //Deve retornar uma lista com usuários já cadastrados.
         //Como já tem spartie Permission neste projeto, já podemos restringir o
         //acesso a essa lista somente a usuários do tipo administrador.

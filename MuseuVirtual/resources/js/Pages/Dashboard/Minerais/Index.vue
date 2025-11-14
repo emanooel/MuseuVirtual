@@ -93,6 +93,7 @@ function submitDelete(id) {
                     </tr>
                   </tbody>
                 </table>
+
                 <!-- Paginação Desktop -->
                 <div v-if="Desktop && props.minerais.links.length > 0" class="mt-6 flex justify-center gap-2">
                   <button
