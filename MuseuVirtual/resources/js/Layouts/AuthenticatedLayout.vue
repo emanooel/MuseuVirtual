@@ -65,6 +65,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Timeline
                                 </NavLink>
+                                <NavLink
+                                    :href="route('usuarios.index')"
+                                    :active="route().current('usuarios.*')"
+                                >
+                                    Usuários
+                                </NavLink>
                             </div>
                         </div>
 
