@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TimelineController;
+use App\Http\Controllers\UsuarioController;
 
 // Público:
 Route::get("/", [SiteController::class, 'home'])->name("home");
@@ -64,6 +65,8 @@ Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.in
 Route::post('/timeline', [TimelineController::class, 'store'])->name('timeline.store');
 Route::delete('/timeline/associacoes/{id}', [TimelineController::class, 'destroyAssociacao'])->name('timeline.associacoes.destroy');
 
+// Gerência Usuários na dashboard
+Route::resource("/usuarios", UsuarioController::class);
 
 // QRcode:
 Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');
