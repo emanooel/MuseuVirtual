@@ -16,6 +16,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TimelineController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissaoController;
 
 // Público:
 Route::get("/", [SiteController::class, 'home'])->name("home");
@@ -68,6 +70,9 @@ Route::delete('/timeline/associacoes/{id}', [TimelineController::class, 'destroy
 
 // Gerência Usuários na dashboard
 Route::resource('/usuarios', UsuarioController::class);
+Route::resource('/papeis', RoleController::class);
+Route::resource('/permissoes', PermissaoController::class)->parameters(['permissoes' => 'permissao']);
+
 
 // QRcode:
 Route::get('/jazidas/{id}/qrcode', [JazidaController::class, 'gerarQrCode'])->name('jazidas.qrcode');

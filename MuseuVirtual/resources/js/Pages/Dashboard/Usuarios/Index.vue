@@ -1,10 +1,27 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
+import swal from 'sweetalert'
 
 const props = defineProps({
     usuarios: Array
 });
+
+function submitDelete(id) {
+    swal({
+    title: "Excluir?",
+    text: "Tem certeza que deseja excluir este usuário?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((apagar) => {
+    if (apagar) {
+      router.delete(route('usuarios.destroy', id));
+      location.reload();
+    }
+  });
+}
 
 </script>
 
@@ -32,21 +49,28 @@ const props = defineProps({
                     <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nome</th>
                     <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
                     <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Papel</th>
+                    <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    <tr v-for="u in usuarios" :key="u.id">
-                    <td class="px-6 py-4 text-center">{{ u.id }}</td>
-                    <td class="px-6 py-4 text-center">{{ u.name }}</td>
-                    <td class="px-6 py-4 text-center">{{ u.email }}</td>
+                    <tr v-for="usuario in usuarios" :key="usuario.id">
+                    <td class="px-6 py-4 text-center">{{ usuario.id }}</td>
+                    <td class="px-6 py-4 text-center">{{ usuario.name }}</td>
+                    <td class="px-6 py-4 text-center">{{ usuario.email }}</td>
                     <td class="px-6 py-4 text-center">
-                        <span v-if="u.roles.length === 0">Nenhum</span>
-                        <span v-else>{{ u.roles.map(r => r.name).join(', ') }}</span>
+                        <span v-if="usuario.roles.length === 0">Nenhum</span>
+                        <span v-else>{{ usuario.roles.map(r => r.name).join(', ') }}</span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <form :action="route('usuarios.destroy', usuario.id)" method="POST" @submit.prevent="submitDelete(usuario.id)">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit"
+                            class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">Excluir</button>
+                          </form>
                     </td>
                     </tr>
                 </tbody>
                 </table>
-
           </div>
         </div>
       </div>

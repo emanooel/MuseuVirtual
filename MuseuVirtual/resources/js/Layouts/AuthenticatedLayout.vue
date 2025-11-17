@@ -71,6 +71,18 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Usuários
                                 </NavLink>
+                                <NavLink
+                                    :href="route('papeis.index')"
+                                    :active="route().current('papeis.*')"
+                                >
+                                    Papéis
+                                </NavLink>
+                                <NavLink
+                                    :href="route('permissoes.index')"
+                                    :active="route().current('permissoes.*')"
+                                >
+                                    Permissões
+                                </NavLink>
                             </div>
                         </div>
 
