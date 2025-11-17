@@ -19,9 +19,11 @@ body {
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --border-radius: 20px;
     /* Complementares */
-    --accent-contrast: #6E72AC;   /* lilás acinzentado, complementar */
-    --accent-warm: #D9822B;       /* laranja queimado, contraste quente */
-    --accent-bright: #7A5CFF; 
+    --accent-contrast: #6E72AC;
+    /* lilás acinzentado, complementar */
+    --accent-warm: #D9822B;
+    /* laranja queimado, contraste quente */
+    --accent-bright: #7A5CFF;
 }
 
 * {
@@ -81,9 +83,9 @@ h2,
 /* Hero Section */
 .hero-section {
     background: linear-gradient(135deg,
-                rgba(172, 177, 142, 0.15) 0%,
-                rgba(115, 120, 92, 0.25) 50%,
-                rgba(54, 60, 39, 0.2) 100%);
+            rgba(172, 177, 142, 0.15) 0%,
+            rgba(115, 120, 92, 0.25) 50%,
+            rgba(54, 60, 39, 0.2) 100%);
     border-radius: 30px;
     padding: 60px 40px;
     margin: 40px 0 60px 0;
@@ -613,46 +615,50 @@ h2,
 
 /* Estilo do pino de anotação */
 .annotation-pin {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background-color: var(--accent-bright);
-  border-radius: 50%;
-  border: 2px solid var(--primary-light);
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  pointer-events: all;
-  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-  z-index: 1;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-bright);
+    border-radius: 50%;
+    border: 2px solid var(--primary-light);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    pointer-events: all;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    z-index: 1;
 }
 
 /* Criando ondas que saem do centro */
 .annotation-pin::before,
 .annotation-pin::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background-color: var(--accent-bright);
-  opacity: 0.6;
-  animation: pulse-wave 2s infinite;
-  z-index: -1; /* Fica atrás do pin */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--accent-bright);
+    opacity: 0.6;
+    animation: pulse-wave 2s infinite;
+    z-index: -1;
+    /* Fica atrás do pin */
 }
 
 /* Atraso para criar efeito de ondas sucessivas */
 .annotation-pin::after {
-  animation-delay: 1s;
+    animation-delay: 1s;
 }
 
 @keyframes pulse-wave {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(3); /* tamanho da onda */
-    opacity: 0; /* some suavemente */
-  }
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(3);
+        /* tamanho da onda */
+        opacity: 0;
+        /* some suavemente */
+    }
 }
 
 
@@ -687,6 +693,13 @@ h2,
 .annotation-pin:hover .annotation-tooltip {
     display: block;
     animation: fadeIn 0.3s forwards;
+}
+
+/* Responsividade do 3D */
+#palco {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 /* Adicionando responsividade para o modal */

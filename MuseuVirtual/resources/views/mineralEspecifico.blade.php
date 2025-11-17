@@ -1,5 +1,5 @@
 <x-layouts.BaseLayout>
-    @vite(['resources/css/EspecificoBlade.css', 'resources/js/app.js','resources/js/mineralespecifico.js'])
+    @vite(['resources/css/EspecificoBlade.css', 'resources/js/app.js', 'resources/js/mineralespecifico.js'])
     <x-slot name="title">Mineral - {{ $mineral->nome }}</x-slot>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -22,17 +22,20 @@
         <br><br>
         <div class="hero-section fade-in">
             <h1><strong>{{ $mineral->nome }}</strong></h1>
-            @if($mineral->descricao)
-                @if($mineral->descricao)
-                        @php
-                            // Remove tags HTML:
-                            $descricaoLimpa = strip_tags($mineral->descricao);
-                            // Decodifica entidades HTML (acentos, aspas):
-                            $descricaoDecodificada = html_entity_decode($descricaoLimpa, ENT_QUOTES, 'UTF-8');
-                            // Limita a 200 caracteres:
-                            $descricaoLimitada = mb_strlen($descricaoDecodificada, 'UTF-8') > 200 ? mb_substr($descricaoDecodificada, 0, 200, 'UTF-8') . '...' : $descricaoDecodificada;
-                            # mb_substr = corta o texto e mantêm acentuação
-                        @endphp
+            @if ($mineral->descricao)
+                @if ($mineral->descricao)
+                    @php
+                        // Remove tags HTML:
+                        $descricaoLimpa = strip_tags($mineral->descricao);
+                        // Decodifica entidades HTML (acentos, aspas):
+                        $descricaoDecodificada = html_entity_decode($descricaoLimpa, ENT_QUOTES, 'UTF-8');
+                        // Limita a 200 caracteres:
+                        $descricaoLimitada =
+                            mb_strlen($descricaoDecodificada, 'UTF-8') > 200
+                                ? mb_substr($descricaoDecodificada, 0, 200, 'UTF-8') . '...'
+                                : $descricaoDecodificada;
+                        # mb_substr = corta o texto e mantêm acentuação
+                    @endphp
                     <p>{{ $descricaoLimitada }}</p>
                 @endif
 
@@ -46,10 +49,10 @@
             @if ($fotoCapa)
                 <div class="image-gallery-container">
                     <div class="main-image-wrapper">
-                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" 
-                            data-caption="{{ $mineral->nome }}" id="main-image-link">
-                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}" data-fancybox="gallery"
-                                data-current-path="{{ $fotoCapa->caminho }}"
+                        <a href="{{ asset('storage/' . $fotoCapa->caminho) }}" data-caption="{{ $mineral->nome }}"
+                            id="main-image-link">
+                            <img id="main-mineral-image" src="{{ asset('storage/' . $fotoCapa->caminho) }}"
+                                data-fancybox="gallery" data-current-path="{{ $fotoCapa->caminho }}"
                                 alt="Foto principal do mineral {{ $mineral->nome }}">
                         </a>
                         <div class="action-buttons">
@@ -60,12 +63,14 @@
                             </div>
                             <div class="action-button" onclick="showQRCode()" title="Gerar QR Code">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-6-6h2v2h-2v-2zm2 2h2v2h-2v-2zm0 2h2v2h-2v-2z" />
+                                    <path
+                                        d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-6-6h2v2h-2v-2zm2 2h2v2h-2v-2zm0 2h2v2h-2v-2z" />
                                 </svg>
                             </div>
                             <div class="action-button" onclick="showCurrentImageAnnotations()" title="Ver anotações">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                                 </svg>
                             </div>
                         </div>

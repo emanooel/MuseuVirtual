@@ -127,7 +127,13 @@
             </div>
         </div>
 
-        
+        {{-- Tem que verificar se a rocha é do tipo ornamental, por hora, apenas rochas ornamentais terão essa funcionalidades --}}
+        {{-- 3DMODAL --}}
+        <div id="3d-modal-overlay" style="display: none;">
+            <canvas id="palco">
+                <img src="{{ asset('storage/' . $fotoCapa->caminho) }}" id="image_map_3d" style="opacity: 0;">
+            </canvas>
+        </div>
 
         @if ($rocha->descricao || $rocha->composicao)
             <div class="section-container fade-in animate-delay-2">

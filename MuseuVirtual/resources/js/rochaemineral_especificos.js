@@ -368,3 +368,128 @@ window.changeMainImage = function (imageSrc) {
         };
     }
 }
+
+// INICIO DA PARTE 3D
+import * as THREE from "https://esm.sh/three@0.164.0";
+import { OrbitControls } from "https://esm.sh/three@0.164.0/examples/jsm/controls/OrbitControls";
+import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.21/+esm';
+
+
+// criar a cena
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xf7f7f7);
+const canvas = document.getElementById("palco");
+const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+renderer.shadowMap.enabled = true;
+
+const fov = 75;
+const aspect = 2;
+const near = 0.1;
+const far = 100;
+
+// ligth
+const colorLight = 0xFFFFFF;
+const intensity = 3;
+const ligth = new THREE.DirectionalLight(colorLight, intensity);
+ligth.position.set(5, 10, 5); 
+scene.add(ligth);
+
+// Point Lighter
+const pl = new THREE.PointLight(colorLight, intensity);
+pl.position.set(-2,2,0);
+scene.add(pl);
+
+// Point Light Helper
+const plHelpler = new THREE.PointLightHelper(pl);
+// scene.add(plHelpler);
+
+const camera = new THREE.PerspectiveCamera(
+  fov, aspect, near, far
+);
+camera.position.set(3, 3, 5); 
+camera.lookAt(0,0,0);
+
+const constante_proporcional = 2.5;
+
+// começando a definir uma caixa
+const boxWidth = 0.05 * constante_proporcional;
+const boxHeight = 1 * constante_proporcional;
+const boxDepth = 2 * constante_proporcional;
+
+const image = document.getElementById("image_map_3d");
+const url_image = image ? image.getAttribute('src'):'';
+
+const loader = new THREE.TextureLoader();
+const texture = loader.load(url_image); 
+texture.colorSpace = THREE.SRGBColorSpace;
+
+const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+const material = new THREE.MeshPhongMaterial({ map:texture });
+
+const cubo = new THREE.Mesh(geometry, material);
+cubo.position.y = 2
+scene.add(cubo);
+
+// plane - plano - chão
+const planeSize = 40;
+const planeGeo = new THREE.PlaneGeometry(planeSize, planeSize);
+const planeMat = new THREE.MeshPhongMaterial({
+  color:0xFFFFFF,
+  side: THREE.DoubleSide,
+});
+const mesh = new THREE.Mesh(planeGeo, planeMat);
+mesh.rotation.x = Math.PI * -.5;
+mesh.position.y = -0.5; 
+mesh.castShadow = true;
+mesh.receiveShadow = true;
+scene.add(mesh);
+
+// controls
+const controls = new OrbitControls(camera, canvas);
+controls.target.set(0, 0, 0); 
+controls.update();
+
+// Variável para rastrear se o usuário está interagindo
+let isUserInteracting = false;
+
+// Eventos para detectar quando o usuário começa e para de interagir
+controls.addEventListener('start', () => {
+  isUserInteracting = true;
+});
+
+controls.addEventListener('end', () => {
+  isUserInteracting = false;
+});
+
+
+function resizeRendererToDisplaySize(renderer) {
+  const canvas = renderer.domElement;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  const needResize = canvas.width !== width || canvas.height !== height;
+  if (needResize) {
+    renderer.setSize(width, height, false);
+  }
+  return needResize;
+}
+
+// Loop de animação
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Girar o cubo APENAS quando o usuário NÃO está interagindo
+  if (!isUserInteracting) {
+    cubo.rotation.y += 0.01;
+  }
+
+  controls.update(); 
+
+  if (resizeRendererToDisplaySize(renderer)) {
+    const canvas = renderer.domElement;
+    camera.aspect = canvas.clientWidth / canvas.clientHeight; 
+    camera.updateProjectionMatrix();
+  }
+  renderer.render(scene, camera);
+}
+animate();
+// FIM DA PARTE 3D
