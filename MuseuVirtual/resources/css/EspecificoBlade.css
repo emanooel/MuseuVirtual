@@ -19,9 +19,11 @@ body {
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --border-radius: 20px;
     /* Complementares */
-    --accent-contrast: #6E72AC;   /* lilás acinzentado, complementar */
-    --accent-warm: #D9822B;       /* laranja queimado, contraste quente */
-    --accent-bright: #7A5CFF; 
+    --accent-contrast: #6E72AC;
+    /* lilás acinzentado, complementar */
+    --accent-warm: #D9822B;
+    /* laranja queimado, contraste quente */
+    --accent-bright: #7A5CFF;
 }
 
 * {
@@ -81,9 +83,9 @@ h2,
 /* Hero Section */
 .hero-section {
     background: linear-gradient(135deg,
-                rgba(172, 177, 142, 0.15) 0%,
-                rgba(115, 120, 92, 0.25) 50%,
-                rgba(54, 60, 39, 0.2) 100%);
+            rgba(172, 177, 142, 0.15) 0%,
+            rgba(115, 120, 92, 0.25) 50%,
+            rgba(54, 60, 39, 0.2) 100%);
     border-radius: 30px;
     padding: 60px 40px;
     margin: 40px 0 60px 0;
@@ -613,46 +615,50 @@ h2,
 
 /* Estilo do pino de anotação */
 .annotation-pin {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background-color: var(--accent-bright);
-  border-radius: 50%;
-  border: 2px solid var(--primary-light);
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  pointer-events: all;
-  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-  z-index: 1;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-bright);
+    border-radius: 50%;
+    border: 2px solid var(--primary-light);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    pointer-events: all;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    z-index: 1;
 }
 
 /* Criando ondas que saem do centro */
 .annotation-pin::before,
 .annotation-pin::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background-color: var(--accent-bright);
-  opacity: 0.6;
-  animation: pulse-wave 2s infinite;
-  z-index: -1; /* Fica atrás do pin */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--accent-bright);
+    opacity: 0.6;
+    animation: pulse-wave 2s infinite;
+    z-index: -1;
+    /* Fica atrás do pin */
 }
 
 /* Atraso para criar efeito de ondas sucessivas */
 .annotation-pin::after {
-  animation-delay: 1s;
+    animation-delay: 1s;
 }
 
 @keyframes pulse-wave {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(3); /* tamanho da onda */
-    opacity: 0; /* some suavemente */
-  }
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(3);
+        /* tamanho da onda */
+        opacity: 0;
+        /* some suavemente */
+    }
 }
 
 
@@ -689,9 +695,129 @@ h2,
     animation: fadeIn 0.3s forwards;
 }
 
+/* Responsividade do 3D */
+#palco {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
 /* Adicionando responsividade para o modal */
 @media (max-width: 768px) {
     .annotations-modal-content {
         padding: 20px;
     }
+}
+
+
+.modal-3d-content {
+    background: var(--primary-dark);
+    border-radius: 12px;
+    box-shadow: var(--shadow-heavy);
+    width: 90vw;
+    max-width: 1200px;
+    height: 80vh;
+    max-height: 800px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--accent-green);
+}
+
+.modal-3d-content .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(54, 60, 39, 0.3);
+    flex-shrink: 0;
+}
+
+.modal-3d-content .modal-header h2 {
+    color: var(--primary-light);
+    font-size: 1.5rem;
+    font-family: 'Cinzel', serif;
+    margin: 0;
+}
+
+.modal-3d-content .modal-header .modal-close-button {
+    background: none;
+    border: none;
+    color: var(--primary-light);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: var(--transition);
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-3d-content .modal-header .modal-close-button:hover {
+    color: var(--accent-green);
+    transform: rotate(90deg);
+}
+
+#palco {
+    width: 100%;
+    height: 100%;
+    display: block;
+    flex-grow: 1;
+}
+
+/* Responsividade do Modal 3D */
+@media (max-width: 768px) {
+    .modal-3d-content {
+        width: 95vw;
+        height: 70vh;
+    }
+
+    .modal-3d-content .modal-header {
+        padding: 15px 20px;
+    }
+
+    .modal-3d-content .modal-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .modal-3d-content .modal-header .modal-close-button {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-3d-content {
+        width: 100vw;
+        height: 60vh;
+        border-radius: 0;
+    }
+
+    .modal-3d-content .modal-header {
+        padding: 12px 16px;
+    }
+
+    .modal-3d-content .modal-header h2 {
+        font-size: 1rem;
+    }
+}
+
+/* Animação de entrada do modal 3D */
+#3d-modal-overlay.modal-overlay {
+    animation: fadeIn 0.3s ease;
+}
+
+#3d-modal-overlay .modal-3d-content {
+    animation: modalSlideIn 0.3s ease forwards;
+}
+
+/* Esconde a imagem de textura */
+#image_map_3d {
+    display: none;
 }
