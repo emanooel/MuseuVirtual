@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -12,15 +14,26 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Dashboard/Papeis/Index');
+    return Inertia::render('Dashboard/Papeis/Index', [
+        'papeis' => Role::with('permissions')->get()
+            ->map(function ($role) {
+                return [
+                    'id' => $role->id,
+                    'name' => $role->name,
+                    'permissions' => $role->permissions->pluck('name'),
+                ];
+            }),
+    ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $permissoes = Permission::orderBy('name', 'ASC')->get();
+        return Inertia::render('Dashboard/Papeis/Create', ['permissoes' => $permissoes]);
     }
 
     /**
@@ -28,13 +41,24 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles',
+            'permissions' => 'array'
+        ]);
+
+        $role = Role::create(['name' => $request->name]);
+
+        if ($request->permissions) {
+            $role->syncPermissions($request->permissions);
+        }
+
+        return redirect()->route('papeis.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(RochaMineral $rochaMineral)
+    public function show($id)
     {
         //
     }
@@ -42,15 +66,16 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RochaMineral $rochaMineral)
+    public function edit(Role $papel)
     {
-        //
+        return Inertia::render('Dashboard/Papeis/Edit', ['papel' => $papel->load('permissions'),
+        'permissoes' => Permission::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RochaMineral $rochaMineral)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -58,8 +83,10 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RochaMineral $rochaMineral)
+    public function destroy($id)
     {
-        //
+        $role = Role::find($id);
+
+        $role->delete();
     }
 }

@@ -68,7 +68,7 @@ Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.in
 Route::post('/timeline', [TimelineController::class, 'store'])->name('timeline.store');
 Route::delete('/timeline/associacoes/{id}', [TimelineController::class, 'destroyAssociacao'])->name('timeline.associacoes.destroy');
 
-// Gerência Usuários na dashboard
+// Gerencia Usuários na dashboard
 Route::resource('/usuarios', UsuarioController::class);
 Route::resource('/papeis', RoleController::class);
 Route::resource('/permissoes', PermissaoController::class)->parameters(['permissoes' => 'permissao']);
