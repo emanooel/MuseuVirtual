@@ -54,4 +54,8 @@ class SiteController extends Controller
 
         return view('home', compact('minerais', 'rochas', 'jazidas', 'termo'));
     }
+
+    public function sobre(){
+        return view("sobre");
+    }
 }

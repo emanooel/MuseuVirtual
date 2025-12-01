@@ -77,12 +77,13 @@
 
       <img src="/assets/img/logo_sem_estado.png" alt="Museu Virtual ES Logo" class="h-11">
 
-      <ul class="desktop-menu hidden flex space-x-8 font-semibold text-2xl">
+      <ul class="desktop-menu hidden flex space-x-8 font-semibold">
         <li><a href="{{ route('home') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('home') ? 'underline decoration-white' : '' }}">Home</a></li>
         <li><a href="{{ route('site.jazidas') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.jazidas','site.jazidas.show') ? 'underline decoration-white' : '' }}">Jazidas</a></li>
         <li><a href="{{ route('site.rochas') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo') ? 'underline decoration-white' : '' }}">Rochas</a></li>
         <li><a href="{{ route('site.minerais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white' : '' }}">Minerais</a></li>
         <li><a href="{{ route('site.rochasOrnamentais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochasOrnamentais','site.rochasOrnamentais.show') ? 'underline decoration-white' : '' }}">Rochas Ornamentais</a></li>
+        <li><a href="{{ route('site.sobre') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.sobre','site.sobre.show') ? 'underline decoration-white' : '' }}">Sobre</a></li>
       </ul>
 
       <!-- Busca desktop -->
@@ -116,6 +117,8 @@
         <li><a href="{{ route('site.rochas') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo') ? 'underline decoration-white font-bold' : '' }}">Rochas</a></li>
         <li><a href="{{ route('site.minerais') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white font-bold' : '' }}">Minerais</a></li>
         <li><a href="{{ route('site.rochasOrnamentais') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white font-bold' : '' }}">Rochas Ornamentais</a></li>
+        <li><a href="{{ route('site.sobre') }}" class="block px-6 py-4 text-2xl transition-all duration-200 hover:bg-gray-800 hover:text-gray-400 hover:underline {{ request()->routeIs('site.sobre','site.sobre.show') ? 'underline decoration-white' : '' }}">Sobre</a></li>
+
       </ul>
     </nav>
 
