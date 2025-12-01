@@ -1,79 +1,88 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
-import swal from 'sweetalert'
+import { useForm, Head } from '@inertiajs/vue3';
 
 const props = defineProps({
-    usuarios: Array
+    usuario: Object,
+    papeis: Array,
 });
 
-function submitDelete(id) {
-    swal({
-    title: "Excluir?",
-    text: "Tem certeza que deseja excluir este usuário?",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((apagar) => {
-    if (apagar) {
-      router.delete(route('usuarios.destroy', id));
-      location.reload();
-    }
-  });
+function submitForm() {
+    form.put(route('usuarios.store'));
 }
-
 </script>
 
 <template>
-  <Head title="Usuários" />
-  <AuthenticatedLayout>
-    
-    <template #header>
-      <div class="flex justify-between">
-        <h2 class="font-semibold text-xl text-gray-900 leading-tight">
-          Usuários
-        </h2>
-      </div>
-    </template>
+    <Head title="Cadastar Usuário" />
+    <AuthenticatedLayout>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
 
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <form @submit.prevent="submitForm">
 
-            <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
-                <thead class="bg-gray-100 dark:bg-gray-700">
-                    <tr>
-                    <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">ID</th>
-                    <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nome</th>
-                    <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
-                    <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Papel</th>
-                    <th class="w-1/6 px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    <tr v-for="u in usuarios" :key="u.id">
-                    <td class="px-6 py-4 text-center">{{ u.id }}</td>
-                    <td class="px-6 py-4 text-center">{{ u.name }}</td>
-                    <td class="px-6 py-4 text-center">{{ u.email }}</td>
-                    <td class="px-6 py-4 text-center">
-                        <span v-if="u.roles.length === 0">Nenhum</span>
-                        <span v-else>{{ u.roles.map(r => r.name).join(', ') }}</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <form :action="route('usuarios.destroy', u.id)" method="POST" @submit.prevent="submitDelete(u.id)">
-                            <input type="hidden" name="_method" value="DELETE" />
+                            <div class="mb-4">
+                                <label for="name" class="block mt-1 w-full">Nome do usuário</label>
+                                <input type="text"
+                                       id="name"
+                                       class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 
+                                       focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 
+                                       rounded-md shadow-sm"/>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="email" class="block mt-1 w-full">E-mail</label>
+                                <input type="email"
+                                       id="email"
+                                       class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 
+                                       focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 
+                                       rounded-md shadow-sm"/>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="senha" class="block mt-1 w-full">Senha</label>
+                                <input type="password"
+                                      placeholder="Insira a senha."
+                                      id="senha"
+                                      class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 
+                                      focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 
+                                      rounded-md shadow-sm"/>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="confirmarSenha" class="block mt-1 w-full">Confirme a senha</label>
+                                <input type="password"
+                                      placeholder="Confirme a senha."
+                                      id="confimarSenha"
+                                      class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 
+                                      focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 
+                                      rounded-md shadow-sm"/>
+                            </div>
+
+                            <div class="mt-4 grid grid-cols-4 gap-4">
+                                <div v-for="papel in props.papeis" :key="papel.id" class="flex items-center gap-2">
+                                    <input 
+                                        type="checkbox"
+                                        class="rounded"
+                                        :value="papel.name"
+                                    />
+                                    <label>{{ papel.name }}</label>
+                                </div>
+                            </div>
+
+                            <br>
+
                             <button type="submit"
-                            class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">Excluir</button>
-                          </form>
-                    </td>
-                    </tr>
-                </tbody>
-                </table>
-          </div>
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                Salvar
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </AuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>

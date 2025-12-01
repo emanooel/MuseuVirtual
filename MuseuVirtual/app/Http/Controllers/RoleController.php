@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -66,10 +67,17 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $papel)
+    public function edit($id)
     {
-        return Inertia::render('Dashboard/Papeis/Edit', ['papel' => $papel->load('permissions'),
-        'permissoes' => Permission::all()]);
+        $papel = Role::findOrFail($id);
+        $hasPermissions = $papel->permissions->pluck('name');
+        $permissoes = Permission::orderBy('name','ASC')->get();
+
+        return Inertia::render('Dashboard/Papeis/Edit', [
+            'permissoes' => $permissoes,
+            'hasPermissions' => $hasPermissions,
+            'papel' => $papel,
+        ]);
     }
 
     /**
@@ -77,8 +85,25 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $papel = Role::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $id
+        ]);
+
+        $papel->update([
+            'name' => $request->name
+        ]);
+
+        if ($request->has('permissions')) {
+            $papel->syncPermissions($request->permissions);
+        }
+
+        return redirect()
+            ->route('papeis.index')
+            ->with('success', 'Papel atualizado com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -34,6 +34,10 @@ function submitDelete(id) {
         <h2 class="font-semibold text-xl text-gray-900 leading-tight">
           Usuários
         </h2>
+        <a :href="route('usuarios.create')"
+           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Cadastrar Usuário
+        </a>
       </div>
     </template>
 
@@ -62,11 +66,8 @@ function submitDelete(id) {
                         <span v-else>{{ usuario.roles.map(r => r.name).join(', ') }}</span>
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <form :action="route('usuarios.destroy', usuario.id)" method="POST" @submit.prevent="submitDelete(usuario.id)">
-                            <input type="hidden" name="_method" value="DELETE" />
-                            <button type="submit"
-                            class="inline-flex items-center px-2 py-1 text-sm text-red-600 dark:text-red-400 hover:underline">Excluir</button>
-                          </form>
+                        <a :href="route('usuarios.edit', usuario.id)" class="inline-flex items-center px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:underline">Editar</a>
+                        <button @click="submitDelete(usuario.id)" class="text-red-600 dark:text-red-400 hover:underline text-sm">Excluir</button>
                     </td>
                     </tr>
                 </tbody>

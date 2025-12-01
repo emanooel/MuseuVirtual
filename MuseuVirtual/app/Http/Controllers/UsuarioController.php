@@ -4,28 +4,20 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+
 
 class UsuarioController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * O spartie permission funciona no sistema roles permission.
-     * roles = papel
-     * permissions = permissão
-     * ou seja, para darmos as permissões de acesso a recursos, essas permissões. 
-     * são dadas ao papel(role). e depois essa papel(role) será atribuido a um usuário.
-     * terá permissão de fazer coisas, aquele usuário que tiver aquele papel(role).
-     * no momento, teremos apenas a role administrador.
-     * o papel de administrador poderá fazer tudo.
+     * Display a listing of the resource. 
      */
     public function index()
     {
         return Inertia::render('Dashboard/Usuarios/Index', [
         'usuarios' => User::with('roles:id,name')->select('id', 'name', 'email')->get()]);
-        //Deve retornar uma lista com usuários já cadastrados.
-        //Como já tem spartie Permission neste projeto, já podemos restringir o
-        //acesso a essa lista somente a usuários do tipo administrador.
-        // lendo a documentação do spartie permission é mostrado como isto é feito.
     }
 
     /**
@@ -33,10 +25,8 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //aqui será um atalho rapido para criarmos os usuários.
-        // Como toda função create do laravel, deverá retornar uma view para
-        // cadastro de novos usuários.
-        // deve ser permitido escolher o papel do usuário cadastrado.
+        $papeis = Role::orderBy('name', 'ASC')->get();
+        return Inertia::render('Dashboard/Usuarios/Create', ['papeis' => $papeis]);
     }
 
     /**
@@ -44,7 +34,25 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //aqui é onde os usuários serão persistidos no banco de dados.
+
+        $validacao = Validator::make($request->all(),[
+            'name' => 'required|min:1',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8|same:confirm_password'
+            'confirm_password' => 'required'
+        ]);
+
+        if ($validacao->fails()) {
+            return redirect()->route('usuarios.create', $id)->withInput()->withErrors($validacao);
+        }
+
+        $usuario = new User();
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        $usuario->password = Hash::make($request->password);
+        $usuario->save();
+        $usuario->syncRoles($request->role);
+        return redirect()->route('usuarios.index', $id)->with('sucess', 'Usuário adicionado com sucesso.');
     }
 
     /**
@@ -60,16 +68,36 @@ class UsuarioController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $usuario = User::with('roles:id,name')->findOrFail($id);
+        $papeis = Role::orderBy('name', 'ASC')->get();
+        return Inertia::render('Dashboard/Usuarios/Edit', [
+        'usuario' => $usuario,
+        'papeis' => $papeis
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $validacao = Validator::make($request->all(),[
+            'name' => 'required|min:1',
+            'email' => 'required|email|unique:users,email,'.$id.',id'
+        ]);
+
+        if ($validacao->fails()) {
+            return redirect()->route('usuarios.edit', $id)->withInput()->withErrors($validacao);
+        }
+
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        $usuario->save();
+        $usuario->syncRoles($request->role);
+        return redirect()->route('usuarios.index', $id)->with('sucess', 'Usuário atualizado com sucesso.');
     }
+
 
     /**
      * Remove the specified resource from storage.
