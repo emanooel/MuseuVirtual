@@ -171,7 +171,6 @@ class RochaController extends Controller
 
     public function siteOrnamentais()
     {
-        $mineral = Mineral::with('fotos')->firstOrFail();
         $rochas = Rocha::where('ornamental', true)->with('fotos')->paginate(12);
         return view('rochasOrnamentais', compact('rochas'));
     }
