@@ -5,12 +5,51 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class AdminSeeder extends Seeder
 {
     public function run()
     {
-        Role::firstOrCreate(['name' => 'admin']);
+        // Limpar cache de permissões
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        /**
+         * 1. Criar permissões
+         */
+        $permissoes = [
+            'ver usuarios',
+            'crud usuarios',
+            'ver permissoes',
+            'crud permissoes',
+            'ver papeis',
+            'crud papeis',
+            'ver minerais',
+            'crud minerais',
+            'ver rochas',
+            'crud rochas',
+            'ver jazidas',
+            'crud jazidas',
+            'ver timeline',
+            'crud timeline',
+        ];
+
+        foreach ($permissoes as $perm) {
+            Permission::firstOrCreate(['name' => $perm]);
+        }
+
+        /**
+         * 2. Criar role admin
+         */
+        $adminRole = Role::firstOrCreate(['name' => 'admin']); // padronize para "admin"
+
+        // Atribui TODAS as permissões ao admin
+        $adminRole->syncPermissions($permissoes);
+
+        /**
+         * 3. Criar usuários admin
+         */
         $usuarios = [
             [
                 'name' => 'Admin',
@@ -68,14 +107,17 @@ class AdminSeeder extends Seeder
                 'password' => bcrypt('VirtualMarlon@2025'),
             ]
         ];
-    
+
         foreach ($usuarios as $dados) {
             $user = User::firstOrCreate(
-                ['email' => $dados['email']], // condição de existência
-                $dados // atributos para criar caso não exista
+                ['email' => $dados['email']],
+                $dados
             );
-    
-            $user->assignRole('admin');
+
+            // garante que sempre tenha o role admin
+            if (!$user->hasRole('admin')) {
+                $user->assignRole('admin');
+            }
         }
     }
 }

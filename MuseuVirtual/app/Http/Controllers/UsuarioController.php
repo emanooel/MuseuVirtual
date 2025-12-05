@@ -36,14 +36,22 @@ class UsuarioController extends Controller
     {
 
         $validacao = Validator::make($request->all(),[
-            'name' => 'required|min:1',
+            'name' => 'required|min:2',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|same:confirm_password'
+            'password' => 'required|min:8|same:confirm_password',
             'confirm_password' => 'required'
+        ], [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.min' => 'O nome deve ter pelo menos 2 caracteres.',
+            'email.required' => 'O campo e-mail é obrigatório.',
+            'email.email' => 'Informe um e-mail válido.',
+            'email.unique' => 'Este e-mail já está em uso.',
+            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
+            'password.required' => 'O campo senha é obrigatório.',
         ]);
 
         if ($validacao->fails()) {
-            return redirect()->route('usuarios.create', $id)->withInput()->withErrors($validacao);
+            return redirect()->route('usuarios.create')->withInput()->withErrors($validacao);
         }
 
         $usuario = new User();
@@ -52,7 +60,7 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($request->password);
         $usuario->save();
         $usuario->syncRoles($request->role);
-        return redirect()->route('usuarios.index', $id)->with('sucess', 'Usuário adicionado com sucesso.');
+        return redirect()->route('usuarios.index')->with('success', 'Usuário adicionado com sucesso.');
     }
 
     /**
