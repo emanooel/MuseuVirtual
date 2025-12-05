@@ -88,6 +88,7 @@
                         </div>
                     </div>
                 </div>
+
             @endif
 
             @if ($rocha->fotos->count() > 1)

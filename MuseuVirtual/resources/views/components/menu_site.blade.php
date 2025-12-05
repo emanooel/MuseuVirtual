@@ -75,15 +75,15 @@
   <header class="w-full bg-black text-white relative z-50">
     <nav class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
 
-      <img src="/assets/img/logo_sem_estado.png" alt="Museu Virtual ES Logo" class="h-11">
+      <img src="/assets/img/logo1.png" alt="Museu Virtual ES Logo" class="h-9">
 
-      <ul class="desktop-menu hidden flex space-x-8 font-semibold">
-        <li><a href="{{ route('home') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('home') ? 'underline decoration-white' : '' }}">Home</a></li>
-        <li><a href="{{ route('site.jazidas') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.jazidas','site.jazidas.show') ? 'underline decoration-white' : '' }}">Jazidas</a></li>
-        <li><a href="{{ route('site.rochas') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo') ? 'underline decoration-white' : '' }}">Rochas</a></li>
-        <li><a href="{{ route('site.minerais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white' : '' }}">Minerais</a></li>
-        <li><a href="{{ route('site.rochasOrnamentais') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochasOrnamentais','site.rochasOrnamentais.show') ? 'underline decoration-white' : '' }}">Rochas Ornamentais</a></li>
-        <li><a href="{{ route('site.sobre') }}" class="px-4 py-3 transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.sobre','site.sobre.show') ? 'underline decoration-white' : '' }}">Sobre</a></li>
+      <ul class="desktop-menu hidden flex space-x-4 font-semibold">
+        <li><a href="{{ route('home') }}" class="px-4 py-3 text-lg transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('home') ? 'underline decoration-white' : '' }}">Home</a></li>
+        <li><a href="{{ route('site.jazidas') }}" class="px-4 py-3 text-lg transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.jazidas','site.jazidas.show') ? 'underline decoration-white' : '' }}">Jazidas</a></li>
+        <li><a href="{{ route('site.rochas') }}" class="px-4 py-3 text-lg transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochas','site.rochas.show','site.rochas.tipo') ? 'underline decoration-white' : '' }}">Rochas</a></li>
+        <li><a href="{{ route('site.minerais') }}" class="px-4 py-3 text-lg transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.minerais','site.minerais.show','site.minerais.tipo') ? 'underline decoration-white' : '' }}">Minerais</a></li>
+        <li><a href="{{ route('site.rochasOrnamentais') }}" class="px-4 py-3 text-lg transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.rochasOrnamentais','site.rochasOrnamentais.show') ? 'underline decoration-white' : '' }}">Rochas Ornamentais</a></li>
+        <li><a href="{{ route('site.sobre') }}" class="px-4 py-3 text-lg transition-colors hover:text-gray-400 hover:underline {{ request()->routeIs('site.sobre','site.sobre.show') ? 'underline decoration-white' : '' }}">Sobre</a></li>
       </ul>
 
       <!-- Busca desktop -->
@@ -107,7 +107,7 @@
   <!-- MENU MOBILE LATERAL -->
   <div id="mobile-menu" class="mobile-menu-container hidden fixed top-0 left-0 h-full w-80 bg-black text-white z-40 menu-slide">
     <div class="flex justify-between items-center p-4 border-b border-gray-700">
-      <img src="/assets/img/logo12.png" alt="Logo" class="h-10">
+      <img src="/assets/img/logo1.png" alt="Logo" class="h-10">
     </div>
 
     <nav class="pt-6">

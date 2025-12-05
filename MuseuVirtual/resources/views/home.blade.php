@@ -85,10 +85,10 @@
     <div class="hero-container">
         <div class="hero-content">
             <br>
-            <h1 class="main-title">Museu Virtual ES</h1>
+            <h1 class="main-title">Museu Geológico Capixaba</h1>
             <p class="subtitle">
-                Bem-vindo ao Museu Virtual das Rochas, um espaço interativo e educativo
-                dedicado à incrível diversidade geológica da nossa região capixaba.
+                Bem-vindo ao Museu Geológico do Espiríto Santo, um espaço interativo e educativo
+                dedicado à incrível diversidade geológica da nossa região.
             </p>
         </div>
 
