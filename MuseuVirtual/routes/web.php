@@ -18,10 +18,6 @@ use App\Http\Controllers\TimelineController;
 // Público:
 Route::get("/", [SiteController::class, 'home'])->name("home");
 Route::get("/site/jazidas/{id}", [JazidaController::class, 'show'])->name("site.jazidas.show");
-Route::get("/site/rochas/{id}", [RochaController::class, 'site'])->name("rochas.show");
-
-Route::get("/site/rochas/{id}", [RochaController::class, 'site_show'])->name("site.rochas.show");
-
 Route::get('/site/minerais/{slug_mineral}', [MineralController::class, 'show'])->name('site.minerais.show');
 Route::get("/site/rochas/tipo/{tipo}", [RochaController::class, 'site_tipo_rocha'])->name("site.rochas.tipo");
 Route::get('/rochas/{id}/qrcode', [RochaController::class, 'gerarQrCode'])->name('rochas.qrcode');
@@ -31,6 +27,8 @@ Route::get("/busca", [SiteController::class, 'busca'])->name("busca");
 Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
+Route::get("/site/rochasOrnamentais", [RochaController::class, 'siteOrnamentais'])->name("site.rochasOrnamentais");
+
 
 Route::get("/api/rochas", [RochaController::class, 'apiListRocha']);
 
@@ -56,7 +54,6 @@ Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 
 // Rochas:
 Route::resource('rocha', RochaController::class)->names('Rocha');
-Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 Route::resource('rochas', RochaController::class)->names('rochas');
 
 // Minerais:

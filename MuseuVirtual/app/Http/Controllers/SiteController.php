@@ -41,13 +41,16 @@ class SiteController extends Controller
 
         // Busca com paginação nomeada para evitar conflitos
         $minerais = Mineral::where('nome', 'LIKE', "%{$termo}%")
-            ->paginate($porPagina, ['*'], 'minerais');
+            ->paginate($porPagina, ['*'], 'minerais')->withPath(url()->current());
 
         $rochas = Rocha::where('nome', 'LIKE', "%{$termo}%")
-            ->paginate($porPagina, ['*'], 'rochas');
+            ->paginate($porPagina, ['*'], 'rochas')->withPath(url()->current());
 
         $jazidas = Jazida::where('localizacao', 'LIKE', "%{$termo}%")
-            ->paginate($porPagina, ['*'], 'jazidas');
+            ->paginate($porPagina, ['*'], 'jazidas')->withPath(url()->current());
+
+        // $rochas_ornamentais = Rocha::where('ornamental', '=', "%{$termo}%")
+        //     ->paginate($porPagina, ['*'], 'jazidas')->withPath(url()->current());
 
         return view('home', compact('minerais', 'rochas', 'jazidas', 'termo'));
     }

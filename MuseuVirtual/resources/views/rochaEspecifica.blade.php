@@ -11,6 +11,7 @@
     {{-- Pass all photos with annotations to JavaScript --}}
     <script>
         window.fotosComAnotacoes = @json($rocha);
+        window.rochaOrnamental = @json($rocha->ornamental);
         
         Fancybox.bind("[data-fancybox]", {
             width: "90%",
@@ -35,7 +36,14 @@
         <div class="hero-section fade-in">
             <h1><strong>{{ $rocha->nome }}</strong></h1>
             <p>
-                Detalhes sobre a geologia, minerais e história desta rocha fascinante.
+               @if($rocha->descricao)
+                    @php
+                        $descricaoLimpa = strip_tags($rocha->descricao);
+                        $descricaoDecodificada = html_entity_decode($descricaoLimpa, ENT_QUOTES, 'UTF-8');
+                        $descricaoLimitada = mb_strlen($descricaoDecodificada, 'UTF-8') > 200 ? mb_substr($descricaoDecodificada, 0, 200, 'UTF-8') . '...' : $descricaoDecodificada;
+                    @endphp
+                    <p>{{ $descricaoLimitada }}</p>
+                @endif
             </p>
         </div>
 
@@ -63,12 +71,20 @@
                                         d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-6-6h2v2h-2v-2zm2 2h2v2h-2v-2zm0 2h2v2h-2v-2z" />
                                 </svg>
                             </div>
-                            {{-- Updated button to get annotations dynamically --}}
                             <div class="action-button" onclick="showCurrentImageAnnotations()" title="Ver anotações">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                                 </svg>
                             </div>
+                            
+                            {{-- Botão 3D apenas para rochas ornamentais --}}
+                            @if($rocha->ornamental)
+                                <div class="action-button" onclick="show3DModal()" title="Visualização 3D">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18.5c-4.18-1.29-7-5.68-7-10.5V8.3l7-3.11v15.31z"/>
+                                    </svg>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -120,6 +136,21 @@
             </div>
         </div>
 
+        {{-- Modal 3D - Apenas para rochas ornamentais --}}
+        @if($rocha->ornamental)
+            <div id="3d-modal-overlay" class="modal-overlay" style="display: none;">
+                <div class="modal-3d-content">
+                    <div class="modal-header">
+                        <h2>🔷 Visualização 3D</h2>
+                        <button class="modal-close-button" onclick="hide3DModal()">&times;</button>
+                    </div>
+                    <canvas id="palco">
+                        <img src="{{ asset('storage/' . $fotoCapa->caminho) }}" id="image_map_3d" style="opacity: 0;">
+                    </canvas>
+                </div>
+            </div>
+        @endif
+
         @if ($rocha->descricao || $rocha->composicao)
             <div class="section-container fade-in animate-delay-2">
                 <div class="content-box">
@@ -133,6 +164,19 @@
 
                     @if ($rocha->composicao)
                         <p><strong>Composição:</strong> {!! $rocha->composicao !!}</p>
+                    @endif
+
+                    @if ($rocha->composicao && count($rocha->minerais) != 0)
+                        <br>
+                    @endif
+
+                    @if (count($rocha->minerais) != 0)
+                        <p><strong>Minerais associados:</strong>
+                        <ul>
+                            @foreach($rocha->minerais as $mineral)
+                                <li><a href="{{ route('site.minerais.show', ['slug_mineral' => $mineral->slug]) }}">• <u>{{ $mineral->nome }}</u></a></li>
+                            @endforeach
+                        </ul>
                     @endif
                 </div>
             </div>

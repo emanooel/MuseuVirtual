@@ -15,17 +15,22 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
-                'password' => bcrypt('admin@pass2025'), // ou gere aleatório
+                'password' => bcrypt('admin@pass2025'),
             ],
             [
                 'name' => 'Caio Motta Barcelos',
                 'email' => 'caiomottabarcelos13@gmail.com',
-                'password' => bcrypt('MuseuCaio@2025'), // ou gere aleatório
+                'password' => bcrypt('MuseuCaio@2025'), 
             ],
             [
                 'name' => 'Emanoel Martins Vieira',
                 'email' => 'emanoelmartinsv@gmail.com',
                 'password' => bcrypt('emanoel@pass2025'),
+            ],
+            [
+                'name' => 'Rodrigo',
+                'email' => 'rodrigo@gmail.com',
+                'password' => bcrypt('mvrodrigu@pass2025'),
             ],
             [
                 'name' => 'Lívia Pezzin Scaramussa',

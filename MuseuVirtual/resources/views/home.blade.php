@@ -1,5 +1,5 @@
 <x-layouts.BaseLayout>
-    @vite(['resources/css/homeBlade.css', 'resources/js/app.js', 'resources/js/home.js'])
+    @vite(['resources/css/homeBlade.css', 'resources/js/app.js'])
     <x-slot name="title">Home</x-slot>
 
     <!-- Loading Screen -->
@@ -7,13 +7,13 @@
         <div class="spinner"></div>
     </div>
     @if (isset($termo))
-        <main id="resultados-container" class="max-w-7xl mx-auto px-4 py-6 bg-white rounded shadow text-black">
+        <main id="resultados-container" class="results-section mt-4 max-w-7xl mx-auto px-4 py-6 rounded shadow text-white">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold font-cinzel">
+                <h2 class="text-2xl font-black lato">
                     Resultados da busca por: <span class="text-white-600">"{{ $termo }}"</span>
                 </h2>
                 <button onclick="document.getElementById('resultados-container').style.display='none'"
-                    class="text-sm text-red-600 hover:underline">
+                    class="text-sm text-red-600 bg-[#524c4c] px-3 py-1 rounded-full transition hover:bg-red-400 hover:text-white">
                     Fechar tudo
                 </button>
             </div>
@@ -22,12 +22,11 @@
                 @if ($minerais->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Minerais encontrados:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($minerais as $mineral)
                                 <li>
-                                    {{-- {{ route('site.minerais.show', ['slug_mineral' => $item->id]) }} --}}
                                     <a href="{{ route('site.minerais.show', $mineral->slug) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $mineral->nome }}
                                     </a>
                                 </li>
@@ -42,11 +41,11 @@
                 @if ($rochas->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Rochas encontradas:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($rochas as $rocha)
                                 <li>
                                     <a href="{{ route('site.rochas.show', [$rocha->tipo,$rocha->slug]) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $rocha->nome }}
                                     </a>
                                 </li>
@@ -61,11 +60,11 @@
                 @if ($jazidas->count() > 0)
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold font-cinzel mb-2">Jazidas encontradas:</h3>
-                        <ul class="list-disc list-inside">
+                        <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($jazidas as $jazida)
                                 <li>
                                     <a href="{{ route('jazidas.show', $jazida->id) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-white px-4 py-2 inline-block text-white px-3 py-1 rounded-full leading-snug break-words max-w-full opacity-90 bg-[#565851] hover:bg-[#898f7a] transition">
                                         {{ $jazida->localizacao }}
                                     </a>
                                 </li>
@@ -82,28 +81,22 @@
         </main>
     @endif
 
-
-
-
     <!-- Hero Section -->
     <div class="hero-container">
         <div class="hero-content">
             <br>
-            <h1 class="main-title">Museu Virtual</h1>
+            <h1 class="main-title">Museu Virtual ES</h1>
             <p class="subtitle">
                 Bem-vindo ao Museu Virtual das Rochas, um espaço interativo e educativo
-                dedicado à incrível diversidade geológica da nossa região.
+                dedicado à incrível diversidade geológica da nossa região capixaba.
             </p>
         </div>
 
-        <!-- Swiper -->
-        <figure class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://th.bing.com/th/id/R.ad6cba861c6885f765c806b5b7863352?rik=6CY9S7bE5j3spA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f5%2f9%2fd%2f1281292-geology-wallpaper-1920x1080-for-lockscreen.jpg&ehk=19Sopya1egoOmeuV1vNCvXYLXkFfrxtBXMqB1Z9hwvc%3d&risl=&pid=ImgRaw&r=0"
-                        alt="Rochas Geologia">
-                </div>
-            </div>
+        <!-- Imagem Hero -->
+        <figure class="hero-image-container">
+            <img src="/assets/img/domingos-martins-pedra-azul23.JPG"
+                alt="Rochas Geologia"
+                class="hero-image">
         </figure>
     </div>
 
@@ -116,8 +109,8 @@
         </h3>
 
         <div class="cards-container">
-            <div class="cards-grid">
-                <figure class="card-figure" data-aos="fade-right">
+            <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <figure class="card-figure" data-aos="fade-right">
                     <a href="{{ route('site.jazidas') }}" class="card-link">
                         <img class="card-image" src="/assets/img/JAZIDAinicial(2).png" alt="Jazidas">
                         <div class="card-content">
@@ -155,12 +148,75 @@
                         </div>
                     </a>
                 </figure>
+
+
+                <figure class="card-figure" data-aos="fade-left">
+                    <a href="{{ route('site.rochasOrnamentais') }}" class="card-link">
+                        <img class="card-image" src="/assets/img/ORNAMENTALinicial.jpg" alt="Rochas Ornamentais">
+                        <div class="card-content">
+                            <h2 class="card-title">Rochas Ornamentais</h2>
+                            <h3 class="card-description">
+                                Conheça as rochas ornamentais da região capixaba,
+                                suas aplicações e importância econômica para o estado.
+                            </h3>
+                        </div>
+                    </a>
+                </figure>
             </div>
         </div>
     </div>
 
+    <!-- CSS para a imagem hero -->
+    <style>
+        .hero-image-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 720px;
+            margin: 2rem auto;
+            padding: 0;
+            display: block;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .hero-image-container {
+                width: 85%;
+                height: 400px;
+                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-image-container {
+                width: 90%;
+                height: 320px;
+                border-radius: 16px;
+                margin: 1.5rem auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image-container {
+                width: 95%;
+                height: 250px;
+                border-radius: 12px;
+                margin: 1rem auto;
+            }
+        }
+    </style>
+
     <!-- Scripts -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         window.addEventListener('load', function() {
@@ -176,20 +232,6 @@
                 offset: 100
             });
         }
-
-        const swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1,
-            loop: true,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false
-            },
-            effect: "fade",
-            fadeEffect: {
-                crossFade: true
-            },
-            speed: 1000,
-        });
 
         let ticking = false;
         window.addEventListener('scroll', () => {

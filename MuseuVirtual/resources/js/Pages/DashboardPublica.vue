@@ -5,38 +5,11 @@ import { Head } from '@inertiajs/vue3';
 
     <Head title="Dashboard" />
         <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                <center>Dashboard Pública</center>
+            <!-- MENSAGEM INDICANDO APENAS ADMINISTRADORES -->
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Dashboard') }}
             </h2>
-
-            <p>Oi!! Adicione o email da sua conta em database/seeders/AdminSeeder.php e rode o seeder para virar adm! Por padrão, você pode cadastrar uma conta com o e-mail admin@admin.com que vai funcionar.</p>
-            <p>Para entrar na dashboard depois de virar adm é só substituir dashboardPublica por dashboard na url(http://localhost/dashboard).</p>
-            <br>
-            <pre>
-    class AdminSeeder extends Seeder
-    {
-        public function run()
-        {
-            $user = User::where('email', 'admin@admin.com')->first();
-            if ($user) {
-                $user->assignRole('admin');
-            }
-
-            $user = User::where('email', 'caiomottabarcelos13@gmail.com')->first();
-            if ($user) {
-                $user->assignRole('admin');
-            }
-
-            $user = User::where('email', 'seuemailaqui@seuprovedor.com')->first(); //Coloca o aqui teu email e rode o seeder com ./vendor/bin/sail artisan db:seed --class=AdminSeeder
-            if ($user) {
-                $user->assignRole('admin');
-            }
-        }
-    }
-            </pre>
-            <p><em>ps: Ainda precisa adicionar uma forma de sair da conta sem ter acesso ao dashboard.</em></p>
-            <p><em>ps2: Se não estiver funcionando, rode ./vendor/bin/sail artisan db:seed --class=RolesSeeder</em></p>
-
+            <p class="mt-2 text-sm text-gray-600">
+                {{ __("Bem-vindo(a) ao painel de controle. Apenas administradores têm acesso a esta área.") }}
+            </p>
         </template>

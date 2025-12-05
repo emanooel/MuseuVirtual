@@ -1,9 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
-import axios from 'axios';
 
 const form = reactive({
     nome: '',
@@ -11,20 +10,25 @@ const form = reactive({
     composicao: '',
     tipo: '',
     fotos: [],
-    capa_nome: ''
+    capa_nome: '',
+    jazida_id: '',
+    minerais_ids: [],
+    ornamental: '',
+});
+
+const props = defineProps({
+    jazidas: Array,
+    minerais: Array,
 });
 
 const associarJazida = ref(false);
-const jazidas = ref([]);
-const jazida_id = ref(null);
-
 const fotoInput = ref(null);
 const previewFotos = ref([]);
+const searchMineral = ref('');
+const rochaOrnamental = ref(false);
 
-onMounted(() => {
-    axios.get('/api/jazidas').then(res => {
-        jazidas.value = res.data;
-    });
+const filteredMinerais = computed(() => {
+    return props.minerais.filter(m => m.nome.toLowerCase().includes(searchMineral.value.toLowerCase()));
 });
 
 function handleFileChange(event) {
@@ -52,17 +56,25 @@ function submitForm() {
     payload.append('descricao', form.descricao);
     payload.append('composicao', form.composicao);
     payload.append('tipo', form.tipo);
+
+    if (associarJazida.value && form.jazida_id) {
+        payload.append('jazida_id', form.jazida_id);
+    }
+
+    payload.append('ornamental', rochaOrnamental.value ? '1' : '0');
+
+    form.minerais_ids = form.minerais_ids.map(Number);
+    form.minerais_ids.forEach(id => payload.append('minerais_ids[]', id));
+
     form.fotos.forEach(f => payload.append('foto[]', f));
     payload.append('capa_nome', form.capa_nome);
-    if (associarJazida.value && jazida_id.value) {
-        payload.append('jazida_id', jazida_id.value);
-    }
 
     router.post(route('rochas.store'), payload);
 }
 </script>
 
 <template>
+
     <Head title="Criar Rocha" />
 
     <AuthenticatedLayout>
@@ -77,23 +89,27 @@ function submitForm() {
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                            <!-- Nome -->
                             <div class="mb-4">
                                 <label for="nome" class="block font-medium">Nome</label>
                                 <input id="nome" v-model="form.nome" type="text" required
                                     class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
                             </div>
 
+                            <!-- Descrição -->
                             <div class="mb-4">
-                                <label for="descricao" class="block font-medium">Descrição</label>
+                                <span for="descricao" class="block font-medium">Descrição</span>
                                 <TinyMCEEditor v-model="form.descricao" />
                             </div>
 
+                            <!-- Composição -->
                             <div class="mb-4">
                                 <label for="composicao" class="block font-medium">Composição</label>
                                 <input id="composicao" v-model="form.composicao" type="text" required
                                     class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
                             </div>
 
+                            <!-- Tipo -->
                             <div class="mb-4">
                                 <label for="tipo" class="block font-medium">Tipo de Rocha</label>
                                 <select id="tipo" v-model="form.tipo" required
@@ -105,29 +121,63 @@ function submitForm() {
                                 </select>
                             </div>
 
+                            <!-- Ornamental? -->
                             <div class="mb-4">
-                                    <label for="jazida" class="block font-medium">Associar esta rocha á alguma jazida?</label>
-                                    <div id="switch">
-                                    <p>Não</p>
-                                    <label class="switch">
-                                        <input type="checkbox" v-model="associarJazida">
-                                        <span class="slider round"></span>
+                                <label for="checkOrnamental" class="block font-medium">É uma rocha ornamental?</label>
+                                <div class="mv-switch-wrap">
+                                    <span>Não</span>
+                                    <label class="mv-switch" for="checkOrnamental">
+                                        <input id="checkOrnamental" type="checkbox" v-model="rochaOrnamental"
+                                            aria-label="É uma rocha ornamental?">
+                                        <span class="mv-switch__track mv-switch--round"></span>
                                     </label>
-                                    <p>Sim</p>
-                                    </div>
+                                    <span>Sim</span>
+                                </div>
+                            </div>
+
+                            <!-- Associar Jazida -->
+                            <div class="mb-4">
+                                <label class="block font-medium" for="checkJazida">Associar esta rocha à alguma
+                                    jazida?</label>
+                                <div class="mv-switch-wrap">
+                                    <span>Não</span>
+                                    <label class="mv-switch" for="checkJazida">
+                                        <input id="checkJazida" type="checkbox" v-model="associarJazida"
+                                            aria-label="Associar a uma jazida">
+                                        <span class="mv-switch__track mv-switch--round"></span>
+                                    </label>
+                                    <span>Sim</span>
+                                </div>
                             </div>
 
                             <div class="mb-4" v-if="associarJazida">
                                 <label for="jazida_id" class="block font-medium">Selecionar Jazida</label>
-                                <select id="jazida_id" v-model="jazida_id"
+                                <select id="jazida_id" v-model="form.jazida_id"
                                     class="block mt-1 w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
                                     <option disabled value="">Escolha uma jazida...</option>
-                                    <option v-for="jazida in jazidas" :key="jazida.id" :value="jazida.id">
+                                    <option v-for="jazida in props.jazidas" :key="jazida.id" :value="jazida.id">
                                         {{ jazida.localizacao }}
                                     </option>
                                 </select>
                             </div>
 
+                            <!-- Associar Minerais -->
+                            <div class="mb-4">
+                                <label class="block font-medium">Associar rocha a minerais</label>
+                                <input type="text" placeholder="Pesquisar mineral..." v-model="searchMineral"
+                                    class="block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm mb-2" />
+
+                                <div class="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
+                                    <div v-for="mineral in filteredMinerais" :key="mineral.id"
+                                        class="flex items-center">
+                                        <input type="checkbox" :value="mineral.id" v-model="form.minerais_ids"
+                                            class="mr-2" />
+                                        <span>{{ mineral.nome }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fotos -->
                             <div class="mb-4">
                                 <label for="foto" class="block font-medium">Fotos da Rocha</label>
                                 <input ref="fotoInput" @change="handleFileChange" type="file" id="foto" multiple
@@ -146,6 +196,7 @@ function submitForm() {
                                 </div>
                             </div>
 
+                            <!-- Botão -->
                             <div class="mt-6">
                                 <button type="submit"
                                     class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
@@ -185,72 +236,56 @@ function submitForm() {
     }
 }
 
-/* O switch */
-.switch {
+/* layout dos rótulos do switch */
+.mv-switch-wrap { 
+  display: flex; 
+  align-items: center; 
+  column-gap: 6px; 
+}
+
+/* container do switch */
+.mv-switch {
   position: relative;
   display: inline-block;
   width: 70px;
   height: 30px;
 }
 
-#switch {
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-}
-
-/* Esconder checkbox padrão*/
-.switch input {
+/* esconder checkbox nativo (acessível) */
+.mv-switch input {
+  position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* Slider */
-.slider {
+/* trilho do switch */
+.mv-switch__track {
   position: absolute;
+  inset: 0;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  transition: .25s;
 }
 
-.slider:before {
-  position: absolute;
+/* “bolinha” */
+.mv-switch__track::before {
   content: "";
+  position: absolute;
   height: 22px;
   width: 22px;
   left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  top: 4px;
+  background-color: #fff;
+  transition: .25s;
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
+/* estados */
+.mv-switch input:checked + .mv-switch__track { background-color: #2196F3; }
+.mv-switch input:focus + .mv-switch__track { box-shadow: 0 0 0 2px rgba(33,150,243,.35); }
+.mv-switch input:checked + .mv-switch__track::before { transform: translateX(40px); }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(40px);
-  -ms-transform: translateX(40px);
-  transform: translateX(40px);
-}
-
-.slider.round {
-  border-radius: 15px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
+/* cantos arredondados */
+.mv-switch--round { border-radius: 15px; }
+.mv-switch--round::before { border-radius: 50%; }
 </style>

@@ -14,12 +14,12 @@ class Rocha extends Model
         'composicao',
         'tipo',
         'jazida_id', // Adicionado para permitir preenchimento via create/update
+        'ornamental',
     ];
 
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
+    protected $casts = [
+        'ornamental' => 'boolean',
+    ];
 
     public function periodo()
     {

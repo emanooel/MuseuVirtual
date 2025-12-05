@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use SimpleSoftwareIO\QrCode\Facades\QrCode; // Certifique-se de ter o pacote instalado
 
+use Illuminate\Support\Str;
+
 class JazidaController extends Controller
 {
     /**
@@ -15,7 +17,7 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::with('fotos')->get();
+        $jazidas = Jazida::with('fotos')->paginate(10)->withPath(url()->current());
         # return view('dashboard.jazidas.index', compact('jazidas'));
         return Inertia::render('Dashboard/Jazidas/Index', ['jazidas' => $jazidas]);
     }
@@ -39,8 +41,17 @@ class JazidaController extends Controller
             'descricao' => 'nullable|string',
             'foto.*' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
+        $slug = Str::slug($request->localizacao);
 
-        $jazida = Jazida::create($request->only(['localizacao', 'descricao']));
+        $jazida = new Jazida([
+            'localizacao' => $request->localizacao,
+            'descricao' => $request->descricao,
+            'slug' => $slug
+        ]);
+
+        $jazida->save();
+        
+        // Jazida::create($request->only(['localizacao', 'descricao']));
 
         // Processar upload de fotos
         if ($request->hasFile('foto')) {
