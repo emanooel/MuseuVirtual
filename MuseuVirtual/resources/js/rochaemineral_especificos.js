@@ -417,12 +417,12 @@ function init3DScene() {
     renderer.outputEncoding = THREE.sRGBEncoding; // Corrige cores
 
     // 2. Configuração da Câmera
-    const fov = 75;
+    const fov = 45;
     const aspect = canvas.clientWidth / canvas.clientHeight; 
     const near = 0.1;
     const far = 100;
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.set(3, 3, 5); 
+    camera.position.set(0, 3, 5); 
     camera.lookAt(0,0,0);
 
     // 3. Luzes
