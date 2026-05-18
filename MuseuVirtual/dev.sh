@@ -8,6 +8,10 @@
 #   ./dev.sh stop     # para containers Docker
 #   ./dev.sh restart  # reinicia tudo
 #
+# Na subida, o script também:
+#   - executa migrations pendentes (se houver)
+#   - executa AdminSeeder se não existir usuário com role admin
+#
 # Acesso:
 #   App:  http://localhost:8080  (Sail — não precisa de "php artisan serve")
 #   Vite: http://localhost:5173
@@ -67,6 +71,47 @@ wait_for_mysql() {
     green "MySQL pronto."
 }
 
+run_migrations_if_needed() {
+    yellow "Verificando migrations..."
+
+    local output
+    if ! output=$("$SAIL" artisan migrate:status --pending --no-ansi 2>&1); then
+        yellow "Executando migrations (banco novo ou indisponível)..."
+        "$SAIL" artisan migrate --force --no-ansi
+        green "Migrations aplicadas."
+        return
+    fi
+
+    if echo "$output" | grep -q "No pending migrations"; then
+        green "Migrations já estão em dia."
+    else
+        yellow "Migrations pendentes detectadas. Executando migrate..."
+        "$SAIL" artisan migrate --force --no-ansi
+        green "Migrations aplicadas."
+    fi
+}
+
+seed_admins_if_needed() {
+    yellow "Verificando usuários administradores..."
+
+    local has_admins
+    has_admins=$("$SAIL" artisan tinker --execute="echo \\App\\Models\\User::role('admin')->exists() ? '1' : '0';" --no-ansi 2>/dev/null | tr -d '\r\n' | tail -1)
+
+    if [[ "$has_admins" == "1" ]]; then
+        green "Usuários administradores já existem."
+        return
+    fi
+
+    yellow "Nenhum administrador encontrado. Executando AdminSeeder..."
+    "$SAIL" artisan db:seed --class=AdminSeeder --force --no-ansi
+    green "Administradores criados."
+}
+
+setup_database() {
+    run_migrations_if_needed
+    seed_admins_if_needed
+}
+
 start() {
     require_docker
     require_sail
@@ -76,6 +121,7 @@ start() {
     "$SAIL" up -d
 
     wait_for_mysql
+    setup_database
 
     echo ""
     green "Ambiente no ar!"
