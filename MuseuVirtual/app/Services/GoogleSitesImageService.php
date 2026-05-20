@@ -75,31 +75,38 @@ class GoogleSitesImageService
             ->all();
     }
 
+    /**
+     * Todas as fotos de amostra da página, em ordem de aparição (sem repetir o mesmo id).
+     *
+     * @return list<string>
+     */
+    public function pickAllSampleImageUrls(array $urls): array
+    {
+        $seen = [];
+        $result = [];
+
+        foreach ($urls as $url) {
+            if (! $this->isSampleCandidate($url)) {
+                continue;
+            }
+
+            $id = $this->imageIdFromUrl($url);
+            if ($id === null || isset($seen[$id])) {
+                continue;
+            }
+
+            $seen[$id] = true;
+            $result[] = $url;
+        }
+
+        return $result;
+    }
+
     public function pickSampleImageUrl(array $urls): ?string
     {
-        $candidates = collect($urls)
-            ->filter(fn (string $url) => $this->isSampleCandidate($url))
-            ->values();
+        $all = $this->pickAllSampleImageUrls($urls);
 
-        if ($candidates->isEmpty()) {
-            return null;
-        }
-
-        $idCounts = $candidates
-            ->map(fn (string $url) => $this->imageIdFromUrl($url))
-            ->filter()
-            ->countBy();
-
-        // Fotos da amostra costumam aparecer uma vez; logos do menu repetem o mesmo id.
-        $unique = $candidates->filter(
-            fn (string $url) => ($idCounts[$this->imageIdFromUrl($url)] ?? 0) === 1
-        );
-
-        if ($unique->isNotEmpty()) {
-            return $unique->last();
-        }
-
-        return $candidates->last();
+        return $all === [] ? null : $all[array_key_last($all)];
     }
 
     private function isSampleCandidate(string $url): bool
@@ -140,7 +147,7 @@ class GoogleSitesImageService
         return $this->extractImageUrls($html);
     }
 
-    public function downloadImage(string $imageUrl, string $directory, string $basename): string
+    public function downloadImage(string $imageUrl, string $directory, string $basename, int $suffix = 0): string
     {
         $response = Http::timeout(120)
             ->withHeaders(['User-Agent' => 'MuseuVirtual-FotoRestore/1.0'])
@@ -149,7 +156,7 @@ class GoogleSitesImageService
         $response->throw();
 
         $extension = $this->guessExtension($response->header('Content-Type'));
-        $filename = Str::slug($basename).'_'.time().$extension;
+        $filename = Str::slug($basename).'_'.time().'_'.$suffix.$extension;
         $relativePath = trim($directory, '/').'/'.$filename;
 
         Storage::disk('public')->put($relativePath, $response->body());

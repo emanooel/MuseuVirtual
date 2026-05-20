@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Fotos;
 use App\Models\Mineral;
 use App\Models\Rocha;
+use Illuminate\Support\Collection;
 use App\Services\GoogleSitesImageService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -44,6 +45,10 @@ class FotosRestaurarGoogleSitesCommand extends Command
 
         if (in_array($tipo, ['minerais', 'todos'], true)) {
             $this->restoreMinerais($dryRun, $minScore);
+        }
+
+        if (in_array($tipo, ['jazidas', 'todos'], true)) {
+            $this->warn('Jazidas: o Google Sites antigo não expõe páginas de jazida; restaure manualmente.');
         }
 
         return self::SUCCESS;
@@ -89,7 +94,7 @@ class FotosRestaurarGoogleSitesCommand extends Command
                 $restored++;
             }
 
-            usleep(400_000);
+            usleep(500_000);
         }
 
         $this->newLine();
@@ -134,6 +139,8 @@ class FotosRestaurarGoogleSitesCommand extends Command
             )) {
                 $restored++;
             }
+
+            usleep(500_000);
         }
 
         $this->info("Minerais restaurados: {$restored}");
@@ -226,46 +233,108 @@ class FotosRestaurarGoogleSitesCommand extends Command
             return false;
         }
 
-        $imageUrl = $this->googleSites->pickSampleImageUrl($urls);
+        $imageUrls = $this->googleSites->pickAllSampleImageUrls($urls);
 
-        if ($imageUrl === null) {
+        if ($imageUrls === []) {
             $this->warn('    Nenhuma imagem utilizável na página.');
 
             return false;
         }
 
-        $imageId = preg_match('#/sitesv/(AA5Ab[A-Za-z0-9_\-]+)=#', $imageUrl, $m) ? substr($m[1], 0, 24).'…' : '?';
-        $this->line("    Imagem (id {$imageId}): ".Str::limit($imageUrl, 70));
+        $fotosOrdenadas = $this->orderedFotos($fotos);
+        $fotosAlvo = $this->fotosToRestore($fotosOrdenadas);
+        $force = (bool) $this->option('force');
 
-        if ($dryRun) {
-            $this->comment('    (dry-run: nada gravado)');
+        $this->line('    Imagens no site: '.count($imageUrls).' | Registros fotos: '.$fotosOrdenadas->count()
+            .' | A restaurar: '.$fotosAlvo->count());
+
+        if ($fotosAlvo->isEmpty() && ! $fotosOrdenadas->isEmpty() && ! $force) {
+            $this->comment('    Nada a fazer (arquivos já existem; use --force para substituir).');
 
             return true;
         }
 
-        try {
-            $relativePath = $this->googleSites->downloadImage($imageUrl, $directory, $entityName);
-        } catch (\Throwable $e) {
-            $this->error("    Falha no download: {$e->getMessage()}");
+        $pairCount = $fotosAlvo->isEmpty()
+            ? count($imageUrls)
+            : min($fotosAlvo->count(), count($imageUrls));
 
-            return false;
+        $sucesso = false;
+
+        for ($i = 0; $i < $pairCount; $i++) {
+            $imageUrl = $imageUrls[$i];
+            $imageId = preg_match('#/sitesv/(AA5Ab[A-Za-z0-9_\-]+)=#', $imageUrl, $m) ? substr($m[1], 0, 20).'…' : '?';
+            $this->line('    ['.($i + 1)."/{$pairCount}] id {$imageId}");
+
+            if ($dryRun) {
+                $sucesso = true;
+                continue;
+            }
+
+            try {
+                $relativePath = $this->googleSites->downloadImage(
+                    $imageUrl,
+                    $directory,
+                    $entityName,
+                    $i
+                );
+            } catch (\Throwable $e) {
+                $this->error("    Falha no download [{$i}]: {$e->getMessage()}");
+                continue;
+            }
+
+            $foto = $fotosAlvo->get($i);
+
+            if ($foto) {
+                $foto->update(['caminho' => $relativePath]);
+                $this->info("    Atualizado fotos.id={$foto->id} → {$relativePath}");
+            } else {
+                Fotos::create([
+                    $idField => $entityId,
+                    'caminho' => $relativePath,
+                    'capa' => $fotosOrdenadas->isEmpty() && $i === 0,
+                ]);
+                $this->info("    Criado registro em fotos → {$relativePath}");
+            }
+
+            $sucesso = true;
+            usleep(200_000);
         }
 
-        $foto = $fotos->sortByDesc('capa')->first();
-
-        if ($foto) {
-            $foto->update(['caminho' => $relativePath]);
-            $this->info("    Atualizado fotos.id={$foto->id} → {$relativePath}");
-        } else {
-            Fotos::create([
-                $idField => $entityId,
-                'caminho' => $relativePath,
-                'capa' => true,
-            ]);
-            $this->info("    Criado registro em fotos → {$relativePath}");
+        if ($fotosAlvo->count() > count($imageUrls)) {
+            $this->warn('    Ainda faltam '.($fotosAlvo->count() - count($imageUrls))
+                .' foto(s) no site (menos imagens que registros no banco).');
         }
 
-        return true;
+        if ($dryRun && $sucesso) {
+            $this->comment('    (dry-run: nada gravado)');
+        }
+
+        return $sucesso;
+    }
+
+    private function orderedFotos(Collection $fotos): Collection
+    {
+        return $fotos->sortBy([
+            ['capa', 'desc'],
+            ['id', 'asc'],
+        ])->values();
+    }
+
+    private function fotosToRestore(Collection $fotosOrdenadas): Collection
+    {
+        if ((bool) $this->option('force')) {
+            return $fotosOrdenadas;
+        }
+
+        $quebradas = $fotosOrdenadas->filter(
+            fn (Fotos $foto) => ! Storage::disk('public')->exists($foto->caminho)
+        )->values();
+
+        if ($quebradas->isNotEmpty()) {
+            return $quebradas;
+        }
+
+        return $fotosOrdenadas->isEmpty() ? $fotosOrdenadas : collect();
     }
 
     private function needsRestore($fotos): bool
