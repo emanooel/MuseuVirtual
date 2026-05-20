@@ -10,11 +10,17 @@ class GoogleSitesImageService
 {
     public const BASE_URL = 'https://sites.google.com/view/mvifesitapina/';
 
-    /** Imagens repetidas em quase todas as páginas (logo, ícones do tema). */
+    /** Logo IFES / banner do tema — aparecem no topo do HTML de várias páginas. */
     private const EXCLUDED_FRAGMENTS = [
         'AA5AbUBkopFErGek',
         'AA5AbUB2joT0Wb86',
+        'AA5AbUCCpW3uL37yfRS4qVQypw9nHQDPJI4QKKmi',
+        'AA5AbUBG7e40iNaX6QPC5Q3SCabDQFANsYIAIsR',
+        'AA5AbUAOoXFGJ6TddsuWbQi3DsEwcXCJ_J2yVl6',
     ];
+
+    /** Larguras típicas de ícones do menu lateral (não são fotos de amostra). */
+    private const MAX_SAMPLE_WIDTH = 2400;
 
     public function discoverPaths(string $prefix): array
     {
@@ -51,7 +57,9 @@ class GoogleSitesImageService
     }
 
     /**
-     * @return list<string> URLs absolutas das imagens da página
+     * URLs de imagens na ordem em que aparecem no HTML (inclui repetições do menu).
+     *
+     * @return list<string>
      */
     public function extractImageUrls(string $html): array
     {
@@ -63,26 +71,55 @@ class GoogleSitesImageService
 
         return collect($matches[0] ?? [])
             ->map(fn (string $url) => rtrim($url, ');'))
-            ->unique()
             ->values()
             ->all();
     }
 
     public function pickSampleImageUrl(array $urls): ?string
     {
-        $filtered = collect($urls)
-            ->reject(fn (string $url) => $this->isExcluded($url))
-            ->sortByDesc(fn (string $url) => $this->widthFromUrl($url))
+        $candidates = collect($urls)
+            ->filter(fn (string $url) => $this->isSampleCandidate($url))
             ->values();
 
-        if ($filtered->isEmpty()) {
+        if ($candidates->isEmpty()) {
             return null;
         }
 
-        // Em páginas de amostra costuma haver uma foto grande (w1280); evita miniaturas.
-        $preferred = $filtered->first(fn (string $url) => $this->widthFromUrl($url) >= 1280);
+        $idCounts = $candidates
+            ->map(fn (string $url) => $this->imageIdFromUrl($url))
+            ->filter()
+            ->countBy();
 
-        return $preferred ?? $filtered->first();
+        // Fotos da amostra costumam aparecer uma vez; logos do menu repetem o mesmo id.
+        $unique = $candidates->filter(
+            fn (string $url) => ($idCounts[$this->imageIdFromUrl($url)] ?? 0) === 1
+        );
+
+        if ($unique->isNotEmpty()) {
+            return $unique->last();
+        }
+
+        return $candidates->last();
+    }
+
+    private function isSampleCandidate(string $url): bool
+    {
+        if ($this->isExcluded($url)) {
+            return false;
+        }
+
+        $width = $this->widthFromUrl($url);
+
+        return $width >= 1280 && $width <= self::MAX_SAMPLE_WIDTH;
+    }
+
+    private function imageIdFromUrl(string $url): ?string
+    {
+        if (preg_match('#/sitesv/(AA5Ab[A-Za-z0-9_\-]+)=#', $url, $m)) {
+            return $m[1];
+        }
+
+        return null;
     }
 
     public function fetchHtml(string $url): string
@@ -146,6 +183,7 @@ class GoogleSitesImageService
 
     public function normalizeKey(string $value): string
     {
+        $value = preg_replace('/\s*\([^)]*\)\s*/', ' ', $value) ?? $value;
         $ascii = Str::ascii(mb_strtolower($value));
 
         return preg_replace('/\s+/', ' ', trim($ascii)) ?? '';

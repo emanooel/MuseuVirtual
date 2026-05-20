@@ -234,7 +234,8 @@ class FotosRestaurarGoogleSitesCommand extends Command
             return false;
         }
 
-        $this->line('    Imagem: '.Str::limit($imageUrl, 80));
+        $imageId = preg_match('#/sitesv/(AA5Ab[A-Za-z0-9_\-]+)=#', $imageUrl, $m) ? substr($m[1], 0, 24).'…' : '?';
+        $this->line("    Imagem (id {$imageId}): ".Str::limit($imageUrl, 70));
 
         if ($dryRun) {
             $this->comment('    (dry-run: nada gravado)');
